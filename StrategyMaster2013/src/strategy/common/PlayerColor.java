@@ -18,5 +18,5 @@ package strategy.common;
  */
 public enum PlayerColor
 {
-	RED, BLUE;
+	RED, BLUE, GREEN;
 }
