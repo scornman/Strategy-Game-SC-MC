@@ -11,8 +11,10 @@
 package strategy.game;
 
 import java.util.Collection;
+
 import strategy.common.*;
 import strategy.game.common.PieceLocationDescriptor;
+import strategy.game.version.beta.BetaStrategyGameController;
 
 /**
  * <p>
@@ -68,6 +70,7 @@ public class StrategyGameFactory
 			Collection<PieceLocationDescriptor> blueConfiguration)
 		throws StrategyException
 	{
-		throw new StrategyRuntimeException("Change this implementation");
+		StrategyGameController controller = new BetaStrategyGameController(redConfiguration, blueConfiguration);
+		return controller;
 	}
 }
