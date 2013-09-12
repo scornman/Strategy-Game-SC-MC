@@ -407,5 +407,21 @@ public class BetaStrategyGameControllerTest {
 		// Create the controller
 		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
-
+	
+	/**
+	 * Tests Piece getPieceAt(Location location);
+	 * bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
+	 * blueLocations.add(new Location2D(0, 5));
+	 * 
+	 * getPieceAt(new Location(0,5)) should return Piece(PieceType.FLAG, PlayerColor.BLUE);
+	 * @throws StrategyException 
+	 */
+	@Test
+	public void getPieceAtLocationShouldReturnBlueFlag() throws StrategyException{
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		Piece piece = new Piece(PieceType.FLAG, PlayerColor.BLUE);
+		
+		assertEquals(piece, ctrlr.getPieceAt(new Location2D(0,5)));
+	}
+	
 }
