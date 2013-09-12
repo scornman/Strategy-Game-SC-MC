@@ -69,6 +69,16 @@ public class BetaStrategyGameController implements StrategyGameController {
 		gameBoard = setUpBoard(redConfiguration, blueConfiguration);
 	}
 	
+	/**
+	 * helper function for setting up the gameBoard
+	 * sets a board to all pieces at all locations null
+	 * then implements the pieces in the redConfiguration and blueConfiguration
+	 * to fill the board
+	 * Loops through based on BOARD_SIZE_X and BOARD_SIZE_Y
+	 * @param redConfiguration
+	 * @param blueConfiguration
+	 * @return
+	 */
 	private Map<Location, Piece> setUpBoard(Collection<PieceLocationDescriptor> redConfiguration, 
 												Collection<PieceLocationDescriptor> blueConfiguration){
 		Map<Location, Piece> board = new HashMap<Location, Piece>();
@@ -78,6 +88,21 @@ public class BetaStrategyGameController implements StrategyGameController {
 				board.put(new Location2D(i,j), null);
 			}
 		}
+		
+		for(PieceLocationDescriptor red: redConfiguration){
+			Location redLocation = red.getLocation();
+			Piece redPiece = red.getPiece();
+			
+			board.put(redLocation, redPiece);
+		}
+		
+		for(PieceLocationDescriptor blue: blueConfiguration){
+			Location blueLocation = blue.getLocation();
+			Piece bluePiece = blue.getPiece();
+			
+			board.put(blueLocation, bluePiece);
+		}
+		
 		return board;
 	}
 
@@ -103,7 +128,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 	@Override
 	public Piece getPieceAt(Location location) {
-		Piece piece = board.get(location);
+		Piece piece = gameBoard.get(location);
 		return piece;
 	}
 
