@@ -31,7 +31,9 @@ import strategy.game.common.PieceType;
  * 
  */
 public class BetaStrategyGameController implements StrategyGameController {
-	
+
+	private boolean gameStarted;
+
 	/**
 	 * Creates a new BetaStrategyGameController with the board configuration
 	 * given by the supplied PieceLocationDescriptor collections.
@@ -53,21 +55,31 @@ public class BetaStrategyGameController implements StrategyGameController {
 		if (!configurationsValid(redConfiguration, blueConfiguration)) {
 			throw new StrategyException("Invalid Starting Configuration");
 		}
-		
+
+		// The game has not yet been started
+		gameStarted = false;
+
 		// TODO: Actually set up the board with the given configurations.
-		
+
 	}
 
 	@Override
 	public void startGame() throws StrategyException {
-		// TODO Auto-generated method stub
-
+		if (gameStarted) {
+			throw new StrategyException(
+					"Cannot start game when a game is already in progress.");
+		} else {
+			gameStarted = true;
+		}
 	}
 
 	@Override
 	public MoveResult move(PieceType piece, Location from, Location to)
 			throws StrategyException {
-		// TODO Auto-generated method stub
+		if (!gameStarted) {
+			throw new StrategyException(
+					"Cannot make a move before the game has started.");
+		}
 		return null;
 	}
 
@@ -206,7 +218,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 		pieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
 		return pieces;
 	}
-	
+
 	/**
 	 * Private helper method that constructs the expected list of pieces in the
 	 * blue configuration, in no particular order. Used to verify that a given

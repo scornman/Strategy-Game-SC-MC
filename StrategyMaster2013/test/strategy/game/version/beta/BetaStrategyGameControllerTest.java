@@ -408,4 +408,43 @@ public class BetaStrategyGameControllerTest {
 		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
+	/**
+	 * Tests that the startGame method throws an error if the game has already
+	 * started.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyException.class)
+	public void testStartGameThrowsExceptionIfGameAlreadyStarted()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		// Start the game.
+		controller.startGame();
+		// Attempt to start the game again after the game has already started.
+		controller.startGame();
+	}
+
+	/**
+	 * Tests that the move method throws an error if the game has not yet
+	 * started.
+	 * 
+	 * @throws StrategyException
+	 *             if the move method is called before the game is started. This
+	 *             is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testMoveThrowsExceptionIfGameNotYetStarted()
+			throws StrategyException {
+		// Create the controller
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		// Create the piece to attempt to move.
+		PieceType typeToMove = PieceType.CAPTAIN;
+		Location fromLocation = new Location2D(1, 1);
+		Location toLocation = new Location2D(1, 2);
+		// Attempt to move before the game has been started.
+		controller.move(typeToMove, fromLocation, toLocation);
+	}
+
 }
