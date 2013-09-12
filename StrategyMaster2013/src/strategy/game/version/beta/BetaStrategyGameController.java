@@ -31,7 +31,7 @@ import strategy.game.common.PieceType;
  * 
  */
 public class BetaStrategyGameController implements StrategyGameController {
-
+	
 	/**
 	 * Creates a new BetaStrategyGameController with the board configuration
 	 * given by the supplied PieceLocationDescriptor collections.
@@ -206,6 +206,31 @@ public class BetaStrategyGameController implements StrategyGameController {
 		pieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
 		return pieces;
 	}
+	
+	/**
+	 * Private helper method that constructs the expected list of pieces in the
+	 * blue configuration, in no particular order. Used to verify that a given
+	 * initial board configuration is valid.
+	 * 
+	 * @return a collection containing all of the pieces that the blue player
+	 *         should begin the game with.
+	 */
+	private Collection<Piece> getCorrectBluePieces() {
+		Collection<Piece> pieces = new ArrayList<Piece>();
+		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
+		pieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
+		return pieces;
+	}
 
 	/**
 	 * Helper method that checks whether two collections of pieces contain the
@@ -252,31 +277,6 @@ public class BetaStrategyGameController implements StrategyGameController {
 	}
 
 	/**
-	 * Private helper method that constructs the expected list of pieces in the
-	 * blue configuration, in no particular order. Used to verify that a given
-	 * initial board configuration is valid.
-	 * 
-	 * @return a collection containing all of the pieces that the blue player
-	 *         should begin the game with.
-	 */
-	private Collection<Piece> getCorrectBluePieces() {
-		Collection<Piece> pieces = new ArrayList<Piece>();
-		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
-		pieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		return pieces;
-	}
-
-	/**
 	 * Determines whether a given location is a valid starting location for a
 	 * piece of the specified color.
 	 * 
@@ -293,13 +293,13 @@ public class BetaStrategyGameController implements StrategyGameController {
 		int yCoord = startLocation.getCoordinate(Coordinate.Y_COORDINATE);
 		switch (color) {
 		case RED:
-			if (xCoord >= 0 && xCoord <= 1 && yCoord >= 0 && yCoord <= 5) {
+			if (xCoord >= 0 && xCoord <= 5 && yCoord >= 0 && yCoord <= 1) {
 				return true;
 			} else {
 				return false;
 			}
 		case BLUE:
-			if (xCoord >= 4 && xCoord <= 5 && yCoord >= 0 && yCoord <= 5) {
+			if (xCoord >= 0 && xCoord <= 5 && yCoord >= 4 && yCoord <= 5) {
 				return true;
 			} else {
 				return false;
