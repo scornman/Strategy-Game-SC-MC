@@ -12,12 +12,15 @@ package strategy.game.version.beta;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
 import strategy.game.StrategyGameController;
 import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
+import strategy.game.common.Location2D;
 import strategy.game.common.MoveResult;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
@@ -33,7 +36,8 @@ import strategy.game.common.PieceType;
 public class BetaStrategyGameController implements StrategyGameController {
 
 	private boolean gameStarted;
-
+	final private Map<Location, Piece> board;
+	
 	/**
 	 * Creates a new BetaStrategyGameController with the board configuration
 	 * given by the supplied PieceLocationDescriptor collections.
@@ -58,8 +62,11 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		// The game has not yet been started
 		gameStarted = false;
-
-		// TODO: Actually set up the board with the given configurations.
+		
+		// set up the board with the given configurations
+		board = new HashMap<Location, Piece>();
+		board.put(new Location2D(0,5), new Piece(PieceType.FLAG, PlayerColor.BLUE));
+		
 
 	}
 
@@ -85,8 +92,8 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 	@Override
 	public Piece getPieceAt(Location location) {
-		// TODO Auto-generated method stub
-		return null;
+		Piece piece = board.get(location);
+		return piece;
 	}
 
 	// Private Helper methods for the constructor
