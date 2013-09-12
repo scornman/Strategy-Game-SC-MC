@@ -38,11 +38,180 @@ public class BetaStrategyGameControllerTest {
 	private StrategyGameFactory factory;
 
 	/**
-	 * Setup method that runs before each test.
+	 * The initial piece configurations that the factory method uses to create
+	 * the controller. These will be set up with a default configuration before
+	 * each test. Each test can then modify them, if desired, before creating
+	 * the controller.
+	 */
+	private Collection<PieceLocationDescriptor> startingRedConfig;
+	private Collection<PieceLocationDescriptor> startingBlueConfig;
+
+	/**
+	 * Setup method that runs before each test. It sets up sample valid starting
+	 * piece configurations for both players, which can be modified and/or used
+	 * to create a BetaStrategyGameController.
 	 */
 	@Before
 	public void setUp() {
 		factory = StrategyGameFactory.getInstance();
+		startingRedConfig = setupValidRedConfiguration();
+		startingBlueConfig = setupValidBlueConfiguration();
+	}
+
+	/**
+	 * Helper method that sets up a valid starting configuration for red pieces
+	 * that test cases can use.
+	 * 
+	 * @return the collection of red pieces and their corresponding starting
+	 *         locations.
+	 */
+	private Collection<PieceLocationDescriptor> setupValidRedConfiguration() {
+		// Set up the starting configuration for the red pieces
+		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
+		ArrayList<Piece> redPieces = new ArrayList<Piece>();
+		ArrayList<Location> redLocations = new ArrayList<Location>();
+		// Red flag
+		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
+		redLocations.add(new Location2D(0, 0));
+		// Red marshal
+		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
+		redLocations.add(new Location2D(1, 0));
+		// Red colonels
+		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
+		redLocations.add(new Location2D(2, 0));
+		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
+		redLocations.add(new Location2D(3, 0));
+		// Red captains
+		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		redLocations.add(new Location2D(4, 0));
+		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		redLocations.add(new Location2D(5, 0));
+		// Red lieutenants
+		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		redLocations.add(new Location2D(0, 1));
+		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		redLocations.add(new Location2D(1, 1));
+		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		redLocations.add(new Location2D(2, 1));
+		// Red sergeants
+		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		redLocations.add(new Location2D(3, 1));
+		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		redLocations.add(new Location2D(4, 1));
+		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		redLocations.add(new Location2D(5, 1));
+		// Combine the pieces with their locations
+		for (int i = 0; i < redPieces.size(); i++) {
+			Piece iPiece = redPieces.get(i);
+			Location iLocation = redLocations.get(i);
+			redConfiguration
+					.add(new PieceLocationDescriptor(iPiece, iLocation));
+		}
+
+		return redConfiguration;
+	}
+
+	/**
+	 * Helper method that sets up a valid starting configuration for blue pieces
+	 * that test cases can use.
+	 * 
+	 * @return the collection of red pieces and their corresponding starting
+	 *         locations.
+	 */
+	private Collection<PieceLocationDescriptor> setupValidBlueConfiguration() {
+		// Set up the starting configuration for the blue pieces
+		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
+		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
+		ArrayList<Location> blueLocations = new ArrayList<Location>();
+		// Blue flag
+		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(0, 5));
+		// Blue marshal
+		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(1, 5));
+		// Blue colonels
+		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(2, 5));
+		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(3, 5));
+		// Blue captains
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(4, 5));
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(5, 5));
+		// Blue lieutenants
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(0, 4));
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(1, 4));
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(2, 4));
+		// Blue sergeants
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(3, 4));
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(4, 4));
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
+		blueLocations.add(new Location2D(5, 4));
+		// Combine the pieces with their locations
+		for (int i = 0; i < bluePieces.size(); i++) {
+			Piece iPiece = bluePieces.get(i);
+			Location iLocation = blueLocations.get(i);
+			blueConfiguration
+					.add(new PieceLocationDescriptor(iPiece, iLocation));
+		}
+
+		return blueConfiguration;
+	}
+
+	/**
+	 * Helper method for modifying a starting configuration so that one of the
+	 * pieces is moved to a different location.
+	 * 
+	 * @param configuration
+	 *            the collection of pieces and their corresponding locations to
+	 *            modify.
+	 * @param piece
+	 *            the piece to move from one location to another.
+	 * @param oldLocation
+	 *            the original location of the piece.
+	 * @param newLocation
+	 *            the new location for the piece to be moved to.
+	 */
+	private void movePieceToNewStartLocation(
+			Collection<PieceLocationDescriptor> configuration, Piece piece,
+			Location oldLocation, Location newLocation) {
+		PieceLocationDescriptor oldPLD = new PieceLocationDescriptor(piece,
+				oldLocation);
+		PieceLocationDescriptor newPLD = new PieceLocationDescriptor(piece,
+				newLocation);
+		configuration.remove(oldPLD);
+		configuration.add(newPLD);
+	}
+
+	/**
+	 * Helper method for modifying a starting configuration so that one of the
+	 * pieces is replaced with another piece in the same location.
+	 * 
+	 * @param configuration
+	 *            the collection of pieces and their corresponding locations to
+	 *            modify.
+	 * @param oldPiece
+	 *            the piece to replace with a new piece.
+	 * @param newPiece
+	 *            the new piece to replace to old piece.
+	 * @param location
+	 *            the location of the piece.
+	 */
+	private void replacePieceInStartConfiguration(
+			Collection<PieceLocationDescriptor> configuration, Piece oldPiece,
+			Piece newPiece, Location location) {
+		PieceLocationDescriptor oldPLD = new PieceLocationDescriptor(oldPiece,
+				location);
+		PieceLocationDescriptor newPLD = new PieceLocationDescriptor(newPiece,
+				location);
+		configuration.remove(oldPLD);
+		configuration.add(newPLD);
 	}
 
 	/**
@@ -59,7 +228,7 @@ public class BetaStrategyGameControllerTest {
 	@Test
 	public void testFactoryMethodCreatesGameWhenGivenValidConfigurations()
 			throws StrategyException {
-		StrategyGameController controller = setupValidBetaStrategyGameController();
+		new BetaStrategyGameController(startingRedConfig, startingBlueConfig);
 		assertTrue(true);
 	}
 
@@ -75,93 +244,14 @@ public class BetaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testControllerCreationFailsWhenConfigurationContainsRedFlagAndMarshalAtSameLocation()
 			throws StrategyException {
-		// Set up the starting configuration for the red pieces
-		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> redPieces = new ArrayList<Piece>();
-		ArrayList<Location> redLocations = new ArrayList<Location>();
-		// Red flag
-		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red marshal
-		// THIS IS THE LOCATION THAT IS INVALID
-		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red colonels
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 2));
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 3));
-		// Red captains
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 4));
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 5));
-		// Red lieutenants
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 0));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 1));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 2));
-		// Red sergeants
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 3));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 4));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < redPieces.size(); i++) {
-			Piece iPiece = redPieces.get(i);
-			Location iLocation = redLocations.get(i);
-			redConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Set up the starting configuration for the blue pieces
-		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
-		ArrayList<Location> blueLocations = new ArrayList<Location>();
-		// Blue flag
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 0));
-		// Blue marshal
-		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 1));
-		// Blue colonels
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 2));
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 3));
-		// Blue captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 5));
-		// Blue lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 0));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 1));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 2));
-		// Blue sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 3));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 4));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < bluePieces.size(); i++) {
-			Piece iPiece = bluePieces.get(i);
-			Location iLocation = blueLocations.get(i);
-			blueConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
+		Piece redMarshall = new Piece(PieceType.MARSHAL, PlayerColor.RED);
+		Location oldMarshallLocation = new Location2D(1, 0);
+		Location newMarshallLocation = new Location2D(0, 0);
+		movePieceToNewStartLocation(startingRedConfig, redMarshall,
+				oldMarshallLocation, newMarshallLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(redConfiguration, blueConfiguration);
+		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -176,93 +266,14 @@ public class BetaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testControllerCreationFailsWhenConfigurationContainsBlueCaptainAndColonelAtSameLocation()
 			throws StrategyException {
-		// Set up the starting configuration for the red pieces
-		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> redPieces = new ArrayList<Piece>();
-		ArrayList<Location> redLocations = new ArrayList<Location>();
-		// Red flag
-		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red marshal
-		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 1));
-		// Red colonels
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 2));
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 3));
-		// Red captains
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 4));
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 5));
-		// Red lieutenants
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 0));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 1));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 2));
-		// Red sergeants
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 3));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 4));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < redPieces.size(); i++) {
-			Piece iPiece = redPieces.get(i);
-			Location iLocation = redLocations.get(i);
-			redConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Set up the starting configuration for the blue pieces
-		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
-		ArrayList<Location> blueLocations = new ArrayList<Location>();
-		// Blue flag
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 0));
-		// Blue marshal
-		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 1));
-		// Blue colonels
-		// THIS IS THE LOCATION THAT IS INVALID
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 3));
-		// Blue captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 5));
-		// Blue lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 0));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 1));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 2));
-		// Blue sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 3));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 4));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < bluePieces.size(); i++) {
-			Piece iPiece = bluePieces.get(i);
-			Location iLocation = blueLocations.get(i);
-			blueConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
+		Piece blueColonel = new Piece(PieceType.COLONEL, PlayerColor.BLUE);
+		Location oldColonelLocation = new Location2D(2, 5);
+		Location newColonelLocation = new Location2D(4, 5);
+		movePieceToNewStartLocation(startingBlueConfig, blueColonel,
+				oldColonelLocation, newColonelLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(redConfiguration, blueConfiguration);
+		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -277,93 +288,14 @@ public class BetaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testControllerCreationFailsWhenRedPieceAtInvalidLocation()
 			throws StrategyException {
-		// Set up the starting configuration for the red pieces
-		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> redPieces = new ArrayList<Piece>();
-		ArrayList<Location> redLocations = new ArrayList<Location>();
-		// Red flag
-		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red marshal
-		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 1));
-		// Red colonels
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 2));
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 3));
-		// Red captains
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 4));
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 5));
-		// Red lieutenants
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 0));
-		// THIS IS THE LOCATION THAT IS INVALID
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(3, 5));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 2));
-		// Red sergeants
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 3));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 4));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < redPieces.size(); i++) {
-			Piece iPiece = redPieces.get(i);
-			Location iLocation = redLocations.get(i);
-			redConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Set up the starting configuration for the blue pieces
-		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
-		ArrayList<Location> blueLocations = new ArrayList<Location>();
-		// Blue flag
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 0));
-		// Blue marshal
-		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 1));
-		// Blue colonels
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 2));
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 3));
-		// Blue captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 5));
-		// Blue lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 0));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 1));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 2));
-		// Blue sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 3));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 4));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < bluePieces.size(); i++) {
-			Piece iPiece = bluePieces.get(i);
-			Location iLocation = blueLocations.get(i);
-			blueConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
+		Piece pieceToChange = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
+		Location oldLocation = new Location2D(1, 1);
+		Location newLocation = new Location2D(5, 3);
+		movePieceToNewStartLocation(startingRedConfig, pieceToChange,
+				oldLocation, newLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(redConfiguration, blueConfiguration);
+		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -378,93 +310,14 @@ public class BetaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testControllerCreationFailsWhenBluePieceAtInvalidLocation()
 			throws StrategyException {
-		// Set up the starting configuration for the red pieces
-		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> redPieces = new ArrayList<Piece>();
-		ArrayList<Location> redLocations = new ArrayList<Location>();
-		// Red flag
-		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red marshal
-		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 1));
-		// Red colonels
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 2));
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 3));
-		// Red captains
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 4));
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 5));
-		// Red lieutenants
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 0));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 1));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 2));
-		// Red sergeants
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 3));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 4));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < redPieces.size(); i++) {
-			Piece iPiece = redPieces.get(i);
-			Location iLocation = redLocations.get(i);
-			redConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Set up the starting configuration for the blue pieces
-		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
-		ArrayList<Location> blueLocations = new ArrayList<Location>();
-		// Blue flag
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 0));
-		// Blue marshal
-		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 1));
-		// Blue colonels
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 2));
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 3));
-		// Blue captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 5));
-		// Blue lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 0));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 1));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 2));
-		// Blue sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 3));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 4));
-		// THIS IS THE LOCATION THAT IS INVALID
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(1, 2));
-		// Combine the pieces with their locations
-		for (int i = 0; i < bluePieces.size(); i++) {
-			Piece iPiece = bluePieces.get(i);
-			Location iLocation = blueLocations.get(i);
-			blueConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
+		Piece pieceToChange = new Piece(PieceType.SERGEANT, PlayerColor.BLUE);
+		Location oldLocation = new Location2D(5, 4);
+		Location newLocation = new Location2D(2, 1);
+		movePieceToNewStartLocation(startingBlueConfig, pieceToChange,
+				oldLocation, newLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(redConfiguration, blueConfiguration);
+		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -479,91 +332,14 @@ public class BetaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testControllerCreationFailsWhenWrongNumberOfRedPieces()
 			throws StrategyException {
-		// Set up the starting configuration for the red pieces
-		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> redPieces = new ArrayList<Piece>();
-		ArrayList<Location> redLocations = new ArrayList<Location>();
-		// Red flag
-		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red marshal
-		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 1));
-		// Red colonels
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 2));
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 3));
-		// Red captains
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 4));
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 5));
-		// Red lieutenants
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 0));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 1));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 2));
-		// Red sergeants
-		// THIS SHOULD FAIL BECAUSE THERE ARE NOT ENOUGH RED SERGEANTS
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 3));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < redPieces.size(); i++) {
-			Piece iPiece = redPieces.get(i);
-			Location iLocation = redLocations.get(i);
-			redConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Set up the starting configuration for the blue pieces
-		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
-		ArrayList<Location> blueLocations = new ArrayList<Location>();
-		// Blue flag
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 0));
-		// Blue marshal
-		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 1));
-		// Blue colonels
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 2));
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 3));
-		// Blue captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 5));
-		// Blue lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 0));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 1));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 2));
-		// Blue sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 3));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 4));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < bluePieces.size(); i++) {
-			Piece iPiece = bluePieces.get(i);
-			Location iLocation = blueLocations.get(i);
-			blueConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
+		Piece pieceToRemove = new Piece(PieceType.SERGEANT, PlayerColor.RED);
+		Location location = new Location2D(4, 1);
+		PieceLocationDescriptor pldToRemove = new PieceLocationDescriptor(
+				pieceToRemove, location);
+		assertTrue(startingRedConfig.remove(pldToRemove));
 
 		// Create the controller
-		factory.makeBetaStrategyGame(redConfiguration, blueConfiguration);
+		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -578,90 +354,14 @@ public class BetaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testControllerCreationFailsWhenWrongNumberOfBluePieces()
 			throws StrategyException {
-		// Set up the starting configuration for the red pieces
-		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> redPieces = new ArrayList<Piece>();
-		ArrayList<Location> redLocations = new ArrayList<Location>();
-		// Red flag
-		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red marshal
-		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 1));
-		// Red colonels
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 2));
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 3));
-		// Red captains
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 4));
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 5));
-		// Red lieutenants
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 0));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 1));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 2));
-		// Red sergeants
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 3));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 4));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < redPieces.size(); i++) {
-			Piece iPiece = redPieces.get(i);
-			Location iLocation = redLocations.get(i);
-			redConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Set up the starting configuration for the blue pieces
-		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
-		ArrayList<Location> blueLocations = new ArrayList<Location>();
-		// Blue flag
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 0));
-		// THIS SHOULD FAIL BECAUSE THERE IS NO BLUE MARSHALL
-		// Blue colonels
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 2));
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 3));
-		// Blue captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 5));
-		// Blue lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 0));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 1));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 2));
-		// Blue sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 3));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 4));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < bluePieces.size(); i++) {
-			Piece iPiece = bluePieces.get(i);
-			Location iLocation = blueLocations.get(i);
-			blueConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
+		Piece pieceToRemove = new Piece(PieceType.MARSHAL, PlayerColor.BLUE);
+		Location location = new Location2D(1, 5);
+		PieceLocationDescriptor pldToRemove = new PieceLocationDescriptor(
+				pieceToRemove, location);
+		assertTrue(startingBlueConfig.remove(pldToRemove));
 
 		// Create the controller
-		factory.makeBetaStrategyGame(redConfiguration, blueConfiguration);
+		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -676,96 +376,16 @@ public class BetaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testControllerCreationFailsWhenWrongRedPieceTypes()
 			throws StrategyException {
-		// Set up the starting configuration for the red pieces
-		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> redPieces = new ArrayList<Piece>();
-		ArrayList<Location> redLocations = new ArrayList<Location>();
-		// Red flag
-		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red marshal
-		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 1));
-		// Red colonels
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 2));
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 3));
-		// Red captains
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 4));
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 5));
-		// Red lieutenants
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 0));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 1));
-		// THIS SHOULD FAIL BECAUSE THERE IS 1 FEWER RED LIEUTENANT AND 1 MORE
-		// RED COLONEL THAN EXPECTED.
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 2));
-		// Red sergeants
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 3));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 4));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < redPieces.size(); i++) {
-			Piece iPiece = redPieces.get(i);
-			Location iLocation = redLocations.get(i);
-			redConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Set up the starting configuration for the blue pieces
-		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
-		ArrayList<Location> blueLocations = new ArrayList<Location>();
-		// Blue flag
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 0));
-		// Blue marshal
-		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 1));
-		// Blue colonels
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 2));
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 3));
-		// Blue captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 5));
-		// Blue lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 0));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 1));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 2));
-		// Blue sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 3));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 4));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < bluePieces.size(); i++) {
-			Piece iPiece = bluePieces.get(i);
-			Location iLocation = blueLocations.get(i);
-			blueConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
+		Piece pieceToReplace = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
+		Piece replacementPiece = new Piece(PieceType.COLONEL, PlayerColor.RED);
+		Location pieceLocation = new Location2D(2, 1);
+		replacePieceInStartConfiguration(startingRedConfig, pieceToReplace,
+				replacementPiece, pieceLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(redConfiguration, blueConfiguration);
+		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
-	
+
 	/**
 	 * Tests that the factory method makeBetaStrategyGame fails with a
 	 * StrategyException if the starting configuration does not contain the
@@ -778,194 +398,14 @@ public class BetaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testControllerCreationFailsWhenWrongBluePieceTypes()
 			throws StrategyException {
-		// Set up the starting configuration for the red pieces
-		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> redPieces = new ArrayList<Piece>();
-		ArrayList<Location> redLocations = new ArrayList<Location>();
-		// Red flag
-		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red marshal
-		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 1));
-		// Red colonels
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 2));
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 3));
-		// Red captains
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 4));
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 5));
-		// Red lieutenants
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 0));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 1));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 2));
-		// Red sergeants
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 3));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 4));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < redPieces.size(); i++) {
-			Piece iPiece = redPieces.get(i);
-			Location iLocation = redLocations.get(i);
-			redConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Set up the starting configuration for the blue pieces
-		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
-		ArrayList<Location> blueLocations = new ArrayList<Location>();
-		// Blue flag
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 0));
-		// Blue marshal
-		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 1));
-		// Blue colonels
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 2));
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 3));
-		// Blue captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		// THIS SHOULD FAIL BECAUSE THERE IS 1 FEWER RED CAPTAIN AND 1 MORE
-		// RED MAJOR THAN EXPECTED.
-		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 5));
-		// Blue lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 0));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 1));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 2));
-		// Blue sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 3));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 4));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < bluePieces.size(); i++) {
-			Piece iPiece = bluePieces.get(i);
-			Location iLocation = blueLocations.get(i);
-			blueConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
+		Piece pieceToReplace = new Piece(PieceType.CAPTAIN, PlayerColor.BLUE);
+		Piece replacementPiece = new Piece(PieceType.MAJOR, PlayerColor.BLUE);
+		Location pieceLocation = new Location2D(5, 5);
+		replacePieceInStartConfiguration(startingBlueConfig, pieceToReplace,
+				replacementPiece, pieceLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(redConfiguration, blueConfiguration);
-	}
-
-	/**
-	 * Helper function for setting up a game controller with a fixed, valid
-	 * starting configuration
-	 * 
-	 * @return the new BetaStrategyGameController
-	 * @throws StrategyException
-	 *             if the controller is not properly set up.
-	 */
-	public StrategyGameController setupValidBetaStrategyGameController()
-			throws StrategyException {
-		// Set up the starting configuration for the red pieces
-		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> redPieces = new ArrayList<Piece>();
-		ArrayList<Location> redLocations = new ArrayList<Location>();
-		// Red flag
-		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 0));
-		// Red marshal
-		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 1));
-		// Red colonels
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 2));
-		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 3));
-		// Red captains
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 4));
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(new Location2D(0, 5));
-		// Red lieutenants
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 0));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 1));
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 2));
-		// Red sergeants
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 3));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 4));
-		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
-		redLocations.add(new Location2D(1, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < redPieces.size(); i++) {
-			Piece iPiece = redPieces.get(i);
-			Location iLocation = redLocations.get(i);
-			redConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Set up the starting configuration for the blue pieces
-		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
-		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
-		ArrayList<Location> blueLocations = new ArrayList<Location>();
-		// Blue flag
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 0));
-		// Blue marshal
-		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 1));
-		// Blue colonels
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 2));
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 3));
-		// Blue captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 4));
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(5, 5));
-		// Blue lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 0));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 1));
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 2));
-		// Blue sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 3));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 4));
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
-		blueLocations.add(new Location2D(4, 5));
-		// Combine the pieces with their locations
-		for (int i = 0; i < bluePieces.size(); i++) {
-			Piece iPiece = bluePieces.get(i);
-			Location iLocation = blueLocations.get(i);
-			blueConfiguration
-					.add(new PieceLocationDescriptor(iPiece, iLocation));
-		}
-
-		// Create the controller
-		StrategyGameController controller = factory.makeBetaStrategyGame(
-				redConfiguration, blueConfiguration);
-		return controller;
+		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 }
