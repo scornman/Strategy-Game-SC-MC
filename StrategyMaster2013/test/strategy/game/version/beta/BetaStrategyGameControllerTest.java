@@ -425,6 +425,20 @@ public class BetaStrategyGameControllerTest {
 	}
 	
 	/**
+	 * Tests Piece getPieceAt(Location location);
+	 * 
+	 * getPieceAt(new Location(1,0)) should return Piece(PieceType.MARSHAL, PlayerColor.RED);
+	 * @throws StrategyException 
+	 */
+	@Test
+	public void getPieceAtLocationShouldReturnRedMarshal() throws StrategyException{
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		Piece piece = new Piece(PieceType.MARSHAL, PlayerColor.RED);
+		
+		assertEquals(piece, ctrlr.getPieceAt(new Location2D(1,0)));
+	}
+	
+	/**
 	 * Tests that the startGame method throws an error if the game has already
 	 * started.
 	 * 

@@ -36,7 +36,9 @@ import strategy.game.common.PieceType;
 public class BetaStrategyGameController implements StrategyGameController {
 
 	private boolean gameStarted;
-	final private Map<Location, Piece> board;
+	final private Map<Location, Piece> gameBoard;
+	final private int BOARD_SIZE_X = 6;
+	final private int BOARD_SIZE_Y = 6;
 	
 	/**
 	 * Creates a new BetaStrategyGameController with the board configuration
@@ -64,10 +66,19 @@ public class BetaStrategyGameController implements StrategyGameController {
 		gameStarted = false;
 		
 		// set up the board with the given configurations
-		board = new HashMap<Location, Piece>();
-		board.put(new Location2D(0,5), new Piece(PieceType.FLAG, PlayerColor.BLUE));
+		gameBoard = setUpBoard(redConfiguration, blueConfiguration);
+	}
+	
+	private Map<Location, Piece> setUpBoard(Collection<PieceLocationDescriptor> redConfiguration, 
+												Collection<PieceLocationDescriptor> blueConfiguration){
+		Map<Location, Piece> board = new HashMap<Location, Piece>();
 		
-
+		for(int i=0; i<BOARD_SIZE_X; i++){
+			for(int j=0; j<BOARD_SIZE_Y; j++){
+				board.put(new Location2D(i,j), null);
+			}
+		}
+		return board;
 	}
 
 	@Override
