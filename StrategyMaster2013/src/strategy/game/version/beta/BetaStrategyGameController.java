@@ -124,6 +124,10 @@ public class BetaStrategyGameController implements StrategyGameController {
 			throw new StrategyException(
 					"Cannot make a move before the game has started.");
 		}
+		// If there is no piece at the from location
+		if(gameBoard.get(from) == null) {
+			throw new StrategyException("No piece to move at this location");
+		}
 		return null;
 	}
 

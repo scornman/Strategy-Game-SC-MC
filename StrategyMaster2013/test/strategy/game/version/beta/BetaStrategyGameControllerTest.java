@@ -407,63 +407,76 @@ public class BetaStrategyGameControllerTest {
 		// Create the controller
 		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
-	
+
 	/**
-	 * Tests Piece getPieceAt(Location location);
-	 * bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
-	 * blueLocations.add(new Location2D(0, 5));
+	 * Tests Piece getPieceAt(Location location); bluePieces.add(new
+	 * Piece(PieceType.FLAG, PlayerColor.BLUE)); blueLocations.add(new
+	 * Location2D(0, 5));
 	 * 
-	 * getPieceAt(new Location(0,5)) should return Piece(PieceType.FLAG, PlayerColor.BLUE);
-	 * @throws StrategyException 
+	 * getPieceAt(new Location(0,5)) should return Piece(PieceType.FLAG,
+	 * PlayerColor.BLUE);
+	 * 
+	 * @throws StrategyException
 	 */
 	@Test
-	public void getPieceAtLocationShouldReturnBlueFlag() throws StrategyException{
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+	public void getPieceAtLocationShouldReturnBlueFlag()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
 		Piece piece = new Piece(PieceType.FLAG, PlayerColor.BLUE);
-		
-		assertEquals(piece, ctrlr.getPieceAt(new Location2D(0,5)));
+
+		assertEquals(piece, ctrlr.getPieceAt(new Location2D(0, 5)));
 	}
-	
+
 	/**
 	 * Tests Piece getPieceAt(Location location);
 	 * 
-	 * getPieceAt(new Location(1,0)) should return Piece(PieceType.MARSHAL, PlayerColor.RED);
-	 * @throws StrategyException 
+	 * getPieceAt(new Location(1,0)) should return Piece(PieceType.MARSHAL,
+	 * PlayerColor.RED);
+	 * 
+	 * @throws StrategyException
 	 */
 	@Test
-	public void getPieceAtLocationShouldReturnRedMarshal() throws StrategyException{
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+	public void getPieceAtLocationShouldReturnRedMarshal()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
 		Piece piece = new Piece(PieceType.MARSHAL, PlayerColor.RED);
-		
-		assertEquals(piece, ctrlr.getPieceAt(new Location2D(1,0)));
+
+		assertEquals(piece, ctrlr.getPieceAt(new Location2D(1, 0)));
 	}
-	
+
 	/**
 	 * getPieceAt returns null if there is no piece at the specified location.
 	 * 
-	 * getPiece at (3,3) should be null
-	 * (there is no piece currently on (3,3))
+	 * getPiece at (3,3) should be null (there is no piece currently on (3,3))
 	 * 
 	 * @throws StrategyException
 	 */
 	@Test
-	public void getPieceAtLocationShouldReturnNullIfNoPiecePresent() throws StrategyException{
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
-		assertEquals(null, ctrlr.getPieceAt(new Location2D(3,3)));
+	public void getPieceAtLocationShouldReturnNullIfNoPiecePresent()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		assertEquals(null, ctrlr.getPieceAt(new Location2D(3, 3)));
 	}
-	
+
 	/**
-	 * getPieceAt should throw an error if the location does not exist on the board
+	 * getPieceAt should throw an error if the location does not exist on the
+	 * board
 	 * 
 	 * get Piece at (6,7) should throw an exception
+	 * 
 	 * @throws StrategyException
 	 */
-	@Test (expected = StrategyRuntimeException.class)
-	public void getPieceAtLocationNotOnBoardShouldThrowException() throws StrategyException{
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
-		ctrlr.getPieceAt(new Location2D(6,7));
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtLocationNotOnBoardShouldThrowException()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(6, 7));
 	}
-	
+
 	/**
 	 * Tests that the startGame method throws an error if the game has already
 	 * started.
@@ -502,16 +515,34 @@ public class BetaStrategyGameControllerTest {
 		// Attempt to move before the game has been started.
 		controller.move(typeToMove, fromLocation, toLocation);
 	}
-	
+
+	/**
+	 * Tests that the move method throws an error if the location to move from
+	 * contains no piece.
+	 * 
+	 * @throws StrategyException
+	 *             if one of the arguments passed to the move method is invalid.
+	 *             This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testMoveThrowsExceptionIfNoPieceAtFromLocation()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(3, 3);
+		Location toLocation = new Location2D(3, 4);
+		controller.move(PieceType.COLONEL, fromLocation, toLocation);
+	}
+
 	/**
 	 * Should throw an error if piece tries to move to location not next to it
 	 * 
 	 * @throws StrategyException
 	 */
-	//@Test(expected = StrategyException.class)
-	//public void throwExceptionIfLocationIsNotNextToRightSpaceOfPiece(){
-		
-	//}
-	
-	
+	// @Test(expected = StrategyException.class)
+	// public void throwExceptionIfLocationIsNotNextToRightSpaceOfPiece(){
+
+	// }
+
 }
