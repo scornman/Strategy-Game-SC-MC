@@ -465,6 +465,39 @@ public class BetaStrategyGameControllerTest {
 	}
 	
 	/**
+	 * getPieceAt
+	 * y-coordinate location shouldn't be negative
+	 * @throws StrategyException
+	 */
+	@Test (expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeYCoordinate() throws StrategyException{
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(0,-1));
+	}
+	
+	/**
+	 * getPieceAt
+	 * x-coordinate location shouldn't be negative
+	 * @throws StrategyException
+	 */
+	@Test (expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeXCoordinate() throws StrategyException{
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(-1,0));
+	}
+	
+	/**
+	 * getPieceAt
+	 * x-coordinate and y-coordinate location shouldn't be negative
+	 * @throws StrategyException
+	 */
+	@Test (expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeCoordinates() throws StrategyException{
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(-1,-1));
+	}
+	
+	/**
 	 * Tests that the startGame method throws an error if the game has already
 	 * started.
 	 * 
