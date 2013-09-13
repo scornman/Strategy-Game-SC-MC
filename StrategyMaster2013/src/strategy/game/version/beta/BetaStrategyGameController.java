@@ -83,6 +83,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	private Map<Location, Piece> setUpBoard(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration) {
+		
 		Map<Location, Piece> board = new HashMap<Location, Piece>();
 
 		for (int i = 0; i < BOARD_SIZE_X; i++) {

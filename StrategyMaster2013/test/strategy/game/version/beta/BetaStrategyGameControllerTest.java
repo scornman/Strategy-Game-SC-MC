@@ -591,5 +591,50 @@ public class BetaStrategyGameControllerTest {
 		Location toLocation = new Location2D(3, 4);
 		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
 	}
+	
+	/**
+	 * Should throw an error if piece tries to move to far in the x location
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyException.class)
+	public void throwExceptionIfPieceTriesToMoveTooManySpacesX() throws StrategyException{
+		StrategyGameController controller = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(1, 0);
+		Location toLocation = new Location2D(3, 0);
+		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
+	}
+
+	/**
+	 * Should throw an error if piece tries to move to far in the y location
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyException.class)
+	public void throwExceptionIfPieceTriesToMoveTooManySpacesY() throws StrategyException{
+		StrategyGameController controller = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(1, 0);
+		Location toLocation = new Location2D(1, 2);
+		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
+	}
+
+	/**
+	 * Should be valid if piece tries to move one space X
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void pieceTriesToMoveOneSpacesX() throws StrategyException{
+		StrategyGameController controller = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(1, 0);
+		Location toLocation = new Location2D(2, 0);
+		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
+		assertTrue(true);
+	}
+
 
 }
+	
