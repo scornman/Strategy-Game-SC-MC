@@ -83,7 +83,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	private Map<Location, Piece> setUpBoard(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration) {
-		
+
 		Map<Location, Piece> board = new HashMap<Location, Piece>();
 
 		for (int i = 0; i < BOARD_SIZE_X; i++) {
@@ -130,6 +130,27 @@ public class BetaStrategyGameController implements StrategyGameController {
 		if(gameBoard.get(from) == null) {
 			throw new StrategyException("No piece to move at this location.");
 		}
+		
+		// Check that none of the arguments are null.
+		if (piece == null || from == null || to == null) {
+			throw new StrategyException(
+					"Arguments to the move method must not be null.");
+		}
+
+		// If there is no piece at the from location, throw exception.
+		if (gameBoard.get(from) == null) {
+			throw new StrategyException("No piece to move at this location");
+		}
+
+		// Get the piece from the from location that is attempting to move.
+		Piece movingPiece = gameBoard.get(from);
+
+		// If the piece at the from location does not match the supplied piece
+		// type, throw exception.
+		if(movingPiece.getType() != piece) {
+			throw new StrategyException("Piece type to move does not match piece at location to move from.");
+		}
+		
 		try{
 			if(from.distanceTo(to) != 1){
 				throw new StrategyException("Cannot move to a non-adjacent space.");
@@ -137,8 +158,8 @@ public class BetaStrategyGameController implements StrategyGameController {
 		}catch(StrategyRuntimeException e) {
 			throw new StrategyException("Cannot move to a non-adjacent space.");
 		}
-		
-		return null;
+
+		return new MoveResult(null, null);
 	}
 
 	@Override
