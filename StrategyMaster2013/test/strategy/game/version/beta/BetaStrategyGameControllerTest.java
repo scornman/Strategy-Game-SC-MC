@@ -492,11 +492,21 @@ public class BetaStrategyGameControllerTest {
 	 * @throws StrategyException
 	 */
 	@Test (expected = StrategyRuntimeException.class)
-	public void getPieceAtCannotHaveANegativeCoordinates() throws StrategyException{
+	public void getPieceAtCannotHaveNegativeCoordinates() throws StrategyException{
 		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 		ctrlr.getPieceAt(new Location2D(-1,-1));
 	}
 	
+	/**
+	 * getPieceAt
+	 * x-coordinate and y-coordinate location shouldn't be negative
+	 * @throws StrategyException
+	 */
+	@Test (expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeXCoordinateAndATooLargeYCoordinate() throws StrategyException{
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(-1,10));
+	}
 	/**
 	 * Tests that the startGame method throws an error if the game has already
 	 * started.
