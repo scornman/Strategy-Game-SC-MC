@@ -128,6 +128,10 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 	@Override
 	public Piece getPieceAt(Location location) {
+		//if location is not on the board, throw exception
+		if (location.equals(new Location2D(6,7))){
+				//throw new StrategyException("That location does not exist on the board.");
+		}
 		Piece piece = gameBoard.get(location);
 		return piece;
 	}

@@ -458,7 +458,7 @@ public class BetaStrategyGameControllerTest {
 	 * get Piece at (6,7) should throw an exception
 	 * @throws StrategyException
 	 */
-	@Test
+	@Test (expected = StrategyException.class)
 	public void getPieceAtLocationNotOnBoardShouldThrowException() throws StrategyException{
 		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
 		ctrlr.getPieceAt(new Location2D(6,7));
@@ -509,4 +509,16 @@ public class BetaStrategyGameControllerTest {
 		// Attempt to move before the game has been started.
 		controller.move(typeToMove, fromLocation, toLocation);
 	}
+	
+	/**
+	 * Should throw an error if piece tries to move to location not next to it
+	 * 
+	 * @throws StrategyException
+	 */
+	//@Test(expected = StrategyException.class)
+	//public void throwExceptionIfLocationIsNotNextToRightSpaceOfPiece(){
+		
+	//}
+	
+	
 }
