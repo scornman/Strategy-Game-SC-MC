@@ -634,6 +634,21 @@ public class BetaStrategyGameControllerTest {
 		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
 		assertTrue(true);
 	}
+	
+	/**
+	 * Should be valid if piece tries to move one space Y
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void pieceTriesToMoveOneSpacesY() throws StrategyException{
+		StrategyGameController controller = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(1, 0);
+		Location toLocation = new Location2D(1, 1);
+		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
+		assertTrue(true);
+	}
 
 
 }
