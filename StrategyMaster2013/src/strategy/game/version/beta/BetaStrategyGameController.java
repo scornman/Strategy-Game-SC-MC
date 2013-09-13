@@ -144,6 +144,11 @@ public class BetaStrategyGameController implements StrategyGameController {
 		if(movingPiece.getType() != piece) {
 			throw new StrategyException("Piece type to move does not match piece at location to move from.");
 		}
+		
+		// The flag should not be able to move.
+		if(movingPiece.getType() == PieceType.FLAG) {
+			throw new StrategyException("You cannot move the flag.");
+		}
 
 		return new MoveResult(null, null);
 	}

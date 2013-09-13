@@ -664,6 +664,30 @@ public class BetaStrategyGameControllerTest {
 	}
 
 	/**
+	 * Tests that the move method throws an error if it attempts to move the
+	 * flag, which should not be able to move.
+	 * 
+	 * @throws StrategyException
+	 *             if one of the arguments passed to the move method is invalid.
+	 *             This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testMoveThrowsExceptionIfMovingFlag() throws StrategyException {
+		// Before setting up the board, switch the flag to the front row, so that is has room to attempt to move.
+		Piece flagPiece = new Piece(PieceType.FLAG, PlayerColor.RED);
+		Location flagLocation = new Location2D(0, 0);
+		Piece lieutenantPiece = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
+		Location lieutenantLocation = new Location2D(0, 1);
+		movePieceToNewStartLocation(startingRedConfig, flagPiece, flagLocation, lieutenantLocation);
+		movePieceToNewStartLocation(startingRedConfig, lieutenantPiece, lieutenantLocation, flagLocation);
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// Attempt to move the flag.
+		controller.move(PieceType.FLAG, lieutenantLocation, new Location2D(0,2));
+	}
+	/**
 	 * Should throw an error if piece tries to move to location not next to it
 	 * 
 	 * @throws StrategyException
