@@ -400,7 +400,7 @@ public class BetaStrategyGameControllerTest {
 			throws StrategyException {
 		Piece pieceToReplace = new Piece(PieceType.CAPTAIN, PlayerColor.BLUE);
 		Piece replacementPiece = new Piece(PieceType.MAJOR, PlayerColor.BLUE);
-		Location pieceLocation = new Location2D(5, 5);
+		Location pieceLocation = new Location2D(3, 5);
 		replacePieceInStartConfiguration(startingBlueConfig, pieceToReplace,
 				replacementPiece, pieceLocation);
 
@@ -436,6 +436,31 @@ public class BetaStrategyGameControllerTest {
 		Piece piece = new Piece(PieceType.MARSHAL, PlayerColor.RED);
 		
 		assertEquals(piece, ctrlr.getPieceAt(new Location2D(1,0)));
+	}
+	
+	/**
+	 * getPieceAt returns null if there is no piece at the specified location.
+	 * 
+	 * getPiece at (3,3) should be null
+	 * (there is no piece currently on (3,3))
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void getPieceAtLocationShouldReturnNullIfNoPiecePresent() throws StrategyException{
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		assertEquals(null, ctrlr.getPieceAt(new Location2D(3,3)));
+	}
+	
+	/**
+	 * getPieceAt should throw an error if the location does not exist on the board
+	 * 
+	 * get Piece at (6,7) should throw an exception
+	 * @throws StrategyException
+	 */
+	@Test
+	public void getPieceAtLocationNotOnBoardShouldThrowException() throws StrategyException{
+		
 	}
 	
 	/**
