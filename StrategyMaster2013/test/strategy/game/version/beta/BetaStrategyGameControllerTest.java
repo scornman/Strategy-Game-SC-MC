@@ -460,7 +460,15 @@ public class BetaStrategyGameControllerTest {
 	 */
 	@Test
 	public void getPieceAtLocationNotOnBoardShouldThrowException() throws StrategyException{
-		
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(6,7));
+	}
+	
+	//@TODO: this shouldn't be null! what do we do?
+	@Test
+	public void getPieceAtLocationNotOnBoardShouldReturnNull() throws StrategyException{
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		assertEquals(null, ctrlr.getPieceAt(new Location2D(6,7)));
 	}
 	
 	/**
