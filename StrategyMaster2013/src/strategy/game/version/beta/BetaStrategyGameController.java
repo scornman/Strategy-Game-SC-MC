@@ -17,6 +17,7 @@ import java.util.Map;
 
 import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
+import strategy.common.StrategyRuntimeException;
 import strategy.game.StrategyGameController;
 import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
@@ -129,13 +130,23 @@ public class BetaStrategyGameController implements StrategyGameController {
 	@Override
 	public Piece getPieceAt(Location location) {
 		//if location is not on the board, throw exception
-		if (location.equals(new Location2D(6,7))){
-				//throw new StrategyException("That location does not exist on the board.");
+		if (!isValidLocation(location)){
+				throw new StrategyRuntimeException("That location does not exist on the board.");
 		}
 		Piece piece = gameBoard.get(location);
 		return piece;
 	}
 
+	private boolean isValidLocation(Location location){
+		int x_coordinate = location.getCoordinate(Coordinate.X_COORDINATE);
+		int y_coordinate = location.getCoordinate(Coordinate.Y_COORDINATE);
+		
+		if(x_coordinate < BOARD_SIZE_X && y_coordinate < BOARD_SIZE_Y){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	// Private Helper methods for the constructor
 
 	/**
