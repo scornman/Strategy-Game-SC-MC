@@ -141,7 +141,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 		int x_coordinate = location.getCoordinate(Coordinate.X_COORDINATE);
 		int y_coordinate = location.getCoordinate(Coordinate.Y_COORDINATE);
 		
-		if(x_coordinate < BOARD_SIZE_X && y_coordinate < BOARD_SIZE_Y){
+		if(x_coordinate < BOARD_SIZE_X && y_coordinate < BOARD_SIZE_Y && x_coordinate >= 0 && y_coordinate >= 0){
 			return true;
 		}else{
 			return false;
