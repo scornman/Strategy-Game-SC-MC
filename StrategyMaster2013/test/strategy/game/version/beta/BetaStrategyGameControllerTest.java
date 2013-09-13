@@ -583,9 +583,10 @@ public class BetaStrategyGameControllerTest {
 	 * 
 	 * @throws StrategyException
 	 */
-	// @Test(expected = StrategyException.class)
-	// public void throwExceptionIfLocationIsNotNextToRightSpaceOfPiece(){
-
-	// }
+	@Test(expected = StrategyException.class)
+	public void throwExceptionIfLocationIsNotNextToRightSpaceOfPiece() throws StrategyException{
+		StrategyGameController controller = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		//@TODO
+	}
 
 }
