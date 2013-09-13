@@ -3,12 +3,12 @@
 - getPieceAt returns a valid piece when supplied with a valid location containing that piece.
 X startGame throws a StrategyException if the game has already started.
 X move throws a StrategyException if the game has not yet been started.
-- move throws a StrategyException if the specified 'from' location is not a valid location.
-- move throws a StrategyException if the specified 'to' location is not a valid location.
-- move throws a StrategyException if the specified pieceType is null.
+X move throws a StrategyException if the specified 'from' location is not a valid location.
+X move throws a StrategyException if the specified 'to' location is not a valid location.
+X move throws a StrategyException if the specified pieceType is null.
 
-- move throws a StrategyException if the specified 'from' location does not contain a piece.
-- move throws a StrategyException if the specified 'from' location does not contain a piece of the specified 	type.
+X move throws a StrategyException if the specified 'from' location does not contain a piece.
+X move throws a StrategyException if the specified 'from' location does not contain a piece of the specified 	type.
 - move throws a StrategyException if the piece in the specified from location does not match the color of the 	player who is moving.
 - move throws a StrategyException if the piece to be moved is not moveable. (i.e. is the flag)
 - after move is called with valid parameters, including an empty 'to' location, getPieceAt on the 'to' location should return the piece that moved.

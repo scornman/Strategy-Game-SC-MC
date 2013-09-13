@@ -478,48 +478,57 @@ public class BetaStrategyGameControllerTest {
 	}
 
 	/**
-	 * getPieceAt
-	 * y-coordinate location shouldn't be negative
+	 * getPieceAt y-coordinate location shouldn't be negative
+	 * 
 	 * @throws StrategyException
 	 */
-	@Test (expected = StrategyRuntimeException.class)
-	public void getPieceAtCannotHaveANegativeYCoordinate() throws StrategyException{
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
-		ctrlr.getPieceAt(new Location2D(0,-1));
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeYCoordinate()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(0, -1));
 	}
-	
+
 	/**
-	 * getPieceAt
-	 * x-coordinate location shouldn't be negative
+	 * getPieceAt x-coordinate location shouldn't be negative
+	 * 
 	 * @throws StrategyException
 	 */
-	@Test (expected = StrategyRuntimeException.class)
-	public void getPieceAtCannotHaveANegativeXCoordinate() throws StrategyException{
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
-		ctrlr.getPieceAt(new Location2D(-1,0));
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeXCoordinate()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(-1, 0));
 	}
-	
+
 	/**
-	 * getPieceAt
-	 * x-coordinate and y-coordinate location shouldn't be negative
+	 * getPieceAt x-coordinate and y-coordinate location shouldn't be negative
+	 * 
 	 * @throws StrategyException
 	 */
-	@Test (expected = StrategyRuntimeException.class)
-	public void getPieceAtCannotHaveNegativeCoordinates() throws StrategyException{
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
-		ctrlr.getPieceAt(new Location2D(-1,-1));
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveNegativeCoordinates()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(-1, -1));
 	}
-	
+
 	/**
-	 * getPieceAt
-	 * x-coordinate and y-coordinate location shouldn't be negative
+	 * getPieceAt x-coordinate and y-coordinate location shouldn't be negative
+	 * 
 	 * @throws StrategyException
 	 */
-	@Test (expected = StrategyRuntimeException.class)
-	public void getPieceAtCannotHaveANegativeXCoordinateAndATooLargeYCoordinate() throws StrategyException{
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
-		ctrlr.getPieceAt(new Location2D(-1,10));
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeXCoordinateAndATooLargeYCoordinate()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(-1, 10));
 	}
+
 	/**
 	 * Tests that the startGame method throws an error if the game has already
 	 * started.
@@ -576,6 +585,82 @@ public class BetaStrategyGameControllerTest {
 		Location fromLocation = new Location2D(3, 3);
 		Location toLocation = new Location2D(3, 4);
 		controller.move(PieceType.COLONEL, fromLocation, toLocation);
+	}
+
+	/**
+	 * Tests that the move method throws an error if the location to move from
+	 * is null.
+	 * 
+	 * @throws StrategyException
+	 *             if one of the arguments passed to the move method is invalid.
+	 *             This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testMoveThrowsExceptionIfFromLocationIsNull()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = null;
+		Location toLocation = new Location2D(1, 2);
+		controller.move(PieceType.LIEUTENANT, fromLocation, toLocation);
+	}
+
+	/**
+	 * Tests that the move method throws an error if the location to move to is
+	 * null.
+	 * 
+	 * @throws StrategyException
+	 *             if one of the arguments passed to the move method is invalid.
+	 *             This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testMoveThrowsExceptionIfToLocationIsNull()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(1, 1);
+		Location toLocation = null;
+		controller.move(PieceType.LIEUTENANT, fromLocation, toLocation);
+	}
+
+	/**
+	 * Tests that the move method throws an error if the piece type is null.
+	 * 
+	 * @throws StrategyException
+	 *             if one of the arguments passed to the move method is invalid.
+	 *             This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testMoveThrowsExceptionIfPieceTypeIsNull()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(1, 1);
+		Location toLocation = new Location2D(1, 2);
+		controller.move(null, fromLocation, toLocation);
+	}
+
+	/**
+	 * Tests that the move method throws an error if the from location does not
+	 * contain the specified piece type.
+	 * 
+	 * @throws StrategyException
+	 *             if one of the arguments passed to the move method is invalid.
+	 *             This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testMoveThrowsExceptionIfFromLocationHasWrongPieceType()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(1, 1);
+		Location toLocation = new Location2D(1, 2);
+		// Piece type in this location should be LIEUTENANT
+		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
 	}
 
 	/**

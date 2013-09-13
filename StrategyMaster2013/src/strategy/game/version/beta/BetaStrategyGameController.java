@@ -40,7 +40,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	final private Map<Location, Piece> gameBoard;
 	final private int BOARD_SIZE_X = 6;
 	final private int BOARD_SIZE_Y = 6;
-	
+
 	/**
 	 * Creates a new BetaStrategyGameController with the board configuration
 	 * given by the supplied PieceLocationDescriptor collections.
@@ -65,45 +65,46 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		// The game has not yet been started
 		gameStarted = false;
-		
+
 		// set up the board with the given configurations
 		gameBoard = setUpBoard(redConfiguration, blueConfiguration);
 	}
-	
+
 	/**
-	 * helper function for setting up the gameBoard
-	 * sets a board to all pieces at all locations null
-	 * then implements the pieces in the redConfiguration and blueConfiguration
-	 * to fill the board
-	 * Loops through based on BOARD_SIZE_X and BOARD_SIZE_Y
+	 * helper function for setting up the gameBoard sets a board to all pieces
+	 * at all locations null then implements the pieces in the redConfiguration
+	 * and blueConfiguration to fill the board Loops through based on
+	 * BOARD_SIZE_X and BOARD_SIZE_Y
+	 * 
 	 * @param redConfiguration
 	 * @param blueConfiguration
 	 * @return
 	 */
-	private Map<Location, Piece> setUpBoard(Collection<PieceLocationDescriptor> redConfiguration, 
-												Collection<PieceLocationDescriptor> blueConfiguration){
+	private Map<Location, Piece> setUpBoard(
+			Collection<PieceLocationDescriptor> redConfiguration,
+			Collection<PieceLocationDescriptor> blueConfiguration) {
 		Map<Location, Piece> board = new HashMap<Location, Piece>();
-		
-		for(int i=0; i<BOARD_SIZE_X; i++){
-			for(int j=0; j<BOARD_SIZE_Y; j++){
-				board.put(new Location2D(i,j), null);
+
+		for (int i = 0; i < BOARD_SIZE_X; i++) {
+			for (int j = 0; j < BOARD_SIZE_Y; j++) {
+				board.put(new Location2D(i, j), null);
 			}
 		}
-		
-		for(PieceLocationDescriptor red: redConfiguration){
+
+		for (PieceLocationDescriptor red : redConfiguration) {
 			Location redLocation = red.getLocation();
 			Piece redPiece = red.getPiece();
-			
+
 			board.put(redLocation, redPiece);
 		}
-		
-		for(PieceLocationDescriptor blue: blueConfiguration){
+
+		for (PieceLocationDescriptor blue : blueConfiguration) {
 			Location blueLocation = blue.getLocation();
 			Piece bluePiece = blue.getPiece();
-			
+
 			board.put(blueLocation, bluePiece);
 		}
-		
+
 		return board;
 	}
 
@@ -124,37 +125,52 @@ public class BetaStrategyGameController implements StrategyGameController {
 			throw new StrategyException(
 					"Cannot make a move before the game has started.");
 		}
-		// If there is no piece at the from location
-		if(gameBoard.get(from) == null) {
+		// Check that none of the arguments are null.
+		if (piece == null || from == null || to == null) {
+			throw new StrategyException(
+					"Arguments to the move method must not be null.");
+		}
+
+		// If there is no piece at the from location, throw exception.
+		if (gameBoard.get(from) == null) {
 			throw new StrategyException("No piece to move at this location");
 		}
-		
-		
-		
-		
-		return null;
+
+		// Get the piece from the from location that is attempting to move.
+		Piece movingPiece = gameBoard.get(from);
+
+		// If the piece at the from location does not match the supplied piece
+		// type, throw exception.
+		if(movingPiece.getType() != piece) {
+			throw new StrategyException("Piece type to move does not match piece at location to move from.");
+		}
+
+		return new MoveResult(null, null);
 	}
 
 	@Override
 	public Piece getPieceAt(Location location) {
-		//if location is not on the board, throw exception
-		if (!isValidLocation(location)){
-				throw new StrategyRuntimeException("That location does not exist on the board.");
+		// if location is not on the board, throw exception
+		if (!isValidLocation(location)) {
+			throw new StrategyRuntimeException(
+					"That location does not exist on the board.");
 		}
 		Piece piece = gameBoard.get(location);
 		return piece;
 	}
 
-	private boolean isValidLocation(Location location){
+	private boolean isValidLocation(Location location) {
 		int x_coordinate = location.getCoordinate(Coordinate.X_COORDINATE);
 		int y_coordinate = location.getCoordinate(Coordinate.Y_COORDINATE);
-		
-		if(x_coordinate < BOARD_SIZE_X && y_coordinate < BOARD_SIZE_Y && x_coordinate >= 0 && y_coordinate >= 0){
+
+		if (x_coordinate < BOARD_SIZE_X && y_coordinate < BOARD_SIZE_Y
+				&& x_coordinate >= 0 && y_coordinate >= 0) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
+
 	// Private Helper methods for the constructor
 
 	/**
