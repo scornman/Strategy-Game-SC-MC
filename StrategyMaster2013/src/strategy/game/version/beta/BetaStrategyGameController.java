@@ -128,6 +128,10 @@ public class BetaStrategyGameController implements StrategyGameController {
 		if(gameBoard.get(from) == null) {
 			throw new StrategyException("No piece to move at this location");
 		}
+		
+		
+		
+		
 		return null;
 	}
 
