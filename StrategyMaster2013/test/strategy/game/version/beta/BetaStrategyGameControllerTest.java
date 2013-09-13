@@ -579,14 +579,17 @@ public class BetaStrategyGameControllerTest {
 	}
 
 	/**
-	 * Should throw an error if piece tries to move to location not next to it
+	 * Should throw an error if piece tries to move to a diagonal location
 	 * 
 	 * @throws StrategyException
 	 */
 	@Test(expected = StrategyException.class)
-	public void throwExceptionIfLocationIsNotNextToRightSpaceOfPiece() throws StrategyException{
+	public void throwExceptionIfPieceTriesToMoveToDiagonalLocation() throws StrategyException{
 		StrategyGameController controller = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
-		//@TODO
+		controller.startGame();
+		Location fromLocation = new Location2D(1, 0);
+		Location toLocation = new Location2D(3, 4);
+		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
 	}
 
 }
