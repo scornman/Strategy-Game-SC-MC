@@ -83,6 +83,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	private Map<Location, Piece> setUpBoard(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration) {
+
 		Map<Location, Piece> board = new HashMap<Location, Piece>();
 
 		for (int i = 0; i < BOARD_SIZE_X; i++) {
@@ -125,6 +126,11 @@ public class BetaStrategyGameController implements StrategyGameController {
 			throw new StrategyException(
 					"Cannot make a move before the game has started.");
 		}
+		// If there is no piece at the from location
+		if (gameBoard.get(from) == null) {
+			throw new StrategyException("No piece to move at this location.");
+		}
+
 		// Check that none of the arguments are null.
 		if (piece == null || from == null || to == null) {
 			throw new StrategyException(
@@ -141,13 +147,23 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		// If the piece at the from location does not match the supplied piece
 		// type, throw exception.
-		if(movingPiece.getType() != piece) {
-			throw new StrategyException("Piece type to move does not match piece at location to move from.");
+		if (movingPiece.getType() != piece) {
+			throw new StrategyException(
+					"Piece type to move does not match piece at location to move from.");
 		}
-		
+
 		// The flag should not be able to move.
-		if(movingPiece.getType() == PieceType.FLAG) {
+		if (movingPiece.getType() == PieceType.FLAG) {
 			throw new StrategyException("You cannot move the flag.");
+		}
+
+		try {
+			if (from.distanceTo(to) != 1) {
+				throw new StrategyException(
+						"Cannot move to a non-adjacent space.");
+			}
+		} catch (StrategyRuntimeException e) {
+			throw new StrategyException("Cannot move to a non-adjacent space.");
 		}
 
 		return new MoveResult(null, null);
