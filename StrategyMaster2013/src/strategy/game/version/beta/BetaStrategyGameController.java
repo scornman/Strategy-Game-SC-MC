@@ -140,10 +140,8 @@ public class BetaStrategyGameController implements StrategyGameController {
 			throw new StrategyException(
 					"Cannot make a move before the game has started.");
 		}
-		// If there is no piece at the from location
-		if (gameBoard.get(from) == null) {
-			throw new StrategyException("No piece to move at this location.");
-		}
+		// Get the piece from the from location that is attempting to move.
+		Piece movingPiece = gameBoard.get(from);
 
 		// Check that none of the arguments are null.
 		if (piece == null || from == null || to == null) {
@@ -151,72 +149,111 @@ public class BetaStrategyGameController implements StrategyGameController {
 					"Arguments to the move method must not be null.");
 		}
 
-		// If there is no piece at the from location, throw exception.
-		if (gameBoard.get(from) == null) {
-			throw new StrategyException("No piece to move at this location");
+		String errorMessageFrom = checkValidMoveFrom(piece, from);
+		if (errorMessageFrom != null){
+			throw new StrategyException(errorMessageFrom);
+		}
+		
+		String errorMessageTo = checkValidMoveTo(piece, from, to);
+		if (errorMessageTo != null){
+			throw new StrategyException(errorMessageTo);
+		}
+		
+		// For a valid move change the location of the piece
+		// to the destination.
+		gameBoard.put(to, movingPiece);
+		gameBoard.put(from, null);
+		
+		endTurn();
+		
+		//if it is the (12th) move, game status set to draw
+		if (turnsCounter == NUMBER_OF_TURNS){
+			return new MoveResult(MoveResultStatus.DRAW, null);
 		}
 
-		// Get the piece from the from location that is attempting to move.
-		Piece movingPiece = gameBoard.get(from);
-
-		// If the piece at the from location does not match the supplied piece
-		// type, throw exception.
-		if (movingPiece.getType() != piece) {
-			throw new StrategyException(
-					"Piece type to move does not match piece at location to move from.");
-		}
-
-		// The flag should not be able to move.
-		if (movingPiece.getType() == PieceType.FLAG) {
-			throw new StrategyException("You cannot move the flag.");
-		}
-
-		// A piece that is not the color whose turn it is cannot move.
-		if (movingPiece.getOwner() != currentTurnColor) {
-			throw new StrategyException(
-					"You cannot move when it is not you turn!");
-		}
-
-		Piece pieceAtToLocation = gameBoard.get(to);
-		// If there is a piece at the destination location
-		if (pieceAtToLocation != null) {
-			// A piece may not move onto a location containing another piece of
-			// the same color/owner.
-			if (movingPiece.getOwner() == pieceAtToLocation.getOwner()) {
-				throw new StrategyException(
-						"You cannot move to a location containing a piece of the same color.");
-			}
-		}
-
-		try {
-			if (from.distanceTo(to) != 1) {
-				throw new StrategyException(
-						"Cannot move to a non-adjacent space.");
-			}
-		} catch (StrategyRuntimeException e) {
-			throw new StrategyException("Cannot move to a non-adjacent space.");
-		}
-
+		return new MoveResult(MoveResultStatus.OK, null);
+	}
+	
+	private void endTurn(){
 		// Upon completion of move, change the color of the current turn.
 		if (currentTurnColor == PlayerColor.RED) {
 			currentTurnColor = PlayerColor.BLUE;
 		} else {
 			currentTurnColor = PlayerColor.RED;
 		}
-
-		// For a valid move change the location of the piece
-		// to the destination.
-		gameBoard.put(to, movingPiece);
-		gameBoard.put(from, null);
 		
 		turnsCounter++;
+	}
+	
+	private String checkValidMoveFrom(PieceType piece, Location from){
+		// Get the piece from the from location that is attempting to move.
+		Piece movingPiece = gameBoard.get(from);
+		String errorMessage;
 		
-		//if it is the (12th) move, game status set to draw
-		if (turnsCounter == 12){
-			return new MoveResult(MoveResultStatus.DRAW, null);
+		// If there is no piece at the from location, throw exception.
+		if (gameBoard.get(from) == null) {
+			errorMessage = "No piece to move at this location";
+			return errorMessage;
+		}
+		
+		// If there is no piece at the from location
+		if (gameBoard.get(from) == null) {
+			errorMessage = "No piece to move at this location.";
+			return errorMessage;
+		}
+				
+		// If the piece at the from location does not match the supplied piece
+		// type, throw exception.
+		if (movingPiece.getType() != piece) {
+			errorMessage = "Piece type to move does not match piece at location to move from.";
+			return errorMessage;
 		}
 
-		return new MoveResult(MoveResultStatus.OK, null);
+		// The flag should not be able to move.
+		if (movingPiece.getType() == PieceType.FLAG) {
+			errorMessage = "You cannot move the flag.";
+			return errorMessage;
+		}
+
+		// A piece that is not the color whose turn it is cannot move.
+		if (movingPiece.getOwner() != currentTurnColor) {
+			errorMessage = "You cannot move when it is not you turn.";
+			return errorMessage;
+		}
+		
+		return null;	
+	}
+	
+	private String checkValidMoveTo(PieceType piece, Location from, Location to){
+		// Get the piece from the to location that is attempting to move.
+		Piece pieceAtToLocation = gameBoard.get(to);
+		Piece movingPiece = gameBoard.get(from);
+		String errorMessage;
+		
+		// If there is a piece at the destination location
+		if (pieceAtToLocation != null) {
+			// A piece may not move onto a location containing another piece of
+			// the same color/owner.
+			if (movingPiece.getOwner() == pieceAtToLocation.getOwner()) {
+				errorMessage = 
+						"You cannot move to a location containing a piece of the same color.";
+				return errorMessage;
+			}
+		}
+
+		try {
+			if (from.distanceTo(to) != 1) {
+				errorMessage = 
+						"Cannot move to a non-adjacent space.";
+				return errorMessage;
+			}
+		} catch (StrategyRuntimeException e) {
+				errorMessage = "Cannot move to a non-adjacent space.";
+				return errorMessage;
+		}
+		
+		return null;
+
 	}
 
 	@Override
