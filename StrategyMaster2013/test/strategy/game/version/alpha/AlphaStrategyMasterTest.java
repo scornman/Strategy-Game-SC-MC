@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import strategy.common.*;
 import strategy.game.StrategyGameController;
+import strategy.game.StrategyGameFactory;
 import strategy.game.common.*;
 
 /**
@@ -23,7 +24,14 @@ import strategy.game.common.*;
  */
 public class AlphaStrategyMasterTest
 {
+	/**
+	 * The factory that the test cases will use to produce
+	 * StrategyGameController objects.
+	 */
+	private StrategyGameFactory factory;
+	
 	private  StrategyGameController game;
+	
 	private final Location redMarshalLocation = new Location2D(0, 0);
 	private final Location redFlagLocation = new Location2D(1, 0);
 	private final Location blueFlagLocation = new Location2D(0, 1);
@@ -36,7 +44,8 @@ public class AlphaStrategyMasterTest
 	@Before
 	public  void setup()
 	{
-		game = new AlphaStrategyGameController();
+		factory = StrategyGameFactory.getInstance();
+		game = factory.makeAlphaStrategyGame();
 	}
 	
 	@Test(expected=StrategyException.class)
