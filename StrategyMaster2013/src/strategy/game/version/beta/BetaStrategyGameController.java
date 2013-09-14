@@ -9,6 +9,8 @@
  *******************************************************************************/
 package strategy.game.version.beta;
 
+import java.awt.Color;
+import java.awt.MultipleGradientPaint.ColorSpaceType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -37,6 +39,7 @@ import strategy.game.common.PieceType;
 public class BetaStrategyGameController implements StrategyGameController {
 
 	private boolean gameStarted;
+	private PlayerColor currentTurnColor;
 	final private Map<Location, Piece> gameBoard;
 	final private int BOARD_SIZE_X = 6;
 	final private int BOARD_SIZE_Y = 6;
@@ -68,6 +71,9 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		// set up the board with the given configurations
 		gameBoard = setUpBoard(redConfiguration, blueConfiguration);
+
+		// Start as red's turn
+		currentTurnColor = PlayerColor.RED;
 	}
 
 	/**
@@ -157,6 +163,23 @@ public class BetaStrategyGameController implements StrategyGameController {
 			throw new StrategyException("You cannot move the flag.");
 		}
 
+		// A piece that is not the color whose turn it is cannot move.
+		if (movingPiece.getOwner() != currentTurnColor) {
+			throw new StrategyException(
+					"You cannot move when it is not you turn!");
+		}
+
+		Piece pieceAtToLocation = gameBoard.get(to);
+		// If there is a piece at the destination location
+		if (pieceAtToLocation != null) {
+			// A piece may not move onto a location containing another piece of
+			// the same color/owner.
+			if (movingPiece.getOwner() == pieceAtToLocation.getOwner()) {
+				throw new StrategyException(
+						"You cannot move to a location containing a piece of the same color.");
+			}
+		}
+
 		try {
 			if (from.distanceTo(to) != 1) {
 				throw new StrategyException(
@@ -164,6 +187,13 @@ public class BetaStrategyGameController implements StrategyGameController {
 			}
 		} catch (StrategyRuntimeException e) {
 			throw new StrategyException("Cannot move to a non-adjacent space.");
+		}
+
+		// Upon completion of move, change the color of the current turn.
+		if (currentTurnColor == PlayerColor.RED) {
+			currentTurnColor = PlayerColor.BLUE;
+		} else {
+			currentTurnColor = PlayerColor.RED;
 		}
 
 		return new MoveResult(null, null);
