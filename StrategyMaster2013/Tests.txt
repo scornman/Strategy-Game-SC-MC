@@ -16,7 +16,13 @@ X move throws a StrategyException if the specified 'from' location does not cont
 X move throws a StrategyException if the specified 'from' location does not contain a piece of the specified 	type.
 - move throws a StrategyException if the piece in the specified from location does not match the color of the 	player who is moving.
 X move throws a StrategyException if the piece to be moved is not moveable. (i.e. is the flag)
-- after move is called with valid parameters, including an empty 'to' location, getPieceAt on the 'to' location should return the piece that moved.
+- after move is called with valid parameters, including an empty 'to' location, getPieceAt on the 'to' location 
+	should return the piece that moved.
+- If a red piece moves into a location containing a blue piece of lower rank, the moveResult's battleWinner contains 
+	the red piece and the former location of the blue piece. The blue piece is removed from the board.
+- If a red piece moves into a location containing a blue piece of higher rank, the moveResult's battleWinner 
+	contains the blue piece and the former location of the red piece. The red piece is removed from the board.
+
 - After 12 moves have been made in a game (6 for each player), the final move should result in a DRAW.
 - If a piece moves into an empty space, the returned MoveResult should have a null battleWinner.
 - If a red piece moves into a location containing the blue flag, the game should end in RED_WINS.
@@ -27,3 +33,11 @@ X move throws a StrategyException if the piece to be moved is not moveable. (i.e
 - After the factory method creates a controller with a given configuration, getPieceAt() for one of the given 	locations should return the corresponding piece in the configuration.
 - StrategyGameFactory.makeBetaStrategyGame throws a StrategyException if either starting configuration is null.
 - StrategyGameFactory.makeAlphaStragegyGame actually works.
+- After the factory method creates a controller with a given configuration, getPieceAt() for one of the 
+	given locations should return the corresponding piece in the configuration.
+-Throw Exception if move() and not +1y -1y +1x or -1x
+-If red Marshal attacks blue Lt. MoveResultStatus(OK)
+	& getBattleWinner() "on the move result" == Marshal [PieceLocationDescriptor]
+*keep whos turn it is (RED initially)
+*number of moves
+	& red Marshal battleWinner.getPiece, battleWinner.getLocation = old blue Lt. location
