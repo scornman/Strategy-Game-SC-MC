@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import strategy.common.*;
 import strategy.game.common.PieceLocationDescriptor;
+import strategy.game.version.alpha.AlphaStrategyGameController;
 import strategy.game.version.beta.BetaStrategyGameController;
 
 /**
@@ -55,7 +56,8 @@ public class StrategyGameFactory
 	 */
 	public StrategyGameController makeAlphaStrategyGame()
 	{
-		throw new StrategyRuntimeException("Change this implementation");
+		StrategyGameController controller = new AlphaStrategyGameController();
+		return controller;
 	}
 	
 	/**
