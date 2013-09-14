@@ -17,7 +17,7 @@ X move throws a StrategyException if the specified 'from' location does not cont
 X move throws a StrategyException if the piece in the specified from location does not match the color of the 	player whose turn it is.
 X move throws a StrategyException if the piece to be moved is not moveable. (i.e. is the flag)
 X move throws a StrategyException if a piece attempts to move into a location occupied by another piece of the 	same color.
-- after move is called with valid parameters, including an empty 'to' location, getPieceAt on the 'to' location should return the piece that moved.
+X after move is called with valid parameters, including an empty 'to' location, getPieceAt on the 'to' location should return the piece that moved.
 - After 12 moves have been made in a game (6 for each player), the final move should result in a DRAW.
 - If a piece moves into an empty space, the returned MoveResult should have a null battleWinner.
 - If a red piece moves into a location containing the blue flag, the game should end in RED_WINS.

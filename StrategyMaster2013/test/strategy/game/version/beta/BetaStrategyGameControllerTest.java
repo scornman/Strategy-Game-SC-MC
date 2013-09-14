@@ -817,10 +817,26 @@ public class BetaStrategyGameControllerTest {
 	/**
 	 * Tests that the move method successfully changes the location of the piece
 	 * that is moved.
+	 * 
+	 * @throws StrategyException
+	 *             if one of the arguments passed to the move method is invalid.
 	 */
 	@Test
-	public void testMoveSuccessfullyMovesPieceToDestinationOnValidMove() {
-
+	public void testMoveSuccessfullyMovesPieceToDestinationOnValidMoveToBlankSpace()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(4, 1);
+		Location toLocation = new Location2D(4, 2);
+		// Get the piece at the from location
+		Piece movingPiece = new Piece(PieceType.SERGEANT, PlayerColor.RED);
+		// Make a valid move to an empty space
+		controller.move(PieceType.SERGEANT, fromLocation, toLocation);
+		// Check that the piece is now at the to location
+		assertEquals(movingPiece, controller.getPieceAt(toLocation));
+		// Check that the from location is now empty
+		assertNull(controller.getPieceAt(fromLocation));
 	}
 
 	/**
@@ -876,17 +892,27 @@ public class BetaStrategyGameControllerTest {
 	 * 
 	 * @throws StrategyException
 	 */
-	// TODO: UNCOMMENT TEST AND FIX!!!
-	// @Test
-	// public void pieceTriesToMoveOneSpacesX() throws StrategyException {
-	// StrategyGameController controller = factory.makeBetaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// Location fromLocation = new Location2D(1, 1);
-	// Location toLocation = new Location2D(2, 1);
-	// controller.move(PieceType.LIEUTENANT, fromLocation, toLocation);
-	// assertTrue(true);
-	// }
+	@Test
+	public void pieceTriesToMoveOneSpacesX() throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// First, move red piece up, so that it can move sideways on the next
+		// turn.
+		Location fromLocation1 = new Location2D(1, 1);
+		Location toLocation1 = new Location2D(1, 2);
+		controller.move(PieceType.LIEUTENANT, fromLocation1, toLocation1);
+		// Next, move a blue piece to be valid.
+		Location fromLocation2 = new Location2D(0,4);
+		Location toLocation2 = new Location2D(0,3);
+		controller.move(PieceType.LIEUTENANT, fromLocation2, toLocation2);
+		// Finally, move the red piece to the side.
+		Location fromLocation3 = new Location2D(1, 2);
+		Location toLocation3 = new Location2D(2, 2);
+		controller.move(PieceType.LIEUTENANT, fromLocation3, toLocation3);
+		assertTrue(true);
+	}
 
 	/**
 	 * Should be valid if piece tries to move one space Y
