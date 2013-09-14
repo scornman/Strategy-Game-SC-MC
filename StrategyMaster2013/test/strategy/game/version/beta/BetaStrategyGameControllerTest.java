@@ -45,7 +45,7 @@ public class BetaStrategyGameControllerTest {
 	 */
 	private Collection<PieceLocationDescriptor> startingRedConfig;
 	private Collection<PieceLocationDescriptor> startingBlueConfig;
-
+	
 	/**
 	 * Setup method that runs before each test. It sets up sample valid starting
 	 * piece configurations for both players, which can be modified and/or used
@@ -904,8 +904,8 @@ public class BetaStrategyGameControllerTest {
 		Location toLocation1 = new Location2D(1, 2);
 		controller.move(PieceType.LIEUTENANT, fromLocation1, toLocation1);
 		// Next, move a blue piece to be valid.
-		Location fromLocation2 = new Location2D(0,4);
-		Location toLocation2 = new Location2D(0,3);
+		Location fromLocation2 = new Location2D(0, 4);
+		Location toLocation2 = new Location2D(0, 3);
 		controller.move(PieceType.LIEUTENANT, fromLocation2, toLocation2);
 		// Finally, move the red piece to the side.
 		Location fromLocation3 = new Location2D(1, 2);
@@ -928,6 +928,53 @@ public class BetaStrategyGameControllerTest {
 		Location toLocation = new Location2D(1, 2);
 		controller.move(PieceType.LIEUTENANT, fromLocation, toLocation);
 		assertTrue(true);
+	}
+
+	/**
+	 * Tests that the move method returns a move result containing a null
+	 * battleWinner if a piece moves to an empty location.
+	 */
+	@Test
+	public void testMoveToEmptySpaceProducesNullBattleWinner()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(4, 1);
+		Location toLocation = new Location2D(4, 2);
+		MoveResult result = controller.move(PieceType.SERGEANT, fromLocation,
+				toLocation);
+		PieceLocationDescriptor winner = result.getBattleWinner();
+		assertNull(winner);
+	}
+
+	/**
+	 * Tests that the move method returns a move result containing an OK status
+	 * if a piece moves to an empty location.
+	 * @throws StrategyException 
+	 */
+	@Test
+	public void testMoveToEmptySpaceProducesOkStatus() throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(4, 1);
+		Location toLocation = new Location2D(4, 2);
+		MoveResult result = controller.move(PieceType.SERGEANT, fromLocation,
+				toLocation);
+		MoveResultStatus status = result.getStatus();
+		assertEquals(MoveResultStatus.OK, status);
+	}
+	
+	/**
+	 * Tests that the a red lieutenant should win when it attacks a blue sergeant.
+	 */
+	@Test
+	public void testRedLieutenantShouldDefeatBlueSergeant() throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
 	}
 
 }

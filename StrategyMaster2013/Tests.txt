@@ -28,6 +28,7 @@ X after move is called with valid parameters, including an empty 'to' location, 
 
 - If a red piece moves into a location containing a blue piece of lower rank, the moveResult's battleWinner contains the red piece and the former location of the blue piece. The blue piece is removed from the board.
 - If a red piece moves into a location containing a blue piece of higher rank, the moveResult's battleWinner 	contains the blue piece and the former location of the red piece. The red piece is removed from the board.
+- If a red piece moves into a location containing a blue piece of the same rank, the moveResult's battleWinner is null.
 - After the factory method creates a controller with a given configuration, getPieceAt() for one of the given 	locations should return the corresponding piece in the configuration.
 - StrategyGameFactory.makeBetaStrategyGame throws a StrategyException if either starting configuration is null.
 - StrategyGameFactory.makeAlphaStragegyGame actually works.
@@ -39,3 +40,5 @@ X after move is called with valid parameters, including an empty 'to' location, 
 *keep whos turn it is (RED initially)
 *number of moves
 	& red Marshal battleWinner.getPiece, battleWinner.getLocation = old blue Lt. location
+
+*Remember to ask on discussion board about master tests

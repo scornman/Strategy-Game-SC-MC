@@ -25,6 +25,7 @@ import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
 import strategy.game.common.Location2D;
 import strategy.game.common.MoveResult;
+import strategy.game.common.MoveResultStatus;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
@@ -196,12 +197,12 @@ public class BetaStrategyGameController implements StrategyGameController {
 			currentTurnColor = PlayerColor.RED;
 		}
 
-		// For a valid move to an empty space, change the location of the piece
+		// For a valid move change the location of the piece
 		// to the destination.
 		gameBoard.put(to, movingPiece);
 		gameBoard.put(from, null);
 
-		return new MoveResult(null, null);
+		return new MoveResult(MoveResultStatus.OK, null);
 	}
 
 	@Override
