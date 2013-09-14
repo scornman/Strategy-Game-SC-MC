@@ -929,5 +929,61 @@ public class BetaStrategyGameControllerTest {
 		controller.move(PieceType.LIEUTENANT, fromLocation, toLocation);
 		assertTrue(true);
 	}
+	
+	/**
+	 * tests that game ends in draw after 6 complete moves if no winner/battles
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void gameEndsInDrawAfterSixMovesWithNoBattles() throws StrategyException{
+		StrategyGameController controller = factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		Location blueOneFromLocation = new Location2D(0, 4);
+		Location blueOneToLocation = new Location2D(0, 3);
+		Location blueTwoFromLocation = new Location2D(1, 4);
+		Location blueTwoToLocation = new Location2D(1, 3);
+		Location blueThreeFromLocation = new Location2D(2, 4);
+		Location blueThreeToLocation = new Location2D(2, 3);
+		Location blueFourFromLocation = new Location2D(3, 4);
+		Location blueFourToLocation = new Location2D(3, 3);
+		Location blueFiveFromLocation = new Location2D(4, 4);
+		Location blueFiveToLocation = new Location2D(4, 3);
+		Location blueSixFromLocation = new Location2D(5, 4);
+		Location blueSixToLocation = new Location2D(5, 3);
+		
+		Location redOneFromLocation = new Location2D(0, 1);
+		Location redOneToLocation = new Location2D(0, 2);
+		Location redTwoFromLocation = new Location2D(1, 1);
+		Location redTwoToLocation = new Location2D(1, 2);
+		Location redThreeFromLocation = new Location2D(2, 1);
+		Location redThreeToLocation = new Location2D(2, 2);
+		Location redFourFromLocation = new Location2D(3, 1);
+		Location redFourToLocation = new Location2D(3, 2);
+		Location redFiveFromLocation = new Location2D(4, 1);
+		Location redFiveToLocation = new Location2D(4, 2);
+		Location redSixFromLocation = new Location2D(5, 1);
+		Location redSixToLocation = new Location2D(5, 2);
 
+		// Make a valid moves to an empty spaces
+		controller.move(PieceType.LIEUTENANT, redOneFromLocation, redOneToLocation);
+		controller.move(PieceType.LIEUTENANT, blueOneFromLocation, blueOneToLocation);
+		controller.move(PieceType.LIEUTENANT, redTwoFromLocation, redTwoToLocation);
+		controller.move(PieceType.LIEUTENANT, blueTwoFromLocation, blueTwoToLocation);
+		controller.move(PieceType.LIEUTENANT, redThreeFromLocation, redThreeToLocation);
+		controller.move(PieceType.LIEUTENANT, blueThreeFromLocation, blueThreeToLocation);
+		controller.move(PieceType.SERGEANT, redFourFromLocation, redFourToLocation);
+		controller.move(PieceType.SERGEANT, blueFourFromLocation, blueFourToLocation);
+		controller.move(PieceType.SERGEANT, redFiveFromLocation, redFiveToLocation);
+		controller.move(PieceType.SERGEANT, blueFiveFromLocation, blueFiveToLocation);
+		controller.move(PieceType.SERGEANT, redSixFromLocation, redSixToLocation);
+		MoveResult result = controller.move(PieceType.SERGEANT, blueSixFromLocation, blueSixToLocation);
+		
+		
+		//check that the game status is DRAW/game ends
+		assertEquals(MoveResultStatus.DRAW, result.getStatus());
+	}
+
+	//TODO: if game is ended start a new game
 }

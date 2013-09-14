@@ -25,6 +25,7 @@ import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
 import strategy.game.common.Location2D;
 import strategy.game.common.MoveResult;
+import strategy.game.common.MoveResultStatus;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
@@ -43,6 +44,10 @@ public class BetaStrategyGameController implements StrategyGameController {
 	final private Map<Location, Piece> gameBoard;
 	final private int BOARD_SIZE_X = 6;
 	final private int BOARD_SIZE_Y = 6;
+	final private int NUMBER_OF_COMPLETE_MOVES = 6;
+	final private int NUMBER_OF_PLAYERS = 2;
+	final private int NUMBER_OF_TURNS = NUMBER_OF_COMPLETE_MOVES * NUMBER_OF_PLAYERS;
+	private int turnsCounter;
 
 	/**
 	 * Creates a new BetaStrategyGameController with the board configuration
@@ -74,6 +79,8 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		// Start as red's turn
 		currentTurnColor = PlayerColor.RED;
+		
+		turnsCounter = 0;
 	}
 
 	/**
@@ -200,8 +207,15 @@ public class BetaStrategyGameController implements StrategyGameController {
 		// to the destination.
 		gameBoard.put(to, movingPiece);
 		gameBoard.put(from, null);
+		
+		turnsCounter++;
+		
+		//if it is the (12th) move, game status set to draw
+		if (turnsCounter == 12){
+			return new MoveResult(MoveResultStatus.DRAW, null);
+		}
 
-		return new MoveResult(null, null);
+		return new MoveResult(MoveResultStatus.OK, null);
 	}
 
 	@Override
