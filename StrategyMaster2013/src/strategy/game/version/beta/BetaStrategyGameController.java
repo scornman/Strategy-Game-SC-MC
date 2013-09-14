@@ -204,7 +204,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 			currentTurnColor = PlayerColor.RED;
 		}
 
-		// For a valid move to an empty space, change the location of the piece
+		// For a valid move change the location of the piece
 		// to the destination.
 		gameBoard.put(to, movingPiece);
 		gameBoard.put(from, null);
