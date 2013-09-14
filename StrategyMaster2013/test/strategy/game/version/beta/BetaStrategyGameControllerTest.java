@@ -26,6 +26,7 @@ import strategy.game.common.*;
  * functionality of the Beta Strategy Game.
  * 
  * @author scornman
+ * @author Madalyn
  * @version Sep 11, 2013
  * 
  */

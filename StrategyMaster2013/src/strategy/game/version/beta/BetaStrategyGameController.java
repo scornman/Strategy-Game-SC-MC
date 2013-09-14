@@ -34,6 +34,7 @@ import strategy.game.common.PieceType;
  * Implements the game core for the Beta Strategy version.
  * 
  * @author scornman
+ * @author Madalyn
  * @version Sep 11, 2013
  * 
  */
