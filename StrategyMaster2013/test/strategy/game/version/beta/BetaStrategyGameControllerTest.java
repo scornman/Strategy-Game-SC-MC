@@ -216,6 +216,55 @@ public class BetaStrategyGameControllerTest {
 	}
 
 	/**
+	 * Helper method for modifying a starting configuration so that two of the
+	 * pieces belonging to one color switch places.
+	 * 
+	 * @param color
+	 *            the color of the pieces to swap.
+	 * @param location1
+	 *            the original location of one of the pieces.
+	 * @param location2
+	 *            the original location of one of the pieces.
+	 */
+	private void swapTwoPiecesInStartConfiguration(PlayerColor color,
+			Location location1, Location location2) {
+		Piece piece1 = getPieceAtStartingLocation(location1);
+		Piece piece2 = getPieceAtStartingLocation(location2);
+		Collection<PieceLocationDescriptor> configuration;
+		if (color == PlayerColor.RED) {
+			configuration = startingRedConfig;
+		} else {
+			configuration = startingBlueConfig;
+		}
+		replacePieceInStartConfiguration(configuration, piece1, piece2,
+				location1);
+		replacePieceInStartConfiguration(configuration, piece2, piece1,
+				location2);
+	}
+
+	/**
+	 * Retrieves the piece at a given position in a starting configuration.
+	 * 
+	 * @param startLocation
+	 *            the location for which to find a piece.
+	 * @return the piece at the given position in the starting configuration.
+	 */
+	private Piece getPieceAtStartingLocation(Location startLocation) {
+		Piece pieceAtLoc = null;
+		for (PieceLocationDescriptor pld : startingRedConfig) {
+			if (startLocation.equals(pld.getLocation())) {
+				pieceAtLoc = pld.getPiece();
+			}
+		}
+		for (PieceLocationDescriptor pld : startingBlueConfig) {
+			if (startLocation.equals(pld.getLocation())) {
+				pieceAtLoc = pld.getPiece();
+			}
+		}
+		return pieceAtLoc;
+	}
+
+	/**
 	 * Tests that the factory method makeBetaStrategyGame from the
 	 * StrategyGameFactory class successfully creates a new
 	 * BetaStrategyGameController when given valid piece configurations. This
@@ -1043,7 +1092,7 @@ public class BetaStrategyGameControllerTest {
 	 * sergeant.
 	 */
 	@Test
-	public void testRedLieutenantShouldDefeatBlueSergeant()
+	public void testAttackingRedLieutenantShouldDefeatBlueSergeant()
 			throws StrategyException {
 		StrategyGameController controller = factory.makeBetaStrategyGame(
 				startingRedConfig, startingBlueConfig);
@@ -1059,9 +1108,42 @@ public class BetaStrategyGameControllerTest {
 		controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
 				new Location2D(0, 3));
 		// Make the attack
-		MoveResult result = controller.move(PieceType.LIEUTENANT, new Location2D(3, 2),
-				new Location2D(3, 3));
+		MoveResult result = controller.move(PieceType.LIEUTENANT,
+				new Location2D(3, 2), new Location2D(3, 3));
 		PieceLocationDescriptor winner = result.getBattleWinner();
-		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.LIEUTENANT, PlayerColor.RED), new Location2D(3, 3)), winner);
+		// Check that the red lieutenant wins and takes the place of the blue
+		// sergeant.
+		assertEquals(new PieceLocationDescriptor(new Piece(
+				PieceType.LIEUTENANT, PlayerColor.RED), new Location2D(3, 3)),
+				winner);
+	}
+
+	/**
+	 * Tests that the a blue sergeant should lose when it attacks a red
+	 * lieutenant.
+	 */
+	@Test
+	public void testAttackingBlueSergeantShouldLoseToRedLieutenant()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// Perform the sequence of moves that will lead to the battle.
+		controller.move(PieceType.LIEUTENANT, new Location2D(2, 1),
+				new Location2D(2, 2));
+		controller.move(PieceType.SERGEANT, new Location2D(3, 4),
+				new Location2D(3, 3));
+		controller.move(PieceType.LIEUTENANT, new Location2D(2, 2),
+				new Location2D(3, 2));
+		// Make the attack
+		MoveResult result = controller.move(PieceType.SERGEANT, new Location2D(
+				3, 3), new Location2D(3, 2));
+		PieceLocationDescriptor winner = result.getBattleWinner();
+		// Check that the red lieutenant wins and takes the place of the blue
+		// sergeant.
+		assertEquals(new PieceLocationDescriptor(new Piece(
+				PieceType.LIEUTENANT, PlayerColor.RED), new Location2D(3, 3)),
+				winner);
 	}
 }
