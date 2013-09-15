@@ -219,4 +219,9 @@ public class BetaBoard {
 		}
 	}
 
+	public void updateBattlePositions(Location attackLocation, Location defendLocation,
+			PieceLocationDescriptor battleWinner) {
+		
+	}
+
 }

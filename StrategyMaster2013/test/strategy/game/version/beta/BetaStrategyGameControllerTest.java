@@ -1054,29 +1054,38 @@ public class BetaStrategyGameControllerTest {
 	 * @throws StrategyException
 	 */
 	@Test
-	public void gameEndsInRedWinsAfterRedCapturesBlueFlag() throws StrategyException{
-		replacePieceInStartConfiguration(startingBlueConfig, new Piece(PieceType.FLAG, PlayerColor.BLUE),  
-				new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE), new Location2D(0,5));
-		replacePieceInStartConfiguration(startingBlueConfig, new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE),  
-				new Piece(PieceType.FLAG, PlayerColor.BLUE), new Location2D(0,4));
-		
+	public void gameEndsInRedWinsAfterRedCapturesBlueFlag()
+			throws StrategyException {
+		replacePieceInStartConfiguration(startingBlueConfig, new Piece(
+				PieceType.FLAG, PlayerColor.BLUE), new Piece(
+				PieceType.LIEUTENANT, PlayerColor.BLUE), new Location2D(0, 5));
+		replacePieceInStartConfiguration(startingBlueConfig, new Piece(
+				PieceType.LIEUTENANT, PlayerColor.BLUE), new Piece(
+				PieceType.FLAG, PlayerColor.BLUE), new Location2D(0, 4));
+
 		StrategyGameController controller = factory.makeBetaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
-		
-		//move red lt
-		//move random blue piece
-		//move red lt
-		//move random blue piece
-		//capture flag
-		controller.move(PieceType.LIEUTENANT, new Location2D(0,1), new Location2D(0,2));
-		controller.move(PieceType.SERGEANT, new Location2D(3,4), new Location2D(3,3));
-		controller.move(PieceType.LIEUTENANT, new Location2D(0,2), new Location2D(0,3));
-		controller.move(PieceType.SERGEANT, new Location2D(3,3), new Location2D(3,2));
-		MoveResult result = controller.move(PieceType.LIEUTENANT, new Location2D(0,3), new Location2D(0,4));
+
+		// move red lt
+		// move random blue piece
+		// move red lt
+		// move random blue piece
+		// capture flag
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
+				new Location2D(0, 2));
+		controller.move(PieceType.SERGEANT, new Location2D(3, 4),
+				new Location2D(3, 3));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 2),
+				new Location2D(0, 3));
+		controller.move(PieceType.SERGEANT, new Location2D(3, 3),
+				new Location2D(3, 2));
+		MoveResult result = controller.move(PieceType.LIEUTENANT,
+				new Location2D(0, 3), new Location2D(0, 4));
 		// check that the game status is DRAW/game ends
-		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());	
+		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
 	}
+
 	// TODO: if game is ended start a new game
 
 	/**
@@ -1139,9 +1148,12 @@ public class BetaStrategyGameControllerTest {
 		// Make the attack
 		MoveResult result = controller.move(PieceType.LIEUTENANT,
 				new Location2D(3, 2), new Location2D(3, 3));
-		PieceLocationDescriptor winner = result.getBattleWinner();
+		// Check that the game does not end.
+		MoveResultStatus status = result.getStatus();
+		assertEquals(MoveResultStatus.OK, status);
 		// Check that the red lieutenant wins and takes the place of the blue
 		// sergeant.
+		PieceLocationDescriptor winner = result.getBattleWinner();
 		assertEquals(new PieceLocationDescriptor(new Piece(
 				PieceType.LIEUTENANT, PlayerColor.RED), new Location2D(3, 3)),
 				winner);
@@ -1168,9 +1180,12 @@ public class BetaStrategyGameControllerTest {
 		// Make the attack
 		MoveResult result = controller.move(PieceType.SERGEANT, new Location2D(
 				3, 3), new Location2D(3, 2));
-		PieceLocationDescriptor winner = result.getBattleWinner();
+		// Check that the game does not end.
+		MoveResultStatus status = result.getStatus();
+		assertEquals(MoveResultStatus.OK, status);
 		// Check that the red lieutenant wins and takes the place of the blue
 		// sergeant.
+		PieceLocationDescriptor winner = result.getBattleWinner();
 		assertEquals(new PieceLocationDescriptor(new Piece(
 				PieceType.LIEUTENANT, PlayerColor.RED), new Location2D(3, 3)),
 				winner);

@@ -100,33 +100,32 @@ public class BetaStrategyGameController implements StrategyGameController {
 		Piece movingPiece = gameBoard.getPieceAt(from);
 		// Get the piece, if any, from the to location.
 		Piece targetPiece = gameBoard.getPieceAt(to);
-		
+
 		// Advance the turn counter to the next turn
 		endTurn();
 
 		// if it is the (12th) move, game status set to draw
 		if (turnsCounter == NUMBER_OF_TURNS) {
 			return new MoveResult(MoveResultStatus.DRAW, null);
-			
+
 		} else {
-			
-			if (targetPiece == null){
-				// For a move into an empty space, change the location of the piece
+
+			// If the move is to an empty space
+			if (targetPiece == null) {
+				// For a move into an empty space, change the location of the
+				// piece
 				// to the destination.
 				gameBoard.putPiece(to, movingPiece);
 				gameBoard.putPiece(from, null);
 				return new MoveResult(MoveResultStatus.OK, null);
 				
-			} else if (targetPiece.getOwner() == PlayerColor.BLUE) {
-				//TODO: Remove Fake
-				return new MoveResult(MoveResultStatus.RED_WINS, new PieceLocationDescriptor(movingPiece, to));
-				
-			} else if (targetPiece.getOwner() == PlayerColor.RED){
-				//TODO: Remove Fake
-				return new MoveResult(MoveResultStatus.BLUE_WINS, new PieceLocationDescriptor(movingPiece, to));
-				
 			} else {
-				throw new StrategyException("Not a valid piece move");
+				// Otherwise, there is a battle.
+				BetaBattleController battle = new BetaBattleController(gameBoard, from, to);
+				MoveResult result = battle.getBattleResult();
+				PieceLocationDescriptor battleWinner = result.getBattleWinner();
+				gameBoard.updateBattlePositions(from, to, battleWinner);
+				return result;
 			}
 		}
 	}
