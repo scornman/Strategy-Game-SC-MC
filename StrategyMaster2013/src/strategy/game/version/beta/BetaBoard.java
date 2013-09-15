@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package strategy.game.version.beta;
 
 import java.util.Collection;
@@ -5,9 +14,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import strategy.common.*;
-import strategy.game.*;
 import strategy.game.common.*;
 
+/**
+ * Class that manages the configuration of pieces for the Beta Strategy game.
+ * 
+ * @author scornman
+ * @version Sep 14, 2013
+ * 
+ */
 public class BetaBoard {
 
 	final private int BOARD_SIZE_X = 6;
@@ -16,16 +31,18 @@ public class BetaBoard {
 	private Map<Location, Piece> pieceMap;
 
 	/**
-	 * TODO helper function for setting up the gameBoard sets a board to all
-	 * pieces at all locations null then implements the pieces in the
-	 * redConfiguration and blueConfiguration to fill the board Loops through
-	 * based on BOARD_SIZE_X and BOARD_SIZE_Y
+	 * Creates a new board with pieces according to the supplied piece
+	 * configurations. It sets up a board with null pieces at all locations
+	 * within the board size, then adds the pieces specified in redConfiguration
+	 * and blueConfiguration to the board.
 	 * 
 	 * @param redConfiguration
+	 *            the collection of red pieces and their starting locations on
+	 *            the board.
 	 * @param blueConfiguration
-	 * @return
+	 *            the collection of blue pieces and their starting locations on
+	 *            the board.
 	 */
-
 	public BetaBoard(Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration) {
 		pieceMap = new HashMap<Location, Piece>();
@@ -51,6 +68,13 @@ public class BetaBoard {
 		}
 	}
 
+	/**
+	 * Returns the piece at the specified location on the board.
+	 * 
+	 * @param location
+	 *            the location to check
+	 * @return the piece at the specified location.
+	 */
 	public Piece getPieceAt(Location location) {
 		// if location is not on the board, throw exception
 		if (!(isValidLocation(location))) {
@@ -60,10 +84,32 @@ public class BetaBoard {
 		return pieceMap.get(location);
 	}
 
+	/**
+	 * Put a piece onto the board at a specific location.
+	 * 
+	 * @param location
+	 *            the location to add the piece.
+	 * @param piece
+	 *            the piece to add.
+	 */
 	public void putPiece(Location location, Piece piece) {
 		pieceMap.put(location, piece);
 	}
 
+	/**
+	 * Checks that it is a valid move to move a piece of the specified type from
+	 * the given from location on the board to the given to location on the
+	 * board.
+	 * 
+	 * @param piece
+	 *            the type of the piece to move.
+	 * @param from
+	 *            the location at which the piece begins the move.
+	 * @param to
+	 *            the location at which the piece ends the move.
+	 * @return an error message string if the move is invalid. If the move is
+	 *         valid, return null.
+	 */
 	public String checkValidMove(PieceType piece, Location from, Location to) {
 		String errorMessage = checkValidMoveFrom(piece, from);
 		if (errorMessage == null) {
@@ -72,6 +118,17 @@ public class BetaBoard {
 		return errorMessage;
 	}
 
+	/**
+	 * Checks that it is a valid move to move a piece of the specified type from
+	 * the given from location on the board.
+	 * 
+	 * @param piece
+	 *            the type of the piece to move.
+	 * @param from
+	 *            the location at which the piece begins the move.
+	 * @return an error message string if the move is invalid. If the move is
+	 *         valid, return null.
+	 */
 	private String checkValidMoveFrom(PieceType piece, Location from) {
 		// Get the piece from the from location that is attempting to move.
 		Piece movingPiece = pieceMap.get(from);
@@ -80,12 +137,6 @@ public class BetaBoard {
 		// If there is no piece at the from location, throw exception.
 		if (pieceMap.get(from) == null) {
 			errorMessage = "No piece to move at this location";
-			return errorMessage;
-		}
-
-		// If there is no piece at the from location
-		if (pieceMap.get(from) == null) {
-			errorMessage = "No piece to move at this location.";
 			return errorMessage;
 		}
 
@@ -105,6 +156,19 @@ public class BetaBoard {
 		return null;
 	}
 
+	/**
+	 * Checks that it is a valid move to move a piece of the specified type to
+	 * the given to location on the board.
+	 * 
+	 * @param piece
+	 *            the type of the piece to move.
+	 * @param from
+	 *            the location at which the piece begins the move.
+	 * @param to
+	 *            the location at which the piece ends the move.
+	 * @return an error message string if the move is invalid. If the move is
+	 *         valid, return null.
+	 */
 	private String checkValidMoveTo(PieceType piece, Location from, Location to) {
 		// Get the piece from the to location that is attempting to move.
 		Piece pieceAtToLocation = pieceMap.get(to);
@@ -135,6 +199,14 @@ public class BetaBoard {
 
 	}
 
+	/**
+	 * Determine whether the given location is a valid location on the board.
+	 * 
+	 * @param location
+	 *            the location to check for validity.
+	 * @return true if the location is a valid location on the board, to which
+	 *         pieces may move; false otherwise.
+	 */
 	public boolean isValidLocation(Location location) {
 		int x_coordinate = location.getCoordinate(Coordinate.X_COORDINATE);
 		int y_coordinate = location.getCoordinate(Coordinate.Y_COORDINATE);

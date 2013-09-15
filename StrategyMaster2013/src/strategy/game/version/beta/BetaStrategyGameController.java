@@ -14,7 +14,6 @@ import java.util.Collection;
 
 import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
-import strategy.common.StrategyRuntimeException;
 import strategy.game.StrategyGameController;
 import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
@@ -115,6 +114,19 @@ public class BetaStrategyGameController implements StrategyGameController {
 		return new MoveResult(MoveResultStatus.OK, null);
 	}
 
+	/**
+	 * Checks that it is legal to move a piece of the specified type from the
+	 * given from location to the given to location.
+	 * 
+	 * @param piece
+	 *            the type of the piece to move.
+	 * @param from
+	 *            the location at which the piece begins the move.
+	 * @param to
+	 *            the location at which the piece ends the move.
+	 * @return an error message string if the move is not legal. If the move is
+	 *         legal, return null.
+	 */
 	private String checkLegalMove(PieceType piece, Location from, Location to) {
 		// Create a string to store the error message in case the move is
 		// invalid.
@@ -150,6 +162,9 @@ public class BetaStrategyGameController implements StrategyGameController {
 		return null;
 	}
 
+	/**
+	 * Ends one player's turn and increments the turn counter.
+	 */
 	private void endTurn() {
 		// Upon completion of move, change the color of the current turn.
 		if (currentTurnColor == PlayerColor.RED) {
