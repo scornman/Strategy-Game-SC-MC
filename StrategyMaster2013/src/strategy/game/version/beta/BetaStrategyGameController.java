@@ -9,13 +9,8 @@
  *******************************************************************************/
 package strategy.game.version.beta;
 
-import java.awt.Color;
-import java.awt.MultipleGradientPaint.ColorSpaceType;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
@@ -23,7 +18,6 @@ import strategy.common.StrategyRuntimeException;
 import strategy.game.StrategyGameController;
 import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
-import strategy.game.common.Location2D;
 import strategy.game.common.MoveResult;
 import strategy.game.common.MoveResultStatus;
 import strategy.game.common.Piece;
@@ -42,12 +36,11 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 	private boolean gameStarted;
 	private PlayerColor currentTurnColor;
-	final private Map<Location, Piece> gameBoard;
-	final private int BOARD_SIZE_X = 6;
-	final private int BOARD_SIZE_Y = 6;
+	final private BetaBoard gameBoard;
 	final private int NUMBER_OF_COMPLETE_MOVES = 6;
 	final private int NUMBER_OF_PLAYERS = 2;
-	final private int NUMBER_OF_TURNS = NUMBER_OF_COMPLETE_MOVES * NUMBER_OF_PLAYERS;
+	final private int NUMBER_OF_TURNS = NUMBER_OF_COMPLETE_MOVES
+			* NUMBER_OF_PLAYERS;
 	private int turnsCounter;
 
 	/**
@@ -76,51 +69,12 @@ public class BetaStrategyGameController implements StrategyGameController {
 		gameStarted = false;
 
 		// set up the board with the given configurations
-		gameBoard = setUpBoard(redConfiguration, blueConfiguration);
+		gameBoard = new BetaBoard(redConfiguration, blueConfiguration);
 
 		// Start as red's turn
 		currentTurnColor = PlayerColor.RED;
-		
+
 		turnsCounter = 0;
-	}
-
-	/**
-	 * helper function for setting up the gameBoard sets a board to all pieces
-	 * at all locations null then implements the pieces in the redConfiguration
-	 * and blueConfiguration to fill the board Loops through based on
-	 * BOARD_SIZE_X and BOARD_SIZE_Y
-	 * 
-	 * @param redConfiguration
-	 * @param blueConfiguration
-	 * @return
-	 */
-	private Map<Location, Piece> setUpBoard(
-			Collection<PieceLocationDescriptor> redConfiguration,
-			Collection<PieceLocationDescriptor> blueConfiguration) {
-
-		Map<Location, Piece> board = new HashMap<Location, Piece>();
-
-		for (int i = 0; i < BOARD_SIZE_X; i++) {
-			for (int j = 0; j < BOARD_SIZE_Y; j++) {
-				board.put(new Location2D(i, j), null);
-			}
-		}
-
-		for (PieceLocationDescriptor red : redConfiguration) {
-			Location redLocation = red.getLocation();
-			Piece redPiece = red.getPiece();
-
-			board.put(redLocation, redPiece);
-		}
-
-		for (PieceLocationDescriptor blue : blueConfiguration) {
-			Location blueLocation = blue.getLocation();
-			Piece bluePiece = blue.getPiece();
-
-			board.put(blueLocation, bluePiece);
-		}
-
-		return board;
 	}
 
 	@Override
@@ -136,82 +90,54 @@ public class BetaStrategyGameController implements StrategyGameController {
 	@Override
 	public MoveResult move(PieceType piece, Location from, Location to)
 			throws StrategyException {
-		if (!gameStarted) {
-			throw new StrategyException(
-					"Cannot make a move before the game has started.");
+
+		// Check whether the move is a legal move.
+		String errorMessage = checkLegalMove(piece, from, to);
+		if (errorMessage != null) {
+			throw new StrategyException(errorMessage);
 		}
+
 		// Get the piece from the from location that is attempting to move.
-		Piece movingPiece = gameBoard.get(from);
+		Piece movingPiece = gameBoard.getPieceAt(from);
 
-		// Check that none of the arguments are null.
-		if (piece == null || from == null || to == null) {
-			throw new StrategyException(
-					"Arguments to the move method must not be null.");
-		}
-
-		String errorMessageFrom = checkValidMoveFrom(piece, from);
-		if (errorMessageFrom != null){
-			throw new StrategyException(errorMessageFrom);
-		}
-		
-		String errorMessageTo = checkValidMoveTo(piece, from, to);
-		if (errorMessageTo != null){
-			throw new StrategyException(errorMessageTo);
-		}
-		
-		// For a valid move change the location of the piece
+		// For a valid move, change the location of the piece
 		// to the destination.
-		gameBoard.put(to, movingPiece);
-		gameBoard.put(from, null);
-		
+		gameBoard.putPiece(to, movingPiece);
+		gameBoard.putPiece(from, null);
+
 		endTurn();
-		
-		//if it is the (12th) move, game status set to draw
-		if (turnsCounter == NUMBER_OF_TURNS){
+
+		// if it is the (12th) move, game status set to draw
+		if (turnsCounter == NUMBER_OF_TURNS) {
 			return new MoveResult(MoveResultStatus.DRAW, null);
 		}
 
 		return new MoveResult(MoveResultStatus.OK, null);
 	}
-	
-	private void endTurn(){
-		// Upon completion of move, change the color of the current turn.
-		if (currentTurnColor == PlayerColor.RED) {
-			currentTurnColor = PlayerColor.BLUE;
-		} else {
-			currentTurnColor = PlayerColor.RED;
-		}
-		
-		turnsCounter++;
-	}
-	
-	private String checkValidMoveFrom(PieceType piece, Location from){
-		// Get the piece from the from location that is attempting to move.
-		Piece movingPiece = gameBoard.get(from);
-		String errorMessage;
-		
-		// If there is no piece at the from location, throw exception.
-		if (gameBoard.get(from) == null) {
-			errorMessage = "No piece to move at this location";
-			return errorMessage;
-		}
-		
-		// If there is no piece at the from location
-		if (gameBoard.get(from) == null) {
-			errorMessage = "No piece to move at this location.";
-			return errorMessage;
-		}
-				
-		// If the piece at the from location does not match the supplied piece
-		// type, throw exception.
-		if (movingPiece.getType() != piece) {
-			errorMessage = "Piece type to move does not match piece at location to move from.";
+
+	private String checkLegalMove(PieceType piece, Location from, Location to) {
+		// Create a string to store the error message in case the move is
+		// invalid.
+		String errorMessage = null;
+
+		// Check that none of the arguments are null.
+		if (piece == null || from == null || to == null) {
+			errorMessage = "Arguments to the move method must not be null.";
 			return errorMessage;
 		}
 
-		// The flag should not be able to move.
-		if (movingPiece.getType() == PieceType.FLAG) {
-			errorMessage = "You cannot move the flag.";
+		// Make sure that the game has been started first
+		if (!gameStarted) {
+			errorMessage = "Cannot make a move before the game has started.";
+			return errorMessage;
+		}
+
+		// Get the piece from the from location that is attempting to move.
+		Piece movingPiece = gameBoard.getPieceAt(from);
+
+		// Check whether the move is a valid move on the board.
+		errorMessage = gameBoard.checkValidMove(piece, from, to);
+		if (errorMessage != null) {
 			return errorMessage;
 		}
 
@@ -220,63 +146,25 @@ public class BetaStrategyGameController implements StrategyGameController {
 			errorMessage = "You cannot move when it is not you turn.";
 			return errorMessage;
 		}
-		
-		return null;	
-	}
-	
-	private String checkValidMoveTo(PieceType piece, Location from, Location to){
-		// Get the piece from the to location that is attempting to move.
-		Piece pieceAtToLocation = gameBoard.get(to);
-		Piece movingPiece = gameBoard.get(from);
-		String errorMessage;
-		
-		// If there is a piece at the destination location
-		if (pieceAtToLocation != null) {
-			// A piece may not move onto a location containing another piece of
-			// the same color/owner.
-			if (movingPiece.getOwner() == pieceAtToLocation.getOwner()) {
-				errorMessage = 
-						"You cannot move to a location containing a piece of the same color.";
-				return errorMessage;
-			}
-		}
 
-		try {
-			if (from.distanceTo(to) != 1) {
-				errorMessage = 
-						"Cannot move to a non-adjacent space.";
-				return errorMessage;
-			}
-		} catch (StrategyRuntimeException e) {
-				errorMessage = "Cannot move to a non-adjacent space.";
-				return errorMessage;
-		}
-		
 		return null;
+	}
 
+	private void endTurn() {
+		// Upon completion of move, change the color of the current turn.
+		if (currentTurnColor == PlayerColor.RED) {
+			currentTurnColor = PlayerColor.BLUE;
+		} else {
+			currentTurnColor = PlayerColor.RED;
+		}
+
+		turnsCounter++;
 	}
 
 	@Override
 	public Piece getPieceAt(Location location) {
-		// if location is not on the board, throw exception
-		if (!isValidLocation(location)) {
-			throw new StrategyRuntimeException(
-					"That location does not exist on the board.");
-		}
-		Piece piece = gameBoard.get(location);
+		Piece piece = gameBoard.getPieceAt(location);
 		return piece;
-	}
-
-	private boolean isValidLocation(Location location) {
-		int x_coordinate = location.getCoordinate(Coordinate.X_COORDINATE);
-		int y_coordinate = location.getCoordinate(Coordinate.Y_COORDINATE);
-
-		if (x_coordinate < BOARD_SIZE_X && y_coordinate < BOARD_SIZE_Y
-				&& x_coordinate >= 0 && y_coordinate >= 0) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	// Private Helper methods for the constructor
