@@ -1119,7 +1119,31 @@ public class BetaStrategyGameControllerTest {
 		assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
 	}
 
-
+	/**
+	 * Tests that there is null battle winner when two pieces of the 
+	 * same type attack each other
+	 * 
+	 */
+	@Test
+	public void sargentAttaksSargentResultsInNullBattleWinner() throws StrategyException{
+		//move red sargent
+		//move blue sargent
+		//red attacks blue sargent
+		//null battle winner
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.SERGEANT, new Location2D(5, 1),
+				new Location2D(5, 2));
+		controller.move(PieceType.SERGEANT, new Location2D(5, 4),
+				new Location2D(5, 3));
+		MoveResult result = controller.move(PieceType.SERGEANT, new Location2D(5, 2),
+				new Location2D(5, 3));
+		// check that the game status is OK
+		assertEquals(MoveResultStatus.OK, result.getStatus());
+	}
+	
 
 	/**
 	 * Tests that the move method returns a move result containing a null
