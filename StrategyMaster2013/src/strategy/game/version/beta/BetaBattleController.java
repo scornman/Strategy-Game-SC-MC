@@ -24,6 +24,7 @@ import strategy.game.common.PieceType;
  * Class for handling battles between two pieces.
  * 
  * @author scornman
+ * @author Madalyn
  * @version Sep 15, 2013
  * 
  */

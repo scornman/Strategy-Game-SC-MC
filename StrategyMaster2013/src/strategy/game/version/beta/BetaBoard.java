@@ -20,7 +20,8 @@ import strategy.game.common.*;
  * Class that manages the configuration of pieces for the Beta Strategy game.
  * 
  * @author scornman
- * @version Sep 14, 2013
+ * @author Madalyn
+ * @version Sep 15, 2013
  * 
  */
 public class BetaBoard {

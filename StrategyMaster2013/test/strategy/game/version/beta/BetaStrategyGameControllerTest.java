@@ -27,7 +27,7 @@ import strategy.game.common.*;
  * 
  * @author scornman
  * @author Madalyn
- * @version Sep 11, 2013
+ * @version Sep 15, 2013
  * 
  */
 public class BetaStrategyGameControllerTest {
