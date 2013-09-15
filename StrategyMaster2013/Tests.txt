@@ -22,7 +22,7 @@ X after move is called with valid parameters, including an empty 'to' location, 
 - If a red piece moves into a location containing a blue piece of higher rank, the moveResult's battleWinner 
 	contains the blue piece and the former location of the red piece. The red piece is removed from the board.
 - After 12 moves have been made in a game (6 for each player), the final move should result in a DRAW.
-- If a piece moves into an empty space, the returned MoveResult should have a null battleWinner.
+X If a piece moves into an empty space, the returned MoveResult should have a null battleWinner.
 - If a red piece moves into a location containing the blue flag, the game should end in RED_WINS.
 - If the game has ended, startGame should start a new game.
 
