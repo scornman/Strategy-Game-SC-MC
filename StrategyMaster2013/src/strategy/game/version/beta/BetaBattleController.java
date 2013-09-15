@@ -69,6 +69,19 @@ public class BetaBattleController {
 		Piece defendPiece = gameBoard.getPieceAt(defendLocation);
 
 		Piece winningPiece = getWinningPiece(attackPiece, defendPiece);
+		Location winnerLocation;
+		PieceLocationDescriptor battleWinner;
+
+		if (winningPiece == null) {
+			battleWinner = null;
+		} else {
+			if (winningPiece.equals(attackPiece)) {
+				winnerLocation = defendLocation;
+			} else {
+				winnerLocation = attackLocation;
+			}
+			battleWinner = new PieceLocationDescriptor(winningPiece, winnerLocation);
+		}
 
 		MoveResultStatus status = null;
 
@@ -82,8 +95,7 @@ public class BetaBattleController {
 			status = MoveResultStatus.OK;
 		}
 
-		return new MoveResult(status, new PieceLocationDescriptor(attackPiece,
-				defendLocation));
+		return new MoveResult(status, battleWinner);
 
 	}
 
