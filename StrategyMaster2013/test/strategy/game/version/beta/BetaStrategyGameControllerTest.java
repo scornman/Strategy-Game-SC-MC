@@ -1048,6 +1048,35 @@ public class BetaStrategyGameControllerTest {
 		assertEquals(MoveResultStatus.DRAW, result.getStatus());
 	}
 
+	/**
+	 * tests that game ends in draw after 6 complete moves if no winner/battles
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void gameEndsInRedWinsAfterRedCapturesBlueFlag() throws StrategyException{
+		replacePieceInStartConfiguration(startingBlueConfig, new Piece(PieceType.FLAG, PlayerColor.BLUE),  
+				new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE), new Location2D(0,5));
+		replacePieceInStartConfiguration(startingBlueConfig, new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE),  
+				new Piece(PieceType.FLAG, PlayerColor.BLUE), new Location2D(0,4));
+		
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		//move red lt
+		//move random blue piece
+		//move red lt
+		//move random blue piece
+		//capture flag
+		controller.move(PieceType.LIEUTENANT, new Location2D(0,1), new Location2D(0,2));
+		controller.move(PieceType.SERGEANT, new Location2D(3,4), new Location2D(3,3));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0,2), new Location2D(0,3));
+		controller.move(PieceType.SERGEANT, new Location2D(3,3), new Location2D(3,2));
+		MoveResult result = controller.move(PieceType.LIEUTENANT, new Location2D(0,3), new Location2D(0,4));
+		// check that the game status is DRAW/game ends
+		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());	
+	}
 	// TODO: if game is ended start a new game
 
 	/**
