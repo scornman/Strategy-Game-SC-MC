@@ -1049,20 +1049,16 @@ public class BetaStrategyGameControllerTest {
 	}
 
 	/**
-	 * tests that game ends in draw after 6 complete moves if no winner/battles
+	 * tests that game ends in RED_WINS after red captures the blue flag
 	 * 
 	 * @throws StrategyException
 	 */
 	@Test
 	public void gameEndsInRedWinsAfterRedCapturesBlueFlag()
 			throws StrategyException {
-		replacePieceInStartConfiguration(startingBlueConfig, new Piece(
-				PieceType.FLAG, PlayerColor.BLUE), new Piece(
-				PieceType.LIEUTENANT, PlayerColor.BLUE), new Location2D(0, 5));
-		replacePieceInStartConfiguration(startingBlueConfig, new Piece(
-				PieceType.LIEUTENANT, PlayerColor.BLUE), new Piece(
-				PieceType.FLAG, PlayerColor.BLUE), new Location2D(0, 4));
-
+		
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,new Location2D(0, 5),new Location2D(0, 4)); 
+		
 		StrategyGameController controller = factory.makeBetaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
@@ -1086,7 +1082,44 @@ public class BetaStrategyGameControllerTest {
 		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
 	}
 
-	// TODO: if game is ended start a new game
+	/**
+	 * tests that game ends in BLUE_WINS after blue captures the red flag
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void gameEndsInBlueWinsAfterBlueCapturesRedFlag()
+			throws StrategyException {
+		
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, new Location2D(0, 0),new Location2D(0, 1)); 
+		
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// move random red piece
+		// move blue lt
+		// move random red piece
+		// move blue lt
+		// move random red piece
+		// capture flag
+		controller.move(PieceType.LIEUTENANT, new Location2D(1, 1),
+				new Location2D(1, 2));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
+				new Location2D(0, 3));
+		controller.move(PieceType.SERGEANT, new Location2D(3, 1),
+				new Location2D(3, 2));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 3),
+				new Location2D(0, 2));
+		controller.move(PieceType.SERGEANT, new Location2D(3, 2),
+				new Location2D(3, 3));
+		MoveResult result = controller.move(PieceType.LIEUTENANT,
+				new Location2D(0, 2), new Location2D(0, 1));
+		// check that the game status is DRAW/game ends
+		assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
+	}
+
+
 
 	/**
 	 * Tests that the move method returns a move result containing a null
