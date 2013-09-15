@@ -107,15 +107,26 @@ public class BetaStrategyGameController implements StrategyGameController {
 		// if it is the (12th) move, game status set to draw
 		if (turnsCounter == NUMBER_OF_TURNS) {
 			return new MoveResult(MoveResultStatus.DRAW, null);
-		} else if (targetPiece == null) {
-			// For a move into an empty space, change the location of the piece
-			// to the destination.
-			gameBoard.putPiece(to, movingPiece);
-			gameBoard.putPiece(from, null);
-			return new MoveResult(MoveResultStatus.OK, null);
+			
 		} else {
-			//TODO: Remove Fake
-			return new MoveResult(MoveResultStatus.OK, new PieceLocationDescriptor(movingPiece, to));
+			
+			if (targetPiece == null){
+				// For a move into an empty space, change the location of the piece
+				// to the destination.
+				gameBoard.putPiece(to, movingPiece);
+				gameBoard.putPiece(from, null);
+				return new MoveResult(MoveResultStatus.OK, null);
+			}
+			else if (targetPiece.getOwner() == PlayerColor.BLUE) {
+				//TODO: Remove Fake
+				return new MoveResult(MoveResultStatus.RED_WINS, new PieceLocationDescriptor(movingPiece, to));
+				
+			} else if (targetPiece.getOwner() == PlayerColor.RED){
+				//TODO: Remove Fake
+				return new MoveResult(MoveResultStatus.BLUE_WINS, new PieceLocationDescriptor(movingPiece, to));
+			}else{
+				throw new StrategyException("Not a valid piece move");
+			}
 		}
 	}
 
