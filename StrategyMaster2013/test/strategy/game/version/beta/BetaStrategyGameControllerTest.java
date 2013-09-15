@@ -1161,6 +1161,10 @@ public class BetaStrategyGameControllerTest {
 				toLocation);
 		PieceLocationDescriptor winner = result.getBattleWinner();
 		assertNull(winner);
+		// Check that the board has properly updated to reflect the move.
+		Piece movedPiece = new Piece(PieceType.SERGEANT, PlayerColor.RED);
+		assertEquals(movedPiece, controller.getPieceAt(toLocation));
+		assertEquals(null, controller.getPieceAt(fromLocation));
 	}
 
 	/**
@@ -1180,6 +1184,10 @@ public class BetaStrategyGameControllerTest {
 				toLocation);
 		MoveResultStatus status = result.getStatus();
 		assertEquals(MoveResultStatus.OK, status);
+		// Check that the board has properly updated to reflect the move.
+		Piece movedPiece = new Piece(PieceType.SERGEANT, PlayerColor.RED);
+		assertEquals(movedPiece, controller.getPieceAt(toLocation));
+		assertEquals(null, controller.getPieceAt(fromLocation));
 	}
 
 	/**
@@ -1193,27 +1201,36 @@ public class BetaStrategyGameControllerTest {
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
+		Location attackerLocation = new Location2D(3, 2);
+		Location defenderLocation = new Location2D(3, 3);
+		Piece attackPiece = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
+
 		// Perform the sequence of moves that will lead to the battle.
 		controller.move(PieceType.LIEUTENANT, new Location2D(2, 1),
 				new Location2D(2, 2));
 		controller.move(PieceType.SERGEANT, new Location2D(3, 4),
-				new Location2D(3, 3));
+				defenderLocation);
 		controller.move(PieceType.LIEUTENANT, new Location2D(2, 2),
-				new Location2D(3, 2));
+				attackerLocation);
 		controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
 				new Location2D(0, 3));
 		// Make the attack
+
 		MoveResult result = controller.move(PieceType.LIEUTENANT,
-				new Location2D(3, 2), new Location2D(3, 3));
+				attackerLocation, defenderLocation);
 		// Check that the game does not end.
 		MoveResultStatus status = result.getStatus();
 		assertEquals(MoveResultStatus.OK, status);
 		// Check that the red lieutenant wins and takes the place of the blue
 		// sergeant.
 		PieceLocationDescriptor winner = result.getBattleWinner();
-		assertEquals(new PieceLocationDescriptor(new Piece(
-				PieceType.LIEUTENANT, PlayerColor.RED), new Location2D(3, 3)),
+		assertEquals(
+				new PieceLocationDescriptor(attackPiece, defenderLocation),
 				winner);
+		// Check that the board has properly updated to reflect the post-battle
+		// state.
+		assertEquals(attackPiece, controller.getPieceAt(defenderLocation));
+		assertEquals(null, controller.getPieceAt(attackerLocation));
 	}
 
 	/**
@@ -1227,6 +1244,10 @@ public class BetaStrategyGameControllerTest {
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
+		Location attackerLocation = new Location2D(3, 3);
+		Location defenderLocation = new Location2D(3, 2);
+		Piece defendPiece = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
+
 		// Perform the sequence of moves that will lead to the battle.
 		controller.move(PieceType.LIEUTENANT, new Location2D(2, 1),
 				new Location2D(2, 2));
@@ -1235,16 +1256,20 @@ public class BetaStrategyGameControllerTest {
 		controller.move(PieceType.LIEUTENANT, new Location2D(2, 2),
 				new Location2D(3, 2));
 		// Make the attack
-		MoveResult result = controller.move(PieceType.SERGEANT, new Location2D(
-				3, 3), new Location2D(3, 2));
+		MoveResult result = controller.move(PieceType.SERGEANT,
+				attackerLocation, defenderLocation);
 		// Check that the game does not end.
 		MoveResultStatus status = result.getStatus();
 		assertEquals(MoveResultStatus.OK, status);
 		// Check that the red lieutenant wins and takes the place of the blue
 		// sergeant.
 		PieceLocationDescriptor winner = result.getBattleWinner();
-		assertEquals(new PieceLocationDescriptor(new Piece(
-				PieceType.LIEUTENANT, PlayerColor.RED), new Location2D(3, 3)),
+		assertEquals(
+				new PieceLocationDescriptor(defendPiece, attackerLocation),
 				winner);
+		// Check that the board has properly updated to reflect the post-battle
+		// state.
+		assertEquals(defendPiece, controller.getPieceAt(attackerLocation));
+		assertEquals(null, controller.getPieceAt(defenderLocation));
 	}
 }

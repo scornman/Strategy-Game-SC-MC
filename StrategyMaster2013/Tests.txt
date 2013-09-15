@@ -42,3 +42,8 @@ X If a piece moves into an empty space, the returned MoveResult should have a nu
 	& red Marshal battleWinner.getPiece, battleWinner.getLocation = old blue Lt. location
 
 *Remember to ask on discussion board about master tests
+
+**REMEMBER: -END THE GAME SO CAN BE RESTARTED
+	    -UPDATE BOARD AFTER BATTLE
+	    -CODEPRO!!!!
+	    -12-TURN RULE END ON A BATTLE
