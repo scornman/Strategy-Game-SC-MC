@@ -219,9 +219,32 @@ public class BetaBoard {
 		}
 	}
 
-	public void updateBattlePositions(Location attackLocation, Location defendLocation,
-			PieceLocationDescriptor battleWinner) {
+	/**
+	 * Updates the positions of pieces on the board after a battle.
+	 * 
+	 * @param attackLocation
+	 *            the location of the attacking piece before the battle.
+	 * @param defendLocation
+	 *            the location of the defending piece before the battle.
+	 * @param battleWinner
+	 *            the winner of the battle and its new location.
+	 */
+	public void updateBattlePositions(Location attackLocation,
+			Location defendLocation, PieceLocationDescriptor battleWinner) {
+		Piece attackPiece = getPieceAt(attackLocation);
+		Piece defendPiece = getPieceAt(defendLocation);
+		Piece winningPiece = battleWinner.getPiece();
 		
+		if(winningPiece.equals(attackPiece)) {
+			putPiece(defendLocation, attackPiece);
+			putPiece(attackLocation, null);
+		} else if(winningPiece.equals(defendPiece)) {
+			putPiece(attackLocation, defendPiece);
+			putPiece(defendLocation, null);
+		} else {
+			putPiece(attackLocation, null);
+			putPiece(defendLocation, null);
+		}
 	}
 
 }
