@@ -116,15 +116,16 @@ public class BetaStrategyGameController implements StrategyGameController {
 				gameBoard.putPiece(to, movingPiece);
 				gameBoard.putPiece(from, null);
 				return new MoveResult(MoveResultStatus.OK, null);
-			}
-			else if (targetPiece.getOwner() == PlayerColor.BLUE) {
+				
+			} else if (targetPiece.getOwner() == PlayerColor.BLUE) {
 				//TODO: Remove Fake
 				return new MoveResult(MoveResultStatus.RED_WINS, new PieceLocationDescriptor(movingPiece, to));
 				
 			} else if (targetPiece.getOwner() == PlayerColor.RED){
 				//TODO: Remove Fake
 				return new MoveResult(MoveResultStatus.BLUE_WINS, new PieceLocationDescriptor(movingPiece, to));
-			}else{
+				
+			} else {
 				throw new StrategyException("Not a valid piece move");
 			}
 		}
