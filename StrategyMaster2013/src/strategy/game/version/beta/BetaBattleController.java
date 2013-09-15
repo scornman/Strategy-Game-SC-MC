@@ -58,7 +58,7 @@ public class BetaBattleController {
 	 * @return a map that maps piece type to rank.
 	 */
 	private Map<PieceType, Integer> setupPieceRanks() {
-		Map<PieceType, Integer> pieceRanks = new HashMap<PieceType, Integer>();
+		final Map<PieceType, Integer> pieceRanks = new HashMap<PieceType, Integer>();
 		pieceRanks.put(PieceType.MARSHAL, 12);
 		pieceRanks.put(PieceType.COLONEL, 10);
 		pieceRanks.put(PieceType.CAPTAIN, 8);
@@ -74,10 +74,10 @@ public class BetaBattleController {
 	 * @return the battle result.
 	 */
 	public MoveResult getBattleResult() {
-		Piece attackPiece = gameBoard.getPieceAt(attackLocation);
-		Piece defendPiece = gameBoard.getPieceAt(defendLocation);
+		final Piece attackPiece = gameBoard.getPieceAt(attackLocation);
+		final Piece defendPiece = gameBoard.getPieceAt(defendLocation);
 
-		Piece winningPiece = getWinningPiece(attackPiece, defendPiece);
+		final Piece winningPiece = getWinningPiece(attackPiece, defendPiece);
 		Location winnerLocation;
 		PieceLocationDescriptor battleWinner;
 
@@ -119,8 +119,8 @@ public class BetaBattleController {
 	 * @return the piece that wins the battle.
 	 */
 	private Piece getWinningPiece(Piece attackPiece, Piece defendPiece) {
-		int attackerRank = rankMap.get(attackPiece.getType());
-		int defenderRank = rankMap.get(defendPiece.getType());
+		final int attackerRank = rankMap.get(attackPiece.getType());
+		final int defenderRank = rankMap.get(defendPiece.getType());
 
 		if (attackerRank > defenderRank) {
 			return attackPiece;

@@ -56,7 +56,7 @@ public class StrategyGameFactory
 	 */
 	public StrategyGameController makeAlphaStrategyGame()
 	{
-		StrategyGameController controller = new AlphaStrategyGameController();
+		final StrategyGameController controller = new AlphaStrategyGameController();
 		return controller;
 	}
 	
@@ -72,7 +72,7 @@ public class StrategyGameFactory
 			Collection<PieceLocationDescriptor> blueConfiguration)
 		throws StrategyException
 	{
-		StrategyGameController controller = new BetaStrategyGameController(redConfiguration, blueConfiguration);
+		final StrategyGameController controller = new BetaStrategyGameController(redConfiguration, blueConfiguration);
 		return controller;
 	}
 }

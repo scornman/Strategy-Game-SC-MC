@@ -37,13 +37,13 @@ public class BetaStrategyGameController implements StrategyGameController {
 	private boolean gameStarted;
 	private PlayerColor currentTurnColor;
 	private BetaBoard gameBoard;
-	final private int NUMBER_OF_COMPLETE_MOVES = 6;
-	final private int NUMBER_OF_PLAYERS = 2;
-	final private int NUMBER_OF_TURNS = NUMBER_OF_COMPLETE_MOVES
+	private final int NUMBER_OF_COMPLETE_MOVES = 6;
+	private final int NUMBER_OF_PLAYERS = 2;
+	private final int NUMBER_OF_TURNS = NUMBER_OF_COMPLETE_MOVES
 			* NUMBER_OF_PLAYERS;
 	private int turnsCounter;
-	final private Collection<PieceLocationDescriptor> initialRedConfig;
-	final private Collection<PieceLocationDescriptor> initialBlueConfig;
+	private final Collection<PieceLocationDescriptor> initialRedConfig;
+	private final Collection<PieceLocationDescriptor> initialBlueConfig;
 
 	/**
 	 * Creates a new BetaStrategyGameController with the board configuration
@@ -99,15 +99,15 @@ public class BetaStrategyGameController implements StrategyGameController {
 			throws StrategyException {
 
 		// Check whether the move is a legal move.
-		String errorMessage = checkLegalMove(piece, from, to);
+		final String errorMessage = checkLegalMove(piece, from, to);
 		if (errorMessage != null) {
 			throw new StrategyException(errorMessage);
 		}
 
 		// Get the piece from the from location that is attempting to move.
-		Piece movingPiece = gameBoard.getPieceAt(from);
+		final Piece movingPiece = gameBoard.getPieceAt(from);
 		// Get the piece, if any, from the to location.
-		Piece targetPiece = gameBoard.getPieceAt(to);
+		final Piece targetPiece = gameBoard.getPieceAt(to);
 
 		// Store the result of the move
 		MoveResult result = null;
@@ -126,10 +126,10 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		} else {
 			// Otherwise, there is a battle.
-			BetaBattleController battle = new BetaBattleController(gameBoard,
+			final BetaBattleController battle = new BetaBattleController(gameBoard,
 					from, to);
 			result = battle.getBattleResult();
-			PieceLocationDescriptor battleWinner = result.getBattleWinner();
+			final PieceLocationDescriptor battleWinner = result.getBattleWinner();
 			gameBoard.updateBattlePositions(from, to, battleWinner);
 		}
 
@@ -189,7 +189,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 		}
 
 		// Get the piece from the from location that is attempting to move.
-		Piece movingPiece = gameBoard.getPieceAt(from);
+		final Piece movingPiece = gameBoard.getPieceAt(from);
 
 		// Check whether the move is a valid move on the board.
 		errorMessage = gameBoard.checkValidMove(piece, from, to);
@@ -222,7 +222,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 	@Override
 	public Piece getPieceAt(Location location) {
-		Piece piece = gameBoard.getPieceAt(location);
+		final Piece piece = gameBoard.getPieceAt(location);
 		return piece;
 	}
 
@@ -253,7 +253,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		// List of all locations already occupied. Used to ensure that two
 		// pieces never start in the same location.
-		List<Location> alreadyOccupiedLocations = new ArrayList<Location>();
+		final List<Location> alreadyOccupiedLocations = new ArrayList<Location>();
 
 		// Check that the starting configuration is valid for red pieces.
 		for (PieceLocationDescriptor iRedPLC : redConfiguration) {
@@ -305,18 +305,18 @@ public class BetaStrategyGameController implements StrategyGameController {
 			Collection<PieceLocationDescriptor> blueConfiguration) {
 		// First, extract the Piece objects from the PieceLocationDescriptor
 		// objects.
-		Collection<Piece> redPieces = new ArrayList<Piece>();
+		final Collection<Piece> redPieces = new ArrayList<Piece>();
 		for (PieceLocationDescriptor iPieceLocationDescriptor : redConfiguration) {
 			redPieces.add(iPieceLocationDescriptor.getPiece());
 		}
-		Collection<Piece> bluePieces = new ArrayList<Piece>();
+		final Collection<Piece> bluePieces = new ArrayList<Piece>();
 		for (PieceLocationDescriptor iPieceLocationDescriptor : blueConfiguration) {
 			bluePieces.add(iPieceLocationDescriptor.getPiece());
 		}
 
 		// Get the expected pieces.
-		Collection<Piece> correctRedPieces = getCorrectRedPieces();
-		Collection<Piece> correctBluePieces = getCorrectBluePieces();
+		final Collection<Piece> correctRedPieces = getCorrectRedPieces();
+		final Collection<Piece> correctBluePieces = getCorrectBluePieces();
 
 		// Ensure that the configurations have the correct number of each type
 		// of piece.
@@ -340,7 +340,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	 *         should begin the game with.
 	 */
 	private Collection<Piece> getCorrectRedPieces() {
-		Collection<Piece> pieces = new ArrayList<Piece>();
+		final Collection<Piece> pieces = new ArrayList<Piece>();
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
@@ -365,7 +365,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	 *         should begin the game with.
 	 */
 	private Collection<Piece> getCorrectBluePieces() {
-		Collection<Piece> pieces = new ArrayList<Piece>();
+		final Collection<Piece> pieces = new ArrayList<Piece>();
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
@@ -400,8 +400,8 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		// Copy the pieces to new lists so that the old piece collections are
 		// not modified.
-		List<Piece> p1 = new ArrayList<Piece>();
-		List<Piece> p2 = new ArrayList<Piece>();
+		final List<Piece> p1 = new ArrayList<Piece>();
+		final List<Piece> p2 = new ArrayList<Piece>();
 		for (Piece iPiece : pieces1) {
 			p1.add(iPiece);
 		}
@@ -438,21 +438,13 @@ public class BetaStrategyGameController implements StrategyGameController {
 	 */
 	private boolean isValidStartingLocation(Location startLocation,
 			PlayerColor color) {
-		int xCoord = startLocation.getCoordinate(Coordinate.X_COORDINATE);
-		int yCoord = startLocation.getCoordinate(Coordinate.Y_COORDINATE);
+		final int xCoord = startLocation.getCoordinate(Coordinate.X_COORDINATE);
+		final int yCoord = startLocation.getCoordinate(Coordinate.Y_COORDINATE);
 		switch (color) {
 		case RED:
-			if (xCoord >= 0 && xCoord <= 5 && yCoord >= 0 && yCoord <= 1) {
-				return true;
-			} else {
-				return false;
-			}
+			return (xCoord >= 0 && xCoord <= 5 && yCoord >= 0 && yCoord <= 1);
 		case BLUE:
-			if (xCoord >= 0 && xCoord <= 5 && yCoord >= 4 && yCoord <= 5) {
-				return true;
-			} else {
-				return false;
-			}
+			return (xCoord >= 0 && xCoord <= 5 && yCoord >= 4 && yCoord <= 5);
 		default:
 			return false;
 		}

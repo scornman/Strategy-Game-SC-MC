@@ -25,10 +25,10 @@ import strategy.game.common.*;
  */
 public class BetaBoard {
 
-	final private int BOARD_SIZE_X = 6;
-	final private int BOARD_SIZE_Y = 6;
+	private final int BOARD_SIZE_X = 6;
+	private final int BOARD_SIZE_Y = 6;
 
-	private Map<Location, Piece> pieceMap;
+	private final Map<Location, Piece> pieceMap;
 
 	/**
 	 * Creates a new board with pieces according to the supplied piece
@@ -131,7 +131,7 @@ public class BetaBoard {
 	 */
 	private String checkValidMoveFrom(PieceType piece, Location from) {
 		// Get the piece from the from location that is attempting to move.
-		Piece movingPiece = pieceMap.get(from);
+		final Piece movingPiece = pieceMap.get(from);
 		String errorMessage;
 
 		// If there is no piece at the from location, throw exception.
@@ -171,8 +171,8 @@ public class BetaBoard {
 	 */
 	private String checkValidMoveTo(PieceType piece, Location from, Location to) {
 		// Get the piece from the to location that is attempting to move.
-		Piece pieceAtToLocation = pieceMap.get(to);
-		Piece movingPiece = pieceMap.get(from);
+		final Piece pieceAtToLocation = pieceMap.get(to);
+		final Piece movingPiece = pieceMap.get(from);
 		String errorMessage;
 
 		// If there is a piece at the destination location
@@ -208,15 +208,11 @@ public class BetaBoard {
 	 *         pieces may move; false otherwise.
 	 */
 	public boolean isValidLocation(Location location) {
-		int x_coordinate = location.getCoordinate(Coordinate.X_COORDINATE);
-		int y_coordinate = location.getCoordinate(Coordinate.Y_COORDINATE);
+		final int x_coordinate = location.getCoordinate(Coordinate.X_COORDINATE);
+		final int y_coordinate = location.getCoordinate(Coordinate.Y_COORDINATE);
 
-		if (x_coordinate < BOARD_SIZE_X && y_coordinate < BOARD_SIZE_Y
-				&& x_coordinate >= 0 && y_coordinate >= 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return (x_coordinate < BOARD_SIZE_X && y_coordinate < BOARD_SIZE_Y
+				&& x_coordinate >= 0 && y_coordinate >= 0);
 	}
 
 	/**
@@ -231,20 +227,20 @@ public class BetaBoard {
 	 */
 	public void updateBattlePositions(Location attackLocation,
 			Location defendLocation, PieceLocationDescriptor battleWinner) {
-		Piece attackPiece = getPieceAt(attackLocation);
-		Piece defendPiece = getPieceAt(defendLocation);
-		
-		if(battleWinner != null){
-			Piece winningPiece = battleWinner.getPiece();
-		
-			if(winningPiece.equals(attackPiece)) {
+		final Piece attackPiece = getPieceAt(attackLocation);
+		final Piece defendPiece = getPieceAt(defendLocation);
+
+		if (battleWinner != null) {
+			final Piece winningPiece = battleWinner.getPiece();
+
+			if (winningPiece.equals(attackPiece)) {
 				putPiece(defendLocation, attackPiece);
 				putPiece(attackLocation, null);
 			} else {
-				//else the winning piece is the defendPiece
+				// else the winning piece is the defendPiece
 				putPiece(attackLocation, defendPiece);
 				putPiece(defendLocation, null);
-			} 
+			}
 		} else {
 			putPiece(attackLocation, null);
 			putPiece(defendLocation, null);

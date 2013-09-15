@@ -22,6 +22,11 @@ public class Location2D implements Location {
 	private final int xCoordinate;
 	private final int yCoordinate;
 
+	/**
+	 * Creates a new Location2D class
+	 * @param xCoordinate
+	 * @param yCoordinate
+	 */
 	public Location2D(int xCoordinate, int yCoordinate) {
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
@@ -47,10 +52,12 @@ public class Location2D implements Location {
 
 	@Override
 	public boolean equals(Object other) {
-		if (other == this)
+		if (other == this) {
 			return true;
-		if (!(other instanceof Location2D))
+		}
+		if (!(other instanceof Location2D)) {
 			return false;
+		}
 		final Location2D that = (Location2D) other;
 		return (xCoordinate == that.xCoordinate && yCoordinate == that.yCoordinate);
 	}
