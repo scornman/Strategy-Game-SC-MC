@@ -233,14 +233,18 @@ public class BetaBoard {
 			Location defendLocation, PieceLocationDescriptor battleWinner) {
 		Piece attackPiece = getPieceAt(attackLocation);
 		Piece defendPiece = getPieceAt(defendLocation);
-		Piece winningPiece = battleWinner.getPiece();
 		
-		if(winningPiece.equals(attackPiece)) {
-			putPiece(defendLocation, attackPiece);
-			putPiece(attackLocation, null);
-		} else if(winningPiece.equals(defendPiece)) {
-			putPiece(attackLocation, defendPiece);
-			putPiece(defendLocation, null);
+		if(battleWinner != null){
+			Piece winningPiece = battleWinner.getPiece();
+		
+			if(winningPiece.equals(attackPiece)) {
+				putPiece(defendLocation, attackPiece);
+				putPiece(attackLocation, null);
+			} else {
+				//else the winning piece is the defendPiece
+				putPiece(attackLocation, defendPiece);
+				putPiece(defendLocation, null);
+			} 
 		} else {
 			putPiece(attackLocation, null);
 			putPiece(defendLocation, null);

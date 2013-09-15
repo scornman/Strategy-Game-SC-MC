@@ -1142,6 +1142,9 @@ public class BetaStrategyGameControllerTest {
 				new Location2D(5, 3));
 		// check that the game status is OK
 		assertEquals(MoveResultStatus.OK, result.getStatus());
+		assertNull(result.getBattleWinner());
+		assertNull(controller.getPieceAt(new Location2D(5,2)));
+		assertNull(controller.getPieceAt(new Location2D(5,3)));		
 	}
 	
 
