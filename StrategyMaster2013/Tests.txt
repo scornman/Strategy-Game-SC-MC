@@ -23,15 +23,15 @@ X after move is called with valid parameters, including an empty 'to' location, 
 	contains the blue piece and the former location of the red piece. The red piece is removed from the board.
 - After 12 moves have been made in a game (6 for each player), the final move should result in a DRAW.
 X If a piece moves into an empty space, the returned MoveResult should have a null battleWinner.
-- If a red piece moves into a location containing the blue flag, the game should end in RED_WINS.
+X If a red piece moves into a location containing the blue flag, the game should end in RED_WINS.
 - If the game has ended, startGame should start a new game.
 
-- If a red piece moves into a location containing a blue piece of lower rank, the moveResult's battleWinner contains the red piece and the former location of the blue piece. The blue piece is removed from the board.
-- If a red piece moves into a location containing a blue piece of higher rank, the moveResult's battleWinner 	contains the blue piece and the former location of the red piece. The red piece is removed from the board.
-- If a red piece moves into a location containing a blue piece of the same rank, the moveResult's battleWinner is null.
-- After the factory method creates a controller with a given configuration, getPieceAt() for one of the given 	locations should return the corresponding piece in the configuration.
+X If a red piece moves into a location containing a blue piece of lower rank, the moveResult's battleWinner contains the red piece and the former location of the blue piece. The blue piece is removed from the board.
+X If a red piece moves into a location containing a blue piece of higher rank, the moveResult's battleWinner 	contains the blue piece and the former location of the red piece. The red piece is removed from the board.
+X If a red piece moves into a location containing a blue piece of the same rank, the moveResult's battleWinner is null.
+X After the factory method creates a controller with a given configuration, getPieceAt() for one of the given 	locations should return the corresponding piece in the configuration.
 - StrategyGameFactory.makeBetaStrategyGame throws a StrategyException if either starting configuration is null.
-- StrategyGameFactory.makeAlphaStragegyGame actually works.
+X StrategyGameFactory.makeAlphaStragegyGame actually works.
 - After the factory method creates a controller with a given configuration, getPieceAt() for one of the 
 	given locations should return the corresponding piece in the configuration.
 -Throw Exception if move() and not +1y -1y +1x or -1x
@@ -44,6 +44,6 @@ X If a piece moves into an empty space, the returned MoveResult should have a nu
 *Remember to ask on discussion board about master tests
 
 **REMEMBER: -END THE GAME SO CAN BE RESTARTED
-	    -UPDATE BOARD AFTER BATTLE
 	    -CODEPRO!!!!
 	    -12-TURN RULE END ON A BATTLE
+	    -CHECK DISCUSSION BOARD FOR EDITING ALPHA MASTER TEST
