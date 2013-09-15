@@ -1049,6 +1049,80 @@ public class BetaStrategyGameControllerTest {
 	}
 
 	/**
+	 * tests that game ends in draw after 6 complete moves if no winner/battles
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void gameEndsInDrawAfterSixMovesWithABattleOnLastMove()
+			throws StrategyException {
+		// Swap red marshall into front row
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
+				new Location2D(1, 0), new Location2D(3, 1));
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		Location blueOneFromLocation = new Location2D(0, 4);
+		Location blueOneToLocation = new Location2D(0, 3);
+		Location blueTwoFromLocation = new Location2D(1, 4);
+		Location blueTwoToLocation = new Location2D(1, 3);
+		Location blueThreeFromLocation = new Location2D(2, 4);
+		Location blueThreeToLocation = new Location2D(2, 3);
+		Location blueFourFromLocation = new Location2D(3, 4);
+		Location blueFourToLocation = new Location2D(3, 3);
+		Location blueFiveFromLocation = new Location2D(3, 3);
+		Location blueFiveToLocation = new Location2D(3, 2);
+		Location blueSixFromLocation = new Location2D(3, 2);
+		Location blueSixToLocation = new Location2D(3, 1);
+
+		Location redOneFromLocation = new Location2D(0, 1);
+		Location redOneToLocation = new Location2D(0, 2);
+		Location redTwoFromLocation = new Location2D(1, 1);
+		Location redTwoToLocation = new Location2D(1, 2);
+		Location redThreeFromLocation = new Location2D(2, 1);
+		Location redThreeToLocation = new Location2D(2, 2);
+		Location redFourFromLocation = new Location2D(2, 2);
+		Location redFourToLocation = new Location2D(2, 1);
+		Location redFiveFromLocation = new Location2D(4, 1);
+		Location redFiveToLocation = new Location2D(4, 2);
+		Location redSixFromLocation = new Location2D(5, 1);
+		Location redSixToLocation = new Location2D(5, 2);
+
+		// Make a valid moves to an empty spaces
+		controller.move(PieceType.LIEUTENANT, redOneFromLocation,
+				redOneToLocation);
+		controller.move(PieceType.LIEUTENANT, blueOneFromLocation,
+				blueOneToLocation);
+		controller.move(PieceType.LIEUTENANT, redTwoFromLocation,
+				redTwoToLocation);
+		controller.move(PieceType.LIEUTENANT, blueTwoFromLocation,
+				blueTwoToLocation);
+		controller.move(PieceType.LIEUTENANT, redThreeFromLocation,
+				redThreeToLocation);
+		controller.move(PieceType.LIEUTENANT, blueThreeFromLocation,
+				blueThreeToLocation);
+		controller.move(PieceType.LIEUTENANT, redFourFromLocation,
+				redFourToLocation);
+		controller.move(PieceType.SERGEANT, blueFourFromLocation,
+				blueFourToLocation);
+		controller.move(PieceType.SERGEANT, redFiveFromLocation,
+				redFiveToLocation);
+		controller.move(PieceType.SERGEANT, blueFiveFromLocation,
+				blueFiveToLocation);
+		controller.move(PieceType.SERGEANT, redSixFromLocation,
+				redSixToLocation);
+		MoveResult result = controller.move(PieceType.SERGEANT,
+				blueSixFromLocation, blueSixToLocation);
+
+		// check that the game status is DRAW/game ends
+		assertEquals(MoveResultStatus.DRAW, result.getStatus());
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.MARSHAL,
+				PlayerColor.RED), new Location2D(3, 2)),
+				result.getBattleWinner());
+	}
+
+	/**
 	 * tests that game ends in RED_WINS after red captures the blue flag
 	 * 
 	 * @throws StrategyException
@@ -1056,9 +1130,10 @@ public class BetaStrategyGameControllerTest {
 	@Test
 	public void gameEndsInRedWinsAfterRedCapturesBlueFlag()
 			throws StrategyException {
-		
-		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,new Location2D(0, 5),new Location2D(0, 4)); 
-		
+
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,
+				new Location2D(0, 5), new Location2D(0, 4));
+
 		StrategyGameController controller = factory.makeBetaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
@@ -1078,7 +1153,7 @@ public class BetaStrategyGameControllerTest {
 				new Location2D(3, 2));
 		MoveResult result = controller.move(PieceType.LIEUTENANT,
 				new Location2D(0, 3), new Location2D(0, 4));
-		// check that the game status is DRAW/game ends
+		// check that the game status is RED_WINS/game ends
 		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
 	}
 
@@ -1090,9 +1165,10 @@ public class BetaStrategyGameControllerTest {
 	@Test
 	public void gameEndsInBlueWinsAfterBlueCapturesRedFlag()
 			throws StrategyException {
-		
-		swapTwoPiecesInStartConfiguration(PlayerColor.RED, new Location2D(0, 0),new Location2D(0, 1)); 
-		
+
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
+				new Location2D(0, 0), new Location2D(0, 1));
+
 		StrategyGameController controller = factory.makeBetaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
@@ -1115,38 +1191,38 @@ public class BetaStrategyGameControllerTest {
 				new Location2D(3, 3));
 		MoveResult result = controller.move(PieceType.LIEUTENANT,
 				new Location2D(0, 2), new Location2D(0, 1));
-		// check that the game status is DRAW/game ends
+		// check that the game status is BLUE_WINS/game ends
 		assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
 	}
 
 	/**
-	 * Tests that there is null battle winner when two pieces of the 
-	 * same type attack each other
+	 * Tests that there is null battle winner when two pieces of the same type
+	 * attack each other
 	 * 
 	 */
 	@Test
-	public void sargentAttaksSargentResultsInNullBattleWinner() throws StrategyException{
-		//move red sargent
-		//move blue sargent
-		//red attacks blue sargent
-		//null battle winner
+	public void sargentAttaksSargentResultsInNullBattleWinner()
+			throws StrategyException {
+		// move red sargent
+		// move blue sargent
+		// red attacks blue sargent
+		// null battle winner
 		StrategyGameController controller = factory.makeBetaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
-		
+
 		controller.move(PieceType.SERGEANT, new Location2D(5, 1),
 				new Location2D(5, 2));
 		controller.move(PieceType.SERGEANT, new Location2D(5, 4),
 				new Location2D(5, 3));
-		MoveResult result = controller.move(PieceType.SERGEANT, new Location2D(5, 2),
-				new Location2D(5, 3));
+		MoveResult result = controller.move(PieceType.SERGEANT, new Location2D(
+				5, 2), new Location2D(5, 3));
 		// check that the game status is OK
 		assertEquals(MoveResultStatus.OK, result.getStatus());
 		assertNull(result.getBattleWinner());
-		assertNull(controller.getPieceAt(new Location2D(5,2)));
-		assertNull(controller.getPieceAt(new Location2D(5,3)));		
+		assertNull(controller.getPieceAt(new Location2D(5, 2)));
+		assertNull(controller.getPieceAt(new Location2D(5, 3)));
 	}
-	
 
 	/**
 	 * Tests that the move method returns a move result containing a null
@@ -1274,5 +1350,153 @@ public class BetaStrategyGameControllerTest {
 		// state.
 		assertEquals(defendPiece, controller.getPieceAt(attackerLocation));
 		assertEquals(null, controller.getPieceAt(defenderLocation));
+	}
+
+	/**
+	 * tests that game can be restarted after a draw.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void gameCanBeRestartedAfterDraw() throws StrategyException {
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		Location blueOneFromLocation = new Location2D(0, 4);
+		Location blueOneToLocation = new Location2D(0, 3);
+		Location blueTwoFromLocation = new Location2D(1, 4);
+		Location blueTwoToLocation = new Location2D(1, 3);
+		Location blueThreeFromLocation = new Location2D(2, 4);
+		Location blueThreeToLocation = new Location2D(2, 3);
+		Location blueFourFromLocation = new Location2D(3, 4);
+		Location blueFourToLocation = new Location2D(3, 3);
+		Location blueFiveFromLocation = new Location2D(4, 4);
+		Location blueFiveToLocation = new Location2D(4, 3);
+		Location blueSixFromLocation = new Location2D(5, 4);
+		Location blueSixToLocation = new Location2D(5, 3);
+
+		Location redOneFromLocation = new Location2D(0, 1);
+		Location redOneToLocation = new Location2D(0, 2);
+		Location redTwoFromLocation = new Location2D(1, 1);
+		Location redTwoToLocation = new Location2D(1, 2);
+		Location redThreeFromLocation = new Location2D(2, 1);
+		Location redThreeToLocation = new Location2D(2, 2);
+		Location redFourFromLocation = new Location2D(3, 1);
+		Location redFourToLocation = new Location2D(3, 2);
+		Location redFiveFromLocation = new Location2D(4, 1);
+		Location redFiveToLocation = new Location2D(4, 2);
+		Location redSixFromLocation = new Location2D(5, 1);
+		Location redSixToLocation = new Location2D(5, 2);
+
+		// Make a valid moves to an empty spaces
+		controller.move(PieceType.LIEUTENANT, redOneFromLocation,
+				redOneToLocation);
+		controller.move(PieceType.LIEUTENANT, blueOneFromLocation,
+				blueOneToLocation);
+		controller.move(PieceType.LIEUTENANT, redTwoFromLocation,
+				redTwoToLocation);
+		controller.move(PieceType.LIEUTENANT, blueTwoFromLocation,
+				blueTwoToLocation);
+		controller.move(PieceType.LIEUTENANT, redThreeFromLocation,
+				redThreeToLocation);
+		controller.move(PieceType.LIEUTENANT, blueThreeFromLocation,
+				blueThreeToLocation);
+		controller.move(PieceType.SERGEANT, redFourFromLocation,
+				redFourToLocation);
+		controller.move(PieceType.SERGEANT, blueFourFromLocation,
+				blueFourToLocation);
+		controller.move(PieceType.SERGEANT, redFiveFromLocation,
+				redFiveToLocation);
+		controller.move(PieceType.SERGEANT, blueFiveFromLocation,
+				blueFiveToLocation);
+		controller.move(PieceType.SERGEANT, redSixFromLocation,
+				redSixToLocation);
+		controller.move(PieceType.SERGEANT, blueSixFromLocation,
+				blueSixToLocation);
+
+		// Game now ends in a draw. A new game can now be started.
+		controller.startGame();
+		assertTrue(true);
+	}
+
+	/**
+	 * tests that game can be restarted after a draw.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void gameCanBeRestartedAfterRedWins() throws StrategyException {
+
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,
+				new Location2D(0, 5), new Location2D(0, 4));
+
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// move red lt
+		// move random blue piece
+		// move red lt
+		// move random blue piece
+		// capture flag
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
+				new Location2D(0, 2));
+		controller.move(PieceType.SERGEANT, new Location2D(3, 4),
+				new Location2D(3, 3));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 2),
+				new Location2D(0, 3));
+		controller.move(PieceType.SERGEANT, new Location2D(3, 3),
+				new Location2D(3, 2));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 3),
+				new Location2D(0, 4));
+
+		// Game now ends in a red win. A new game can now be started.
+		controller.startGame();
+		// Make sure that the board configuration has been reset.
+		assertEquals(new Piece(PieceType.LIEUTENANT, PlayerColor.RED),
+				controller.getPieceAt(new Location2D(0, 1)));
+	}
+
+	/**
+	 * tests that game can be restarted after a draw.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void gameCanBeRestartedAfterBlueWins() throws StrategyException {
+
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
+				new Location2D(0, 0), new Location2D(0, 1));
+
+		StrategyGameController controller = factory.makeBetaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// move random red piece
+		// move blue lt
+		// move random red piece
+		// move blue lt
+		// move random red piece
+		// capture flag
+		controller.move(PieceType.LIEUTENANT, new Location2D(1, 1),
+				new Location2D(1, 2));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
+				new Location2D(0, 3));
+		controller.move(PieceType.SERGEANT, new Location2D(3, 1),
+				new Location2D(3, 2));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 3),
+				new Location2D(0, 2));
+		controller.move(PieceType.SERGEANT, new Location2D(3, 2),
+				new Location2D(3, 3));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 2),
+				new Location2D(0, 1));
+
+		// Game now ends in a blue win. A new game can now be started.
+		controller.startGame();
+		// Make sure that the board configuration has been reset.
+		assertEquals(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE),
+				controller.getPieceAt(new Location2D(0, 4)));
+		assertTrue(true);
 	}
 }

@@ -11,7 +11,6 @@
 package strategy.game.common;
 
 import strategy.common.StrategyRuntimeException;
-import strategy.game.common.*;
 
 /**
  * Description

@@ -32,18 +32,15 @@ X If a red piece moves into a location containing a blue piece of the same rank,
 X After the factory method creates a controller with a given configuration, getPieceAt() for one of the given 	locations should return the corresponding piece in the configuration.
 - StrategyGameFactory.makeBetaStrategyGame throws a StrategyException if either starting configuration is null.
 X StrategyGameFactory.makeAlphaStragegyGame actually works.
-- After the factory method creates a controller with a given configuration, getPieceAt() for one of the 
+X After the factory method creates a controller with a given configuration, getPieceAt() for one of the 
 	given locations should return the corresponding piece in the configuration.
--Throw Exception if move() and not +1y -1y +1x or -1x
--If red Marshal attacks blue Lt. MoveResultStatus(OK)
+X Throw Exception if move() and not +1y -1y +1x or -1x
+X If red Marshal attacks blue Lt. MoveResultStatus(OK)
 	& getBattleWinner() "on the move result" == Marshal [PieceLocationDescriptor]
-*keep whos turn it is (RED initially)
-*number of moves
+X keep whos turn it is (RED initially)
+X number of moves
 	& red Marshal battleWinner.getPiece, battleWinner.getLocation = old blue Lt. location
 
-*Remember to ask on discussion board about master tests
+X Remember to ask on discussion board about master tests
 
-**REMEMBER: -END THE GAME SO CAN BE RESTARTED
-	    -CODEPRO!!!!
-	    -12-TURN RULE END ON A BATTLE
-	    -CHECK DISCUSSION BOARD FOR EDITING ALPHA MASTER TEST
+**REMEMBER: -CODEPRO!!!!

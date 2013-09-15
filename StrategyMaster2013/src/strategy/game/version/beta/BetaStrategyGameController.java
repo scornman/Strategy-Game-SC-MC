@@ -11,6 +11,7 @@ package strategy.game.version.beta;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
@@ -35,12 +36,14 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 	private boolean gameStarted;
 	private PlayerColor currentTurnColor;
-	final private BetaBoard gameBoard;
+	private BetaBoard gameBoard;
 	final private int NUMBER_OF_COMPLETE_MOVES = 6;
 	final private int NUMBER_OF_PLAYERS = 2;
 	final private int NUMBER_OF_TURNS = NUMBER_OF_COMPLETE_MOVES
 			* NUMBER_OF_PLAYERS;
 	private int turnsCounter;
+	final private Collection<PieceLocationDescriptor> initialRedConfig;
+	final private Collection<PieceLocationDescriptor> initialBlueConfig;
 
 	/**
 	 * Creates a new BetaStrategyGameController with the board configuration
@@ -63,6 +66,11 @@ public class BetaStrategyGameController implements StrategyGameController {
 		if (!configurationsValid(redConfiguration, blueConfiguration)) {
 			throw new StrategyException("Invalid Starting Configuration");
 		}
+
+		// Store the configurations, so that they can be used to restart the
+		// game.
+		initialRedConfig = redConfiguration;
+		initialBlueConfig = blueConfiguration;
 
 		// The game has not yet been started
 		gameStarted = false;
@@ -101,33 +109,53 @@ public class BetaStrategyGameController implements StrategyGameController {
 		// Get the piece, if any, from the to location.
 		Piece targetPiece = gameBoard.getPieceAt(to);
 
+		// Store the result of the move
+		MoveResult result = null;
+
 		// Advance the turn counter to the next turn
 		endTurn();
 
-		// if it is the (12th) move, game status set to draw
-		if (turnsCounter == NUMBER_OF_TURNS) {
-			return new MoveResult(MoveResultStatus.DRAW, null);
+		// If the move is to an empty space
+		if (targetPiece == null) {
+			// For a move into an empty space, change the location of the
+			// piece
+			// to the destination.
+			gameBoard.putPiece(to, movingPiece);
+			gameBoard.putPiece(from, null);
+			result = new MoveResult(MoveResultStatus.OK, null);
 
 		} else {
-
-			// If the move is to an empty space
-			if (targetPiece == null) {
-				// For a move into an empty space, change the location of the
-				// piece
-				// to the destination.
-				gameBoard.putPiece(to, movingPiece);
-				gameBoard.putPiece(from, null);
-				return new MoveResult(MoveResultStatus.OK, null);
-				
-			} else {
-				// Otherwise, there is a battle.
-				BetaBattleController battle = new BetaBattleController(gameBoard, from, to);
-				MoveResult result = battle.getBattleResult();
-				PieceLocationDescriptor battleWinner = result.getBattleWinner();
-				gameBoard.updateBattlePositions(from, to, battleWinner);
-				return result;
-			}
+			// Otherwise, there is a battle.
+			BetaBattleController battle = new BetaBattleController(gameBoard,
+					from, to);
+			result = battle.getBattleResult();
+			PieceLocationDescriptor battleWinner = result.getBattleWinner();
+			gameBoard.updateBattlePositions(from, to, battleWinner);
 		}
+
+		MoveResultStatus moveStatus = result.getStatus();
+
+		// If neither side has captured a flag
+		if (moveStatus == MoveResultStatus.OK) {
+			// if it is the (12th) move, game status set to draw
+			if (turnsCounter == NUMBER_OF_TURNS) {
+				moveStatus = MoveResultStatus.DRAW;
+				result = new MoveResult(moveStatus, result.getBattleWinner());
+			}
+
+		}
+
+		// If the game has ended, reset the board.
+		if (moveStatus == MoveResultStatus.RED_WINS
+				|| moveStatus == MoveResultStatus.BLUE_WINS
+				|| moveStatus == MoveResultStatus.DRAW) {
+			// End the game
+			gameStarted = false;
+			// Reset the board.
+			gameBoard = new BetaBoard(initialRedConfig, initialBlueConfig);
+		}
+
+		return result;
 	}
 
 	/**
@@ -225,7 +253,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		// List of all locations already occupied. Used to ensure that two
 		// pieces never start in the same location.
-		ArrayList<Location> alreadyOccupiedLocations = new ArrayList<Location>();
+		List<Location> alreadyOccupiedLocations = new ArrayList<Location>();
 
 		// Check that the starting configuration is valid for red pieces.
 		for (PieceLocationDescriptor iRedPLC : redConfiguration) {
@@ -372,8 +400,8 @@ public class BetaStrategyGameController implements StrategyGameController {
 
 		// Copy the pieces to new lists so that the old piece collections are
 		// not modified.
-		ArrayList<Piece> p1 = new ArrayList<Piece>();
-		ArrayList<Piece> p2 = new ArrayList<Piece>();
+		List<Piece> p1 = new ArrayList<Piece>();
+		List<Piece> p2 = new ArrayList<Piece>();
 		for (Piece iPiece : pieces1) {
 			p1.add(iPiece);
 		}
