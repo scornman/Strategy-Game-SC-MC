@@ -87,6 +87,6 @@ public class StrategyGameFactory
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
 		//@TODO
-		return new StrategyGameControllerImpl();
+		return new StrategyGameControllerImpl(null, null, null, null, null, null, null);
 	}
 }

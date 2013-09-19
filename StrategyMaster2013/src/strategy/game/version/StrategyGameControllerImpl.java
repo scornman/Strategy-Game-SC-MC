@@ -4,12 +4,14 @@
 package strategy.game.version;
 
 import java.util.Collection;
+import java.util.List;
 
 import strategy.common.StrategyException;
 import strategy.game.StrategyGameController;
 import strategy.game.common.Location;
 import strategy.game.common.MoveResult;
 import strategy.game.common.Piece;
+import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
 
 /**
@@ -25,10 +27,17 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 	Board gameBoard;
 	
 	/**
-	 * 
+	 *  
 	 */
-	public StrategyGameControllerImpl() {
+	public StrategyGameControllerImpl(	Collection<ValidateConfigurationBehavior> configBehaviors,
+										Collection<ValidateMoveBehavior> moveBehaviors,
+										TurnUpdateBehavior turnUpdateBehavior,
+										BattleBehavior battleBehavior,
+										GameResultBehavior gameResultBehavior,
+										Board gameBoard,
+										List<PieceLocationDescriptor> configurations	) {
 		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
