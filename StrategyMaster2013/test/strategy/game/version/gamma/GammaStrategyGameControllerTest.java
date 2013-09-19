@@ -301,7 +301,7 @@ public class GammaStrategyGameControllerTest {
 				oldMarshallLocation, newMarshallLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -323,7 +323,7 @@ public class GammaStrategyGameControllerTest {
 				oldColonelLocation, newColonelLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -345,7 +345,7 @@ public class GammaStrategyGameControllerTest {
 				oldLocation, newLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -367,7 +367,7 @@ public class GammaStrategyGameControllerTest {
 				oldLocation, newLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -389,7 +389,7 @@ public class GammaStrategyGameControllerTest {
 		assertTrue(startingRedConfig.remove(pldToRemove));
 
 		// Create the controller
-		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -411,7 +411,7 @@ public class GammaStrategyGameControllerTest {
 		assertTrue(startingBlueConfig.remove(pldToRemove));
 
 		// Create the controller
-		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -433,7 +433,7 @@ public class GammaStrategyGameControllerTest {
 				replacementPiece, pieceLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -455,7 +455,7 @@ public class GammaStrategyGameControllerTest {
 				replacementPiece, pieceLocation);
 
 		// Create the controller
-		factory.makeBetaStrategyGame(startingRedConfig, startingBlueConfig);
+		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
 	/**
@@ -471,7 +471,7 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void getPieceAtLocationShouldReturnBlueFlag()
 			throws StrategyException {
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		Piece piece = new Piece(PieceType.FLAG, PlayerColor.BLUE);
 
@@ -489,7 +489,7 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void getPieceAtLocationShouldReturnRedMarshal()
 			throws StrategyException {
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		Piece piece = new Piece(PieceType.MARSHAL, PlayerColor.RED);
 
@@ -506,7 +506,7 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void getPieceAtLocationShouldReturnNullIfNoPiecePresent()
 			throws StrategyException {
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		assertEquals(null, ctrlr.getPieceAt(new Location2D(3, 3)));
 	}
@@ -522,7 +522,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyRuntimeException.class)
 	public void getPieceAtLocationNotOnBoardShouldThrowException()
 			throws StrategyException {
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		ctrlr.getPieceAt(new Location2D(6, 7));
 	}
@@ -535,7 +535,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyRuntimeException.class)
 	public void getPieceAtCannotHaveANegativeYCoordinate()
 			throws StrategyException {
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		ctrlr.getPieceAt(new Location2D(0, -1));
 	}
@@ -548,7 +548,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyRuntimeException.class)
 	public void getPieceAtCannotHaveANegativeXCoordinate()
 			throws StrategyException {
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		ctrlr.getPieceAt(new Location2D(-1, 0));
 	}
@@ -561,7 +561,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyRuntimeException.class)
 	public void getPieceAtCannotHaveNegativeCoordinates()
 			throws StrategyException {
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		ctrlr.getPieceAt(new Location2D(-1, -1));
 	}
@@ -574,7 +574,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyRuntimeException.class)
 	public void getPieceAtCannotHaveANegativeXCoordinateAndATooLargeYCoordinate()
 			throws StrategyException {
-		StrategyGameController ctrlr = factory.makeBetaStrategyGame(
+		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		ctrlr.getPieceAt(new Location2D(-1, 10));
 	}
@@ -588,7 +588,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testStartGameThrowsExceptionIfGameAlreadyStarted()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		// Start the game.
 		controller.startGame();
@@ -608,7 +608,7 @@ public class GammaStrategyGameControllerTest {
 	public void testMoveThrowsExceptionIfGameNotYetStarted()
 			throws StrategyException {
 		// Create the controller
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		// Create the piece to attempt to move.
 		PieceType typeToMove = PieceType.CAPTAIN;
@@ -629,7 +629,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfNoPieceAtFromLocation()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(3, 3);
@@ -649,7 +649,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfFromLocationIsNull()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = null;
@@ -668,7 +668,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfToLocationIsNull()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(1, 1);
@@ -686,7 +686,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfPieceTypeIsNull()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(1, 1);
@@ -705,7 +705,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfFromLocationHasWrongPieceType()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(1, 1);
@@ -725,7 +725,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfBlueMovesFirst()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		// Attempt to move a blue piece when red should have the first turn.
@@ -745,7 +745,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfRedMakesFirstTwoMoves()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location firstFromLocation = new Location2D(0, 1);
@@ -772,7 +772,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfBlueMovesTwiceInARow()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location firstFromLocation = new Location2D(0, 1);
@@ -811,7 +811,7 @@ public class GammaStrategyGameControllerTest {
 				lieutenantLocation);
 		movePieceToNewStartLocation(startingRedConfig, lieutenantPiece,
 				lieutenantLocation, flagLocation);
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -831,7 +831,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfRedPieceMovesToOtherRedPiece()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		// Attempt to move red marshal to location containing red lieutenant.
@@ -851,7 +851,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void testMoveThrowsExceptionIfBluePieceMovesToOtherBluePiece()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		// First, make a valid move for red.
@@ -874,7 +874,7 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void testMoveSuccessfullyMovesPieceToDestinationOnValidMoveToBlankSpace()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(4, 1);
@@ -897,7 +897,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void throwExceptionIfPieceTriesToMoveToDiagonalLocation()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(1, 1);
@@ -913,7 +913,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void throwExceptionIfPieceTriesToMoveTooManySpacesX()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(1, 1);
@@ -929,7 +929,7 @@ public class GammaStrategyGameControllerTest {
 	@Test(expected = StrategyException.class)
 	public void throwExceptionIfPieceTriesToMoveTooManySpacesY()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(1, 1);
@@ -944,7 +944,7 @@ public class GammaStrategyGameControllerTest {
 	 */
 	@Test
 	public void pieceTriesToMoveOneSpacesX() throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -971,7 +971,7 @@ public class GammaStrategyGameControllerTest {
 	 */
 	@Test
 	public void pieceTriesToMoveOneSpacesY() throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(1, 1);
@@ -988,7 +988,7 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void gameEndsInDrawAfterSixMovesWithNoBattles()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -1059,7 +1059,7 @@ public class GammaStrategyGameControllerTest {
 		// Swap red marshall into front row
 		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
 				new Location2D(1, 0), new Location2D(3, 1));
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -1134,7 +1134,7 @@ public class GammaStrategyGameControllerTest {
 		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,
 				new Location2D(0, 5), new Location2D(0, 4));
 
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -1169,7 +1169,7 @@ public class GammaStrategyGameControllerTest {
 		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
 				new Location2D(0, 0), new Location2D(0, 1));
 
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -1207,7 +1207,7 @@ public class GammaStrategyGameControllerTest {
 		// move blue sargent
 		// red attacks blue sargent
 		// null battle winner
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -1231,7 +1231,7 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void testMoveToEmptySpaceProducesNullBattleWinner()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(4, 1);
@@ -1254,7 +1254,7 @@ public class GammaStrategyGameControllerTest {
 	 */
 	@Test
 	public void testMoveToEmptySpaceProducesOkStatus() throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		Location fromLocation = new Location2D(4, 1);
@@ -1276,7 +1276,7 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void testAttackingRedLieutenantShouldDefeatBlueSergeant()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -1319,7 +1319,7 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void testAttackingBlueSergeantShouldLoseToRedLieutenant()
 			throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -1359,7 +1359,7 @@ public class GammaStrategyGameControllerTest {
 	 */
 	@Test
 	public void gameCanBeRestartedAfterDraw() throws StrategyException {
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -1431,7 +1431,7 @@ public class GammaStrategyGameControllerTest {
 		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,
 				new Location2D(0, 5), new Location2D(0, 4));
 
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
@@ -1469,7 +1469,7 @@ public class GammaStrategyGameControllerTest {
 		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
 				new Location2D(0, 0), new Location2D(0, 1));
 
-		StrategyGameController controller = factory.makeBetaStrategyGame(
+		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 

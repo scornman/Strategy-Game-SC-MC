@@ -76,10 +76,10 @@ public class StrategyGameFactory
 		return controller;
 	}
 
-	public void makeGammaStrategyGame(
+	public StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }
