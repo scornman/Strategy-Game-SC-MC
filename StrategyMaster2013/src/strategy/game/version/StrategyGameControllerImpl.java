@@ -3,6 +3,8 @@
  */
 package strategy.game.version;
 
+import java.util.Collection;
+
 import strategy.common.StrategyException;
 import strategy.game.StrategyGameController;
 import strategy.game.common.Location;
@@ -15,7 +17,13 @@ import strategy.game.common.PieceType;
  *
  */
 public class StrategyGameControllerImpl implements StrategyGameController{
-
+	Collection<ValidateConfigurationBehavior> configBehaviors;
+	Collection<ValidateMoveBehavior> moveBehaviors;
+	TurnUpdateBehavior turnUpdateBehavior;
+	BattleBehavior battleBehavior;
+	GameResultBehavior gameResultBehavior;
+	Board gameBoard;
+	
 	/**
 	 * 
 	 */

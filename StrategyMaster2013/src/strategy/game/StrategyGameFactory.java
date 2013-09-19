@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import strategy.common.*;
 import strategy.game.common.PieceLocationDescriptor;
+import strategy.game.version.StrategyGameControllerImpl;
 import strategy.game.version.alpha.AlphaStrategyGameController;
 import strategy.game.version.beta.BetaStrategyGameController;
 
@@ -86,6 +87,6 @@ public class StrategyGameFactory
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
 		//@TODO
-		return null;
+		return new StrategyGameControllerImpl();
 	}
 }

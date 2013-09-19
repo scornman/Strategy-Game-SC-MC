@@ -29,7 +29,7 @@ import strategy.game.common.PieceType;
  * 
  * @author scornman
  * @author Madalyn
- * @version Sep 15, 2013
+ * @version Sep 19, 2013
  * 
  */
 public class BetaStrategyGameController implements StrategyGameController {
