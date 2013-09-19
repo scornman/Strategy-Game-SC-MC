@@ -75,4 +75,11 @@ public class StrategyGameFactory
 		final StrategyGameController controller = new BetaStrategyGameController(redConfiguration, blueConfiguration);
 		return controller;
 	}
+
+	public void makeGammaStrategyGame(
+			Collection<PieceLocationDescriptor> startingRedConfig,
+			Collection<PieceLocationDescriptor> startingBlueConfig) {
+		// TODO Auto-generated method stub
+		
+	}
 }
