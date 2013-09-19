@@ -75,7 +75,7 @@ public class StrategyGameFactory
 		final StrategyGameController controller = new BetaStrategyGameController(redConfiguration, blueConfiguration);
 		return controller;
 	}
-	
+
 	/**
 	 * Create a new gamma strategy game
 	 * @param startingRedConfig
