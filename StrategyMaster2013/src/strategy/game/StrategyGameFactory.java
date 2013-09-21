@@ -10,11 +10,24 @@
 
 package strategy.game;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import strategy.common.*;
+import strategy.game.common.Location;
+import strategy.game.common.Location2D;
+import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
+import strategy.game.version.BattleBehavior;
+import strategy.game.version.Board;
+import strategy.game.version.GameResultBehavior;
 import strategy.game.version.StrategyGameControllerImpl;
+import strategy.game.version.TurnUpdateBehavior;
+import strategy.game.version.ValidateConfigurationBehavior;
+import strategy.game.version.ValidateMoveBehavior;
 import strategy.game.version.alpha.AlphaStrategyGameController;
 import strategy.game.version.beta.BetaStrategyGameController;
 
@@ -87,6 +100,59 @@ public class StrategyGameFactory
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
 		//@TODO
-		return new StrategyGameControllerImpl(null, null, null, null, null, null, null);
+		/*Collection<ValidateConfigurationBehavior> configBehaviors,
+		Collection<ValidateMoveBehavior> moveBehaviors,
+		TurnUpdateBehavior turnUpdateBehavior,
+		BattleBehavior battleBehavior,
+		GameResultBehavior gameResultBehavior,
+		Board gameBoard,
+		List<PieceLocationDescriptor> configurations*/
+		Collection<Location> chokePoints = new ArrayList<Location>();
+		chokePoints.add(new Location2D(2,2));
+		chokePoints.add(new Location2D(2,3));
+		chokePoints.add(new Location2D(3,2));
+		chokePoints.add(new Location2D(3,3));
+		Map<Location, Piece> gameBoard = makeBoard(startingRedConfig, startingBlueConfig, 6, 6, chokePoints);
+		
+		return new StrategyGameControllerImpl(null, null, null, null, null, null, null, gameBoard);
+	}
+	
+	private HashMap<Location, Piece> makeBoard(	Collection<PieceLocationDescriptor> redConfiguration, 
+												Collection<PieceLocationDescriptor> blueConfiguration,
+												int BOARD_SIZE_X,
+												int BOARD_SIZE_Y,
+												Collection<Location> chokePoints){
+		
+		Map<Location, Piece> pieceMap = new HashMap<Location, Piece>();
+		
+		//create the locations on the board by the dimensions given
+		for (int i = 0; i < BOARD_SIZE_X; i++) {
+			for (int j = 0; j < BOARD_SIZE_Y; j++) {
+				pieceMap.put(new Location2D(i, j), null);
+			}
+		}
+
+		//add the red pieces to the board
+		for (PieceLocationDescriptor red : redConfiguration) {
+			Location redLocation = red.getLocation();
+			Piece redPiece = red.getPiece();
+
+			pieceMap.put(redLocation, redPiece);
+		}
+
+		//add the blue pieces to the board
+		for (PieceLocationDescriptor blue : blueConfiguration) {
+			Location blueLocation = blue.getLocation();
+			Piece bluePiece = blue.getPiece();
+
+			pieceMap.put(blueLocation, bluePiece);
+		}
+		
+		//remove the chokepoints from the map
+		for(Location chokePoint : chokePoints){
+			pieceMap.remove(chokePoint);
+		}
+		
+		return (HashMap<Location, Piece>) pieceMap;
 	}
 }

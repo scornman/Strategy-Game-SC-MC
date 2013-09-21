@@ -5,6 +5,7 @@ package strategy.game.version;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import strategy.common.StrategyException;
 import strategy.game.StrategyGameController;
@@ -35,7 +36,8 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 										BattleBehavior battleBehavior,
 										GameResultBehavior gameResultBehavior,
 										Board gameBoard,
-										List<PieceLocationDescriptor> configurations	) {
+										List<PieceLocationDescriptor> configurations,
+										Map board) {
 		// TODO Auto-generated constructor stub
 		
 	}
