@@ -959,7 +959,7 @@ public class GammaStrategyGameControllerTest {
 		controller.move(PieceType.LIEUTENANT, fromLocation2, toLocation2);
 		// Finally, move the red piece to the side.
 		Location fromLocation3 = new Location2D(1, 2);
-		Location toLocation3 = new Location2D(2, 2);
+		Location toLocation3 = new Location2D(0, 2);
 		controller.move(PieceType.LIEUTENANT, fromLocation3, toLocation3);
 		assertTrue(true);
 	}
