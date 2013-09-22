@@ -33,6 +33,7 @@ import strategy.game.version.beta.BetaStrategyGameController;
 import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
 import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributionConfigValidator;
+import strategy.game.version.validateConfigurationBehaviors.GammaStartLocationsConfigValidator;
 import strategy.game.version.validateMoveBehaviors.MovingOnTurnMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotAttackingOwnTeamMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotMovingFlagMoveValidator;
@@ -103,51 +104,48 @@ public class StrategyGameFactory {
 	/**
 	 * Create a new gamma strategy game
 	 * 
-	 * @param startingRedConfig 
+	 * @param startingRedConfig
 	 * @param startingBlueConfig
 	 * @return
-	 * @throws StrategyException 
+	 * @throws StrategyException
 	 */
 	public StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
-			Collection<PieceLocationDescriptor> startingBlueConfig) throws StrategyException {
-		
+			Collection<PieceLocationDescriptor> startingBlueConfig)
+			throws StrategyException {
+
 		Collection<Location> chokePoints = new ArrayList<Location>();
 		chokePoints.add(new Location2D(2, 2));
 		chokePoints.add(new Location2D(2, 3));
 		chokePoints.add(new Location2D(3, 2));
 		chokePoints.add(new Location2D(3, 3));
-		Map<Location, Piece> pieceMap = makeBoard(	startingRedConfig,
-													startingBlueConfig, 
-													6, 
-													6, 
-													chokePoints	);
-		
+		Map<Location, Piece> pieceMap = makeBoard(startingRedConfig,
+				startingBlueConfig, 6, 6, chokePoints);
+
 		Board gameBoard = new Board(pieceMap);
-		
+
 		Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
-		configValidators.add(new GammaPieceDistributionConfigValidator(startingRedConfig, startingBlueConfig));
-		
+		configValidators.add(new GammaPieceDistributionConfigValidator(
+				startingRedConfig, startingBlueConfig));
+		configValidators.add(new GammaStartLocationsConfigValidator(
+				startingRedConfig, startingBlueConfig));
+
 		Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
 		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
 		moveValidators.add(new OneSpaceInDirectionMoveValidator());
 		moveValidators.add(new NotMovingFlagMoveValidator());
 		moveValidators.add(new MovingOnTurnMoveValidator(gameBoard));
-		
+
 		TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
-		
+
 		BattleBehavior battleBehavior = new GammaBattleBehavior(gameBoard);
-		
-		GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(gameBoard);
-		
 
+		GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
+				gameBoard);
 
-		return new StrategyGameControllerImpl(	configValidators, 
-												moveValidators,
-												turnUpdateBehavior, 
-												battleBehavior, 
-												gameResultBehavior,
-												gameBoard	);
+		return new StrategyGameControllerImpl(configValidators, moveValidators,
+				turnUpdateBehavior, battleBehavior, gameResultBehavior,
+				gameBoard);
 	}
 
 	private HashMap<Location, Piece> makeBoard(
