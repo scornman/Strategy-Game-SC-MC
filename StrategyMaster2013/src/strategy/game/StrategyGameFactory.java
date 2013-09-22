@@ -104,8 +104,8 @@ public class StrategyGameFactory {
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
 
-		Collection<ValidateConfigurationBehavior> configBehaviors = null;
-		Collection<ValidateMoveBehavior> moveBehaviors = null;
+		Collection<ValidateConfigurationBehavior> configValidators = null;
+		Collection<ValidateMoveBehavior> moveValidators = null;
 		TurnUpdateBehavior turnUpdateBehavior = null;
 		BattleBehavior battleBehavior = null;
 		GameResultBehavior gameResultBehavior = null;
@@ -123,8 +123,8 @@ public class StrategyGameFactory {
 													6, 
 													chokePoints	);
 
-		return new StrategyGameControllerImpl(	configBehaviors, 
-												moveBehaviors,
+		return new StrategyGameControllerImpl(	configValidators, 
+												moveValidators,
 												turnUpdateBehavior, 
 												battleBehavior, 
 												gameResultBehavior,

@@ -20,8 +20,8 @@ import strategy.game.common.PieceType;
  *
  */
 public class StrategyGameControllerImpl implements StrategyGameController{
-	private final Collection<ValidateConfigurationBehavior> configBehaviors;
-	private final Collection<ValidateMoveBehavior> moveBehaviors;
+	private final Collection<ValidateConfigurationBehavior> configValidators;
+	private final Collection<ValidateMoveBehavior> moveValidators;
 	private final TurnUpdateBehavior turnUpdateBehavior;
 	private final BattleBehavior battleBehavior;
 	private final GameResultBehavior gameResultBehavior;
@@ -31,16 +31,16 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 	/**
 	 *  
 	 */
-	public StrategyGameControllerImpl(	Collection<ValidateConfigurationBehavior> configBehaviors,
-										Collection<ValidateMoveBehavior> moveBehaviors,
+	public StrategyGameControllerImpl(	Collection<ValidateConfigurationBehavior> configValidators,
+										Collection<ValidateMoveBehavior> moveValidators,
 										TurnUpdateBehavior turnUpdateBehavior,
 										BattleBehavior battleBehavior,
 										GameResultBehavior gameResultBehavior,
 										Board gameBoard,
 										Map<Location, Piece> pieceMap	) {
 		// TODO Auto-generated constructor stub
-		this.configBehaviors = configBehaviors;
-		this.moveBehaviors = moveBehaviors;
+		this.configValidators = configValidators;
+		this.moveValidators = moveValidators;
 		this.turnUpdateBehavior = turnUpdateBehavior;
 		this.battleBehavior = battleBehavior;
 		this.gameResultBehavior = gameResultBehavior;
@@ -62,7 +62,12 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 	@Override
 	public MoveResult move(PieceType piece, Location from, Location to)
 			throws StrategyException {
-		// TODO Auto-generated method stub
+
+		for(ValidateMoveBehavior moveValidator : moveValidators){
+			if(!moveValidator.isMoveValid(piece, from, to)){
+				throw new StrategyException("That move is not valid.");
+			}
+		}
 		
 		return null;
 	}
