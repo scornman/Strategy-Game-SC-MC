@@ -112,9 +112,9 @@ public class StrategyGameFactory
 		chokePoints.add(new Location2D(2,3));
 		chokePoints.add(new Location2D(3,2));
 		chokePoints.add(new Location2D(3,3));
-		Map<Location, Piece> gameBoard = makeBoard(startingRedConfig, startingBlueConfig, 6, 6, chokePoints);
+		Map<Location, Piece> pieceMap = makeBoard(startingRedConfig, startingBlueConfig, 6, 6, chokePoints);
 		
-		return new StrategyGameControllerImpl(null, null, null, null, null, null, null, gameBoard);
+		return new StrategyGameControllerImpl(null, null, null, null, null, null, null, pieceMap);
 	}
 	
 	private HashMap<Location, Piece> makeBoard(	Collection<PieceLocationDescriptor> redConfiguration, 

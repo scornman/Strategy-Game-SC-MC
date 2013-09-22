@@ -26,6 +26,7 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 	BattleBehavior battleBehavior;
 	GameResultBehavior gameResultBehavior;
 	Board gameBoard;
+	private boolean gameStarted;
 	
 	/**
 	 *  
@@ -37,14 +38,19 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 										GameResultBehavior gameResultBehavior,
 										Board gameBoard,
 										List<PieceLocationDescriptor> configurations,
-										Map board) {
+										Map<Location, Piece> pieceMap	) {
 		// TODO Auto-generated constructor stub
+		gameStarted = false;
 		
 	}
 
 	@Override
 	public void startGame() throws StrategyException {
-		// TODO Auto-generated method stub
+		if(!gameStarted){
+			gameStarted = true;
+		}else{
+			throw new StrategyException("The game has already been started.");
+		}
 		
 	}
 
