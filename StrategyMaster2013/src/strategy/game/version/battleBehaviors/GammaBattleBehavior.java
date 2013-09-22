@@ -44,11 +44,10 @@ public class GammaBattleBehavior implements BattleBehavior {
 		return false;
 	}
 
-
 	/**
-	 * Determine which of two pieces wins the battle.
-	 * if there is no piece defending the to location, the attacking piece wins
-	 * if there are two of the same pieces in the battle, neither wins
+	 * Determine which of two pieces wins the battle. if there is no piece
+	 * defending the to location, the attacking piece wins if there are two of
+	 * the same pieces in the battle, neither wins
 	 * 
 	 * @param attackPiece
 	 *            the piece that is attacking.
@@ -61,21 +60,17 @@ public class GammaBattleBehavior implements BattleBehavior {
 			Location toLocation) {
 		Piece attackPiece = gameBoard.getPieceAt(fromLocation);
 		Piece defendPiece = gameBoard.getPieceAt(toLocation);
-		
-		if(isBattle(fromLocation, toLocation)){			
-			final int attackerRank = rankMap.get(attackPiece.getType());
-			final int defenderRank = rankMap.get(defendPiece.getType());
-	
-			if (attackerRank > defenderRank) {
-				return new PieceLocationDescriptor(attackPiece, toLocation);
-			} else if (defenderRank > attackerRank) {
-				return new PieceLocationDescriptor(defendPiece, fromLocation);
-			} else {
-				// If the two pieces have the same rank, there is no battle winner.
-				return null;
-			}
-		}else{
+
+		final int attackerRank = rankMap.get(attackPiece.getType());
+		final int defenderRank = rankMap.get(defendPiece.getType());
+
+		if (attackerRank > defenderRank) {
 			return new PieceLocationDescriptor(attackPiece, toLocation);
+		} else if (defenderRank > attackerRank) {
+			return new PieceLocationDescriptor(defendPiece, fromLocation);
+		} else {
+			// If the two pieces have the same rank, there is no battle winner.
+			return null;
 		}
 	}
 }
