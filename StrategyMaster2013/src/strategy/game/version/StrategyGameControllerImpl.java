@@ -63,7 +63,11 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 	@Override
 	public MoveResult move(PieceType piece, Location from, Location to)
 			throws StrategyException {
-
+		
+		if(!gameStarted){
+			throw new StrategyException("Cannot move before the game is started.");
+		}
+		
 		for(ValidateMoveBehavior moveValidator : moveValidators){
 			if(!moveValidator.isMoveValid(piece, from, to)){
 				throw new StrategyException("That move is not valid.");
