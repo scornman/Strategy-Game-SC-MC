@@ -35,63 +35,67 @@ import strategy.game.version.beta.BetaStrategyGameController;
  * <p>
  * Factory to produce various versions of the Strategy game. This is implemented
  * as a singleton.
- * </p><p>
- * NOTE: If an error occurs creating any game, that is not specified in the particular
- * factory method's documentation, the factory method should throw a 
+ * </p>
+ * <p>
+ * NOTE: If an error occurs creating any game, that is not specified in the
+ * particular factory method's documentation, the factory method should throw a
  * StrategyRuntimeException.
  * </p>
  * 
  * @author gpollice
  * @version Sep 10, 2013
  */
-public class StrategyGameFactory
-{
+public class StrategyGameFactory {
 	private final static StrategyGameFactory instance = new StrategyGameFactory();
-	
+
 	/**
 	 * Default private constructor to ensure this is a singleton.
 	 */
-	private StrategyGameFactory()
-	{
+	private StrategyGameFactory() {
 		// Intentionally left empty.
 	}
 
 	/**
 	 * @return the instance
 	 */
-	public static StrategyGameFactory getInstance()
-	{
+	public static StrategyGameFactory getInstance() {
 		return instance;
 	}
-	
+
 	/**
 	 * Create an Alpha Strategy game.
+	 * 
 	 * @return the created Alpha Strategy game
 	 */
-	public StrategyGameController makeAlphaStrategyGame()
-	{
+	public StrategyGameController makeAlphaStrategyGame() {
 		final StrategyGameController controller = new AlphaStrategyGameController();
 		return controller;
 	}
-	
+
 	/**
-	 * Create a new Beta Strategy game given the 
-	 * @param redConfiguration the initial starting configuration for the RED pieces
-	 * @param blueConfiguration the initial starting configuration for the BLUE pieces
-	 * @return the Beta Strategy game instance with the initial configuration of pieces
-	 * @throws StrategyException if either configuration is correct
+	 * Create a new Beta Strategy game given the
+	 * 
+	 * @param redConfiguration
+	 *            the initial starting configuration for the RED pieces
+	 * @param blueConfiguration
+	 *            the initial starting configuration for the BLUE pieces
+	 * @return the Beta Strategy game instance with the initial configuration of
+	 *         pieces
+	 * @throws StrategyException
+	 *             if either configuration is correct
 	 */
 	public StrategyGameController makeBetaStrategyGame(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration)
-		throws StrategyException
-	{
-		final StrategyGameController controller = new BetaStrategyGameController(redConfiguration, blueConfiguration);
+			throws StrategyException {
+		final StrategyGameController controller = new BetaStrategyGameController(
+				redConfiguration, blueConfiguration);
 		return controller;
 	}
 
 	/**
 	 * Create a new gamma strategy game
+	 * 
 	 * @param startingRedConfig
 	 * @param startingBlueConfig
 	 * @return
@@ -99,40 +103,50 @@ public class StrategyGameFactory
 	public StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
-		//@TODO
-		/*Collection<ValidateConfigurationBehavior> configBehaviors,
-		Collection<ValidateMoveBehavior> moveBehaviors,
-		TurnUpdateBehavior turnUpdateBehavior,
-		BattleBehavior battleBehavior,
-		GameResultBehavior gameResultBehavior,
-		Board gameBoard,
-		List<PieceLocationDescriptor> configurations*/
+
+		Collection<ValidateConfigurationBehavior> configBehaviors = null;
+		Collection<ValidateMoveBehavior> moveBehaviors = null;
+		TurnUpdateBehavior turnUpdateBehavior = null;
+		BattleBehavior battleBehavior = null;
+		GameResultBehavior gameResultBehavior = null;
+		Board gameBoard = null;
+
 		Collection<Location> chokePoints = new ArrayList<Location>();
-		chokePoints.add(new Location2D(2,2));
-		chokePoints.add(new Location2D(2,3));
-		chokePoints.add(new Location2D(3,2));
-		chokePoints.add(new Location2D(3,3));
-		Map<Location, Piece> pieceMap = makeBoard(startingRedConfig, startingBlueConfig, 6, 6, chokePoints);
-		
-		return new StrategyGameControllerImpl(null, null, null, null, null, null, null, pieceMap);
+		chokePoints.add(new Location2D(2, 2));
+		chokePoints.add(new Location2D(2, 3));
+		chokePoints.add(new Location2D(3, 2));
+		chokePoints.add(new Location2D(3, 3));
+
+		Map<Location, Piece> pieceMap = makeBoard(	startingRedConfig,
+													startingBlueConfig, 
+													6, 
+													6, 
+													chokePoints	);
+
+		return new StrategyGameControllerImpl(	configBehaviors, 
+												moveBehaviors,
+												turnUpdateBehavior, 
+												battleBehavior, 
+												gameResultBehavior,
+												gameBoard, 
+												pieceMap	);
 	}
-	
-	private HashMap<Location, Piece> makeBoard(	Collection<PieceLocationDescriptor> redConfiguration, 
-												Collection<PieceLocationDescriptor> blueConfiguration,
-												int BOARD_SIZE_X,
-												int BOARD_SIZE_Y,
-												Collection<Location> chokePoints){
-		
+
+	private HashMap<Location, Piece> makeBoard(
+			Collection<PieceLocationDescriptor> redConfiguration,
+			Collection<PieceLocationDescriptor> blueConfiguration,
+			int BOARD_SIZE_X, int BOARD_SIZE_Y, Collection<Location> chokePoints) {
+
 		Map<Location, Piece> pieceMap = new HashMap<Location, Piece>();
-		
-		//create the locations on the board by the dimensions given
+
+		// create the locations on the board by the dimensions given
 		for (int i = 0; i < BOARD_SIZE_X; i++) {
 			for (int j = 0; j < BOARD_SIZE_Y; j++) {
 				pieceMap.put(new Location2D(i, j), null);
 			}
 		}
 
-		//add the red pieces to the board
+		// add the red pieces to the board
 		for (PieceLocationDescriptor red : redConfiguration) {
 			Location redLocation = red.getLocation();
 			Piece redPiece = red.getPiece();
@@ -140,19 +154,19 @@ public class StrategyGameFactory
 			pieceMap.put(redLocation, redPiece);
 		}
 
-		//add the blue pieces to the board
+		// add the blue pieces to the board
 		for (PieceLocationDescriptor blue : blueConfiguration) {
 			Location blueLocation = blue.getLocation();
 			Piece bluePiece = blue.getPiece();
 
 			pieceMap.put(blueLocation, bluePiece);
 		}
-		
-		//remove the chokepoints from the map
-		for(Location chokePoint : chokePoints){
+
+		// remove the chokepoints from the map
+		for (Location chokePoint : chokePoints) {
 			pieceMap.remove(chokePoint);
 		}
-		
+
 		return (HashMap<Location, Piece>) pieceMap;
 	}
 }

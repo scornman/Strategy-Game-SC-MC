@@ -20,12 +20,12 @@ import strategy.game.common.PieceType;
  *
  */
 public class StrategyGameControllerImpl implements StrategyGameController{
-	Collection<ValidateConfigurationBehavior> configBehaviors;
-	Collection<ValidateMoveBehavior> moveBehaviors;
-	TurnUpdateBehavior turnUpdateBehavior;
-	BattleBehavior battleBehavior;
-	GameResultBehavior gameResultBehavior;
-	Board gameBoard;
+	private final Collection<ValidateConfigurationBehavior> configBehaviors;
+	private final Collection<ValidateMoveBehavior> moveBehaviors;
+	private final TurnUpdateBehavior turnUpdateBehavior;
+	private final BattleBehavior battleBehavior;
+	private final GameResultBehavior gameResultBehavior;
+	private final Board gameBoard;
 	private boolean gameStarted;
 	
 	/**
@@ -37,9 +37,14 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 										BattleBehavior battleBehavior,
 										GameResultBehavior gameResultBehavior,
 										Board gameBoard,
-										List<PieceLocationDescriptor> configurations,
 										Map<Location, Piece> pieceMap	) {
 		// TODO Auto-generated constructor stub
+		this.configBehaviors = configBehaviors;
+		this.moveBehaviors = moveBehaviors;
+		this.turnUpdateBehavior = turnUpdateBehavior;
+		this.battleBehavior = battleBehavior;
+		this.gameResultBehavior = gameResultBehavior;
+		this.gameBoard = gameBoard;
 		gameStarted = false;
 		
 	}
@@ -58,6 +63,7 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 	public MoveResult move(PieceType piece, Location from, Location to)
 			throws StrategyException {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
