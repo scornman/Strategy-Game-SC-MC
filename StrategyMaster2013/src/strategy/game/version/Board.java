@@ -55,6 +55,7 @@ public class Board {
 		return pieceMap.containsKey(location);
 	}
 	
+	
 	/**
 	 * Updates the positions of pieces on the board after a battle.
 	 * 
@@ -72,5 +73,22 @@ public class Board {
 
 		Location moveLocation = battleWinner.getLocation();
 		putPiece(moveLocation, battleWinner.getPiece());
+	}
+	
+	/**
+	 * Updates the positions of pieces on the board on move
+	 * 
+	 * @param from
+	 *            the location of the piece before the move.
+	 * @param to
+	 *            the location the piece wants to move to.
+	 * @param piece
+	 *            the piece that is moving.
+	 */
+	public void updatePositions(Location from, Location to){
+		Piece piece = getPieceAt(from);
+		
+		putPiece(from, null);
+		putPiece(to, piece);
 	}
 }
