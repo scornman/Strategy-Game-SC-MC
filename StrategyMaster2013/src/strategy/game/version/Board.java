@@ -55,8 +55,7 @@ public class Board {
 	public boolean isValidLocation(Location location) {
 		return pieceMap.containsKey(location);
 	}
-	
-	
+
 	/**
 	 * Updates the positions of pieces on the board after a battle.
 	 * 
@@ -69,13 +68,17 @@ public class Board {
 	 */
 	public void updateBattlePositions(Location attackLocation,
 			Location defendLocation, PieceLocationDescriptor battleWinner) {
+
 		putPiece(attackLocation, null);
 		putPiece(defendLocation, null);
 
-		Location moveLocation = battleWinner.getLocation();
-		putPiece(moveLocation, battleWinner.getPiece());
+		// If there is a winner that survived the battle
+		if (battleWinner != null) {
+			Location moveLocation = battleWinner.getLocation();
+			putPiece(moveLocation, battleWinner.getPiece());
+		}
 	}
-	
+
 	/**
 	 * Updates the positions of pieces on the board on move
 	 * 
@@ -86,9 +89,9 @@ public class Board {
 	 * @param piece
 	 *            the piece that is moving.
 	 */
-	public void updatePositions(Location from, Location to){
+	public void updatePositions(Location from, Location to) {
 		Piece piece = getPieceAt(from);
-		
+
 		putPiece(from, null);
 		putPiece(to, piece);
 	}
