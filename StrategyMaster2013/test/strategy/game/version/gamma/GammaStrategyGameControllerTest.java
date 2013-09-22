@@ -980,7 +980,6 @@ public class GammaStrategyGameControllerTest {
 		assertTrue(true);
 	}
 
-
 	/**
 	 * tests that game ends in RED_WINS after red captures the blue flag
 	 * 
@@ -1135,25 +1134,23 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void testAttackingRedLieutenantShouldDefeatBlueSergeant()
 			throws StrategyException {
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
+				new Location2D(2, 1), new Location2D(4, 1));
 		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
-		Location attackerLocation = new Location2D(3, 2);
-		Location defenderLocation = new Location2D(3, 3);
+		Location attackerLocation = new Location2D(4, 2);
+		Location defenderLocation = new Location2D(4, 3);
 		Piece attackPiece = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
 
 		// Perform the sequence of moves that will lead to the battle.
-		controller.move(PieceType.LIEUTENANT, new Location2D(2, 1),
-				new Location2D(2, 2));
-		controller.move(PieceType.SERGEANT, new Location2D(3, 4),
-				defenderLocation);
-		controller.move(PieceType.LIEUTENANT, new Location2D(2, 2),
+		controller.move(PieceType.LIEUTENANT, new Location2D(4, 1),
 				attackerLocation);
-		controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
-				new Location2D(0, 3));
+		controller.move(PieceType.SERGEANT, new Location2D(4, 4),
+				defenderLocation);
+		
 		// Make the attack
-
 		MoveResult result = controller.move(PieceType.LIEUTENANT,
 				attackerLocation, defenderLocation);
 		// Check that the game does not end.
@@ -1178,21 +1175,22 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void testAttackingBlueSergeantShouldLoseToRedLieutenant()
 			throws StrategyException {
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, new Location2D(2, 1), new Location2D(4, 1));
 		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 
-		Location attackerLocation = new Location2D(3, 3);
-		Location defenderLocation = new Location2D(3, 2);
+		Location attackerLocation = new Location2D(4, 3);
+		Location defenderLocation = new Location2D(4, 2);
 		Piece defendPiece = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
 
 		// Perform the sequence of moves that will lead to the battle.
-		controller.move(PieceType.LIEUTENANT, new Location2D(2, 1),
-				new Location2D(2, 2));
-		controller.move(PieceType.SERGEANT, new Location2D(3, 4),
-				new Location2D(3, 3));
-		controller.move(PieceType.LIEUTENANT, new Location2D(2, 2),
-				new Location2D(3, 2));
+		controller.move(PieceType.LIEUTENANT, new Location2D(4, 1),
+				defenderLocation);
+		controller.move(PieceType.SERGEANT, new Location2D(4, 4),
+				attackerLocation);
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
+				new Location2D(0, 2));
 		// Make the attack
 		MoveResult result = controller.move(PieceType.SERGEANT,
 				attackerLocation, defenderLocation);
@@ -1212,4 +1210,3 @@ public class GammaStrategyGameControllerTest {
 	}
 
 }
-	

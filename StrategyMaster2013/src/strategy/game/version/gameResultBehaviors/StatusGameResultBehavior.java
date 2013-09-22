@@ -1,7 +1,6 @@
 package strategy.game.version.gameResultBehaviors;
 
 import strategy.common.PlayerColor;
-import strategy.game.common.Location;
 import strategy.game.common.MoveResultStatus;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceType;
