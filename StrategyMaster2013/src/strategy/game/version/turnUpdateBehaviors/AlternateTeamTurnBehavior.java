@@ -11,9 +11,7 @@ public class AlternateTeamTurnBehavior implements TurnUpdateBehavior{
 	}
 
 	@Override
-	public PlayerColor updateTurn(PieceLocationDescriptor attackPiece) {
-		PlayerColor currentColor = attackPiece.getPiece().getOwner();
-		
+	public PlayerColor updateTurn(PlayerColor currentColor) {		
 		if (currentColor == PlayerColor.RED){
 			currentColor = PlayerColor.BLUE;
 		}else{

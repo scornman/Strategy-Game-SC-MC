@@ -34,6 +34,7 @@ import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
 import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributionConfigValidator;
 import strategy.game.version.validateMoveBehaviors.NotAttackingOwnTeamMoveValidator;
+import strategy.game.version.validateMoveBehaviors.NotMovingFlagMoveValidator;
 import strategy.game.version.validateMoveBehaviors.OneSpaceInDirectionMoveValidator;
 
 /**
@@ -129,6 +130,7 @@ public class StrategyGameFactory {
 		Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
 		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
 		moveValidators.add(new OneSpaceInDirectionMoveValidator());
+		moveValidators.add(new NotMovingFlagMoveValidator());
 		
 		TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 		

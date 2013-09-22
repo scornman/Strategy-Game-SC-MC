@@ -5,6 +5,7 @@ import java.util.Map;
 import strategy.common.StrategyRuntimeException;
 import strategy.game.common.Location;
 import strategy.game.common.Piece;
+import strategy.game.common.PieceLocationDescriptor;
 
 public class Board {
 	private Map<Location, Piece> pieceMap;
@@ -52,5 +53,42 @@ public class Board {
 	 */
 	public boolean isValidLocation(Location location) {
 		return pieceMap.containsKey(location);
+	}
+	
+	
+	/**
+	 * Updates the positions of pieces on the board after a battle.
+	 * 
+	 * @param attackLocation
+	 *            the location of the attacking piece before the battle.
+	 * @param defendLocation
+	 *            the location of the defending piece before the battle.
+	 * @param battleWinner
+	 *            the winner of the battle and its new location.
+	 */
+	public void updateBattlePositions(Location attackLocation,
+			Location defendLocation, PieceLocationDescriptor battleWinner) {
+		putPiece(attackLocation, null);
+		putPiece(defendLocation, null);
+
+		Location moveLocation = battleWinner.getLocation();
+		putPiece(moveLocation, battleWinner.getPiece());
+	}
+	
+	/**
+	 * Updates the positions of pieces on the board on move
+	 * 
+	 * @param from
+	 *            the location of the piece before the move.
+	 * @param to
+	 *            the location the piece wants to move to.
+	 * @param piece
+	 *            the piece that is moving.
+	 */
+	public void updatePositions(Location from, Location to){
+		Piece piece = getPieceAt(from);
+		
+		putPiece(from, null);
+		putPiece(to, piece);
 	}
 }
