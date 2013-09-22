@@ -1362,7 +1362,7 @@ public class GammaStrategyGameControllerTest {
 	}
 
 	/**
-	 * Test that you cannont move onto a choke point (which are synonomous
+	 * Test that you cannot move onto a choke point (which are synonymous
 	 * with invalid locations)
 	 * 
 	 * @throws StrategyException
