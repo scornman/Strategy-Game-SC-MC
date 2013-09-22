@@ -69,8 +69,9 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 				throw new StrategyException("That move is not valid.");
 			}
 		}
-		
+
 		PieceLocationDescriptor battleWinner = battleBehavior.getBattleWinner(from, to);
+
 		MoveResultStatus gameStatus = gameResultBehavior.getGameStatus(from, to);
 		MoveResult result = new MoveResult(gameStatus, battleWinner);
 		

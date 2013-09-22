@@ -21,9 +21,16 @@ public class NotAttackingOwnTeamMoveValidator implements ValidateMoveBehavior{
 	public boolean isMoveValid(PieceType piece, Location from, Location to) {
 		Piece attackingPiece = gameBoard.getPieceAt(from);
 		Piece defendingPiece = gameBoard.getPieceAt(to);
-		PlayerColor attackColor = attackingPiece.getOwner();
-		PlayerColor defendColor = defendingPiece.getOwner();
 		
-		return (attackColor != defendColor);
+		if(attackingPiece != null){
+			if(defendingPiece == null){
+				return true;
+			}
+			PlayerColor attackColor = attackingPiece.getOwner();
+			PlayerColor defendColor = defendingPiece.getOwner();
+			return (attackColor != defendColor);
+		}else{
+			return false;
+		}
 	}
 }

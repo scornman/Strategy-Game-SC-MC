@@ -30,6 +30,7 @@ import strategy.game.version.ValidateMoveBehavior;
 import strategy.game.version.alpha.AlphaStrategyGameController;
 import strategy.game.version.battleBehaviors.GammaBattleBehavior;
 import strategy.game.version.beta.BetaStrategyGameController;
+import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
 import strategy.game.version.validateMoveBehaviors.NotAttackingOwnTeamMoveValidator;
 import strategy.game.version.validateMoveBehaviors.OneSpaceInDirectionMoveValidator;
@@ -128,9 +129,9 @@ public class StrategyGameFactory {
 		
 		TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 		
-		BattleBehavior battleBehavior = new GammaBattleBehavior();
+		BattleBehavior battleBehavior = new GammaBattleBehavior(gameBoard);
 		
-		GameResultBehavior gameResultBehavior = null;
+		GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(gameBoard);
 		
 
 
