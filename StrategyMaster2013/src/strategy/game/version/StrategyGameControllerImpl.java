@@ -31,15 +31,16 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 	private PlayerColor currentColor;
 
 	/**
-	 * @throws StrategyException 
-	 *  
+	 * @throws StrategyException
+	 * 
 	 */
 	public StrategyGameControllerImpl(
 			Collection<ValidateConfigurationBehavior> configValidators,
 			Collection<ValidateMoveBehavior> moveValidators,
 			TurnUpdateBehavior turnUpdateBehavior,
 			BattleBehavior battleBehavior,
-			GameResultBehavior gameResultBehavior, Board gameBoard) throws StrategyException {
+			GameResultBehavior gameResultBehavior, Board gameBoard)
+			throws StrategyException {
 		// TODO Auto-generated constructor stub
 		this.configValidators = configValidators;
 		this.moveValidators = moveValidators;
@@ -73,39 +74,41 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 	@Override
 	public MoveResult move(PieceType piece, Location from, Location to)
 			throws StrategyException {
-		
-		if(piece == null || from == null || to == null){
-			throw new StrategyException("You must enter valid parameters to move.");
+
+		if (piece == null || from == null || to == null) {
+			throw new StrategyException(
+					"You must enter valid parameters to move.");
 		}
-		
-		if(!gameStarted){
-			throw new StrategyException("Cannot move before the game is started.");
+
+		if (!gameStarted) {
+			throw new StrategyException(
+					"Cannot move before the game is started.");
 		}
-		
-		
-		for(ValidateMoveBehavior moveValidator : moveValidators){
-			if(!moveValidator.isMoveValid(piece, from, to)){
+
+		for (ValidateMoveBehavior moveValidator : moveValidators) {
+			if (!moveValidator.isMoveValid(piece, from, to)) {
 				throw new StrategyException("That move is not valid.");
 			}
 		}
-		
+
 		PieceLocationDescriptor battleWinner;
-		
-		//get the winner
-		if(battleBehavior.isBattle(from, to)){
+
+		// get the winner
+		if (battleBehavior.isBattle(from, to)) {
 			battleWinner = battleBehavior.getBattleWinner(from, to);
-			//update the board
+			// update the board
 			gameBoard.updateBattlePositions(from, to, battleWinner);
-		}else{
+		} else {
 			battleWinner = null;
-			//update the board
+			// update the board
 			gameBoard.updatePositions(from, to);
 		}
-		
-		//check the game status
-		MoveResultStatus gameStatus = gameResultBehavior.getGameStatus(from, to);
-		MoveResult result = new MoveResult(gameStatus, battleWinner);		
-		//update whose turn it is
+
+		// check the game status
+		MoveResultStatus gameStatus = gameResultBehavior
+				.getGameStatus(from, to);
+		MoveResult result = new MoveResult(gameStatus, battleWinner);
+		// update whose turn it is
 		currentColor = turnUpdateBehavior.updateTurn(currentColor);
 
 		return result;
