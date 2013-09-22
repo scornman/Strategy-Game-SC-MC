@@ -32,6 +32,7 @@ import strategy.game.version.battleBehaviors.GammaBattleBehavior;
 import strategy.game.version.beta.BetaStrategyGameController;
 import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
+import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributionConfigValidator;
 import strategy.game.version.validateMoveBehaviors.NotAttackingOwnTeamMoveValidator;
 import strategy.game.version.validateMoveBehaviors.OneSpaceInDirectionMoveValidator;
 
@@ -100,13 +101,14 @@ public class StrategyGameFactory {
 	/**
 	 * Create a new gamma strategy game
 	 * 
-	 * @param startingRedConfig
+	 * @param startingRedConfig 
 	 * @param startingBlueConfig
 	 * @return
+	 * @throws StrategyException 
 	 */
 	public StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
-			Collection<PieceLocationDescriptor> startingBlueConfig) {
+			Collection<PieceLocationDescriptor> startingBlueConfig) throws StrategyException {
 		
 		Collection<Location> chokePoints = new ArrayList<Location>();
 		chokePoints.add(new Location2D(2, 2));
@@ -121,7 +123,8 @@ public class StrategyGameFactory {
 		
 		Board gameBoard = new Board(pieceMap);
 		
-		Collection<ValidateConfigurationBehavior> configValidators = null;
+		Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
+		configValidators.add(new GammaPieceDistributionConfigValidator(startingRedConfig, startingBlueConfig));
 		
 		Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
 		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));

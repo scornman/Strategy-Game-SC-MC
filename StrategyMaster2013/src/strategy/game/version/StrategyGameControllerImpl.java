@@ -18,9 +18,9 @@ import strategy.game.common.PieceType;
 
 /**
  * @author Madalyn
- *
+ * 
  */
-public class StrategyGameControllerImpl implements StrategyGameController{
+public class StrategyGameControllerImpl implements StrategyGameController {
 	private final Collection<ValidateConfigurationBehavior> configValidators;
 	private final Collection<ValidateMoveBehavior> moveValidators;
 	private final TurnUpdateBehavior turnUpdateBehavior;
@@ -29,16 +29,17 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 	private final Board gameBoard;
 	private boolean gameStarted;
 	private PlayerColor currentColor;
-	
+
 	/**
+	 * @throws StrategyException 
 	 *  
 	 */
-	public StrategyGameControllerImpl(	Collection<ValidateConfigurationBehavior> configValidators,
-										Collection<ValidateMoveBehavior> moveValidators,
-										TurnUpdateBehavior turnUpdateBehavior,
-										BattleBehavior battleBehavior,
-										GameResultBehavior gameResultBehavior,
-										Board gameBoard	) {
+	public StrategyGameControllerImpl(
+			Collection<ValidateConfigurationBehavior> configValidators,
+			Collection<ValidateMoveBehavior> moveValidators,
+			TurnUpdateBehavior turnUpdateBehavior,
+			BattleBehavior battleBehavior,
+			GameResultBehavior gameResultBehavior, Board gameBoard) throws StrategyException {
 		// TODO Auto-generated constructor stub
 		this.configValidators = configValidators;
 		this.moveValidators = moveValidators;
@@ -47,36 +48,47 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 		this.gameResultBehavior = gameResultBehavior;
 		this.gameBoard = gameBoard;
 		gameStarted = false;
-		currentColor = PlayerColor.RED; //TODO:every game starts with red. if this changes change this		
+		currentColor = PlayerColor.RED; // TODO:every game starts with red. if
+										// this changes change this
+
+		// Ensure that the starting piece configurations are valid before
+		// proceeding
+		for (ValidateConfigurationBehavior configValidator : configValidators) {
+			if (!(configValidator.isConfigurationValid())) {
+				throw new StrategyException("Invalid Starting Configuration");
+			}
+		}
 	}
 
 	@Override
 	public void startGame() throws StrategyException {
-		if(!gameStarted){
+		if (!gameStarted) {
 			gameStarted = true;
-		}else{
+		} else {
 			throw new StrategyException("The game has already been started.");
 		}
-		
+
 	}
 
 	@Override
 	public MoveResult move(PieceType piece, Location from, Location to)
 			throws StrategyException {
 
-		for(ValidateMoveBehavior moveValidator : moveValidators){
-			if(!moveValidator.isMoveValid(piece, from, to)){
+		for (ValidateMoveBehavior moveValidator : moveValidators) {
+			if (!moveValidator.isMoveValid(piece, from, to)) {
 				throw new StrategyException("That move is not valid.");
 			}
 		}
 
-		PieceLocationDescriptor battleWinner = battleBehavior.getBattleWinner(from, to);
+		PieceLocationDescriptor battleWinner = battleBehavior.getBattleWinner(
+				from, to);
 
-		MoveResultStatus gameStatus = gameResultBehavior.getGameStatus(from, to);
+		MoveResultStatus gameStatus = gameResultBehavior
+				.getGameStatus(from, to);
 		MoveResult result = new MoveResult(gameStatus, battleWinner);
-		
+
 		currentColor = turnUpdateBehavior.updateTurn(battleWinner);
-		
+
 		return result;
 	}
 
