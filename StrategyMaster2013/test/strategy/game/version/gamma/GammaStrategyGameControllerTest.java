@@ -508,7 +508,7 @@ public class GammaStrategyGameControllerTest {
 			throws StrategyException {
 		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
-		assertEquals(null, ctrlr.getPieceAt(new Location2D(3, 3)));
+		assertEquals(null, ctrlr.getPieceAt(new Location2D(4, 3)));
 	}
 
 	/**
