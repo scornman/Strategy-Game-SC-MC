@@ -64,9 +64,14 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 	public MoveResult move(PieceType piece, Location from, Location to)
 			throws StrategyException {
 		
+		if(piece == null || from == null || to == null){
+			throw new StrategyException("You must enter valid parameters to move.");
+		}
+		
 		if(!gameStarted){
 			throw new StrategyException("Cannot move before the game is started.");
 		}
+		
 		
 		for(ValidateMoveBehavior moveValidator : moveValidators){
 			if(!moveValidator.isMoveValid(piece, from, to)){
