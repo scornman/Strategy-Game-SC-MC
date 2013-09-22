@@ -13,10 +13,9 @@ package strategy.game;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import strategy.common.*;
+import strategy.common.StrategyException;
 import strategy.game.common.Location;
 import strategy.game.common.Location2D;
 import strategy.game.common.Piece;
@@ -30,6 +29,7 @@ import strategy.game.version.ValidateConfigurationBehavior;
 import strategy.game.version.ValidateMoveBehavior;
 import strategy.game.version.alpha.AlphaStrategyGameController;
 import strategy.game.version.beta.BetaStrategyGameController;
+import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
 
 /**
  * <p>
@@ -106,7 +106,7 @@ public class StrategyGameFactory {
 
 		Collection<ValidateConfigurationBehavior> configValidators = null;
 		Collection<ValidateMoveBehavior> moveValidators = null;
-		TurnUpdateBehavior turnUpdateBehavior = null;
+		TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 		BattleBehavior battleBehavior = null;
 		GameResultBehavior gameResultBehavior = null;
 		Board gameBoard = null;
