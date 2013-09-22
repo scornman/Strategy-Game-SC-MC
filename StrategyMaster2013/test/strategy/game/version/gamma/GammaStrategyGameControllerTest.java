@@ -779,8 +779,8 @@ public class GammaStrategyGameControllerTest {
 		Location firstToLocation = new Location2D(0, 2);
 		Location secondFromLocation = new Location2D(0, 4);
 		Location secondToLocation = new Location2D(0, 3);
-		Location thirdFromLocation = new Location2D(3, 4);
-		Location thirdToLocation = new Location2D(3, 3);
+		Location thirdFromLocation = new Location2D(4, 4);
+		Location thirdToLocation = new Location2D(4, 3);
 		// Make a valid move for red.
 		controller.move(PieceType.LIEUTENANT, firstFromLocation,
 				firstToLocation);
