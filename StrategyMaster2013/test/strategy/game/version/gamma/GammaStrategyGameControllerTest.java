@@ -1235,6 +1235,7 @@ public class GammaStrategyGameControllerTest {
 		controller.move(PieceType.SERGEANT, new Location2D(5, 3), new Location2D(5, 2));
 		// This move is invalid
 		controller.move(movingPiece, location1, location2);
+		assertTrue(true);
 	}
 
 }

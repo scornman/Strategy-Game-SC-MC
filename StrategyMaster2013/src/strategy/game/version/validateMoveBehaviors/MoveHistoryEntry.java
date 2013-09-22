@@ -1,5 +1,6 @@
 package strategy.game.version.validateMoveBehaviors;
 
+import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
 import strategy.game.common.PieceType;
 
@@ -60,17 +61,24 @@ public class MoveHistoryEntry {
 	}
 
 	/**
-	 * Determines whether this move is the same as another move in terms of
-	 * from and to locations.
+	 * Determines whether this move is the same as another move in terms of from
+	 * and to locations.
 	 * 
 	 * @param otherMove
 	 *            the other move to compare this move to.
-	 * @return true if the from location of this move matches the from location of
-	 *         the other move and the to location of this move matches the to
+	 * @return true if the from location of this move matches the from location
+	 *         of the other move and the to location of this move matches the to
 	 *         location of the other move.
 	 */
 	public boolean isSameMove(MoveHistoryEntry otherMove) {
-		return (from == otherMove.getFrom()) && (to == otherMove.getTo());
+		return (from.getCoordinate(Coordinate.X_COORDINATE) == otherMove
+				.getFrom().getCoordinate(Coordinate.X_COORDINATE) && from
+				.getCoordinate(Coordinate.Y_COORDINATE) == otherMove.getFrom()
+				.getCoordinate(Coordinate.Y_COORDINATE))
+				&& (to.getCoordinate(Coordinate.X_COORDINATE) == otherMove
+						.getTo().getCoordinate(Coordinate.X_COORDINATE) && to
+						.getCoordinate(Coordinate.Y_COORDINATE) == otherMove
+						.getTo().getCoordinate(Coordinate.Y_COORDINATE));
 	}
 
 	/**
@@ -84,7 +92,14 @@ public class MoveHistoryEntry {
 	 *         location of the other move.
 	 */
 	public boolean isOppositeMove(MoveHistoryEntry otherMove) {
-		return (from == otherMove.getTo()) && (to == otherMove.getFrom());
+		return (to.getCoordinate(Coordinate.X_COORDINATE) == otherMove
+				.getFrom().getCoordinate(Coordinate.X_COORDINATE) && to
+				.getCoordinate(Coordinate.Y_COORDINATE) == otherMove.getFrom()
+				.getCoordinate(Coordinate.Y_COORDINATE))
+				&& (from.getCoordinate(Coordinate.X_COORDINATE) == otherMove
+						.getTo().getCoordinate(Coordinate.X_COORDINATE) && from
+						.getCoordinate(Coordinate.Y_COORDINATE) == otherMove
+						.getTo().getCoordinate(Coordinate.Y_COORDINATE));
 	}
 
 }
