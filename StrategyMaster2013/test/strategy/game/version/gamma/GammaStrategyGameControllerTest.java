@@ -1209,72 +1209,125 @@ public class GammaStrategyGameControllerTest {
 		assertEquals(defendPiece, controller.getPieceAt(attackerLocation));
 		assertEquals(null, controller.getPieceAt(defenderLocation));
 	}
-	
+
 	/**
-	 * If all the pieces are off the board except
-	 * the two flags then the game is a draw
-	 * @throws StrategyException 
+	 * If all the pieces are off the board except the two flags then the game is
+	 * a draw
+	 * 
+	 * @throws StrategyException
 	 */
 	@Test
-	public void gameEndsInDrawWhenOnlyTwoFlagsLeftOnBoard() throws StrategyException{
+	public void gameEndsInDrawWhenOnlyTwoFlagsLeftOnBoard()
+			throws StrategyException {
 		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		// Perform the sequence of moves that will lead to the battle.
-		controller.move(PieceType.LIEUTENANT, new Location2D(0,1), new Location2D(0,2));//red
-		controller.move(PieceType.LIEUTENANT, new Location2D(0,4), new Location2D(0,3));//blue
-		controller.move(PieceType.LIEUTENANT, new Location2D(0,2), new Location2D(0,3));//red kills
-		controller.move(PieceType.LIEUTENANT, new Location2D(1,4), new Location2D(1,3));//blue
-		controller.move(PieceType.LIEUTENANT, new Location2D(1,1), new Location2D(1,2));//red
-		controller.move(PieceType.LIEUTENANT, new Location2D(1,3), new Location2D(1,2));//blue kills
-		controller.move(PieceType.LIEUTENANT, new Location2D(2,1), new Location2D(1,1));//red
-		controller.move(PieceType.LIEUTENANT, new Location2D(2,4), new Location2D(1,4));//blue
-		controller.move(PieceType.LIEUTENANT, new Location2D(1,1), new Location2D(1,2));//red
-		controller.move(PieceType.LIEUTENANT, new Location2D(1,4), new Location2D(1,3));//blue
-		controller.move(PieceType.LIEUTENANT, new Location2D(1,2), new Location2D(1,3));//red kills
-		controller.move(PieceType.MARSHAL, new Location2D(1,5), new Location2D(1,4));//blue
-		controller.move(PieceType.MARSHAL, new Location2D(1,0), new Location2D(1,1));//red
-		controller.move(PieceType.MARSHAL, new Location2D(1,4), new Location2D(1,3));//blue
-		controller.move(PieceType.MARSHAL, new Location2D(1,1), new Location2D(1,2));//red
-		controller.move(PieceType.MARSHAL, new Location2D(1,3), new Location2D(1,2));//blue kills
-		controller.move(PieceType.COLONEL, new Location2D(2,0), new Location2D(2,1));//red
-		controller.move(PieceType.COLONEL, new Location2D(2,5), new Location2D(2,4));//blue
-		controller.move(PieceType.COLONEL, new Location2D(2,1), new Location2D(1,1));//red
-		controller.move(PieceType.COLONEL, new Location2D(2,4), new Location2D(1,4));//blue
-		controller.move(PieceType.COLONEL, new Location2D(1,1), new Location2D(1,2));//red
-		controller.move(PieceType.COLONEL, new Location2D(1,4), new Location2D(1,3));//blue
-		controller.move(PieceType.COLONEL, new Location2D(1,2), new Location2D(1,3));//red kills
-		controller.move(PieceType.SERGEANT, new Location2D(5,4), new Location2D(5,3));//blue
-		controller.move(PieceType.SERGEANT, new Location2D(5,1), new Location2D(5,2));//red
-		controller.move(PieceType.SERGEANT, new Location2D(5,3), new Location2D(5,2));//blue kills
-		controller.move(PieceType.SERGEANT, new Location2D(4,1), new Location2D(4,2));//red
-		controller.move(PieceType.SERGEANT, new Location2D(4,4), new Location2D(4,3));//blue
-		controller.move(PieceType.SERGEANT, new Location2D(4,2), new Location2D(4,3));//red kills
-		controller.move(PieceType.SERGEANT, new Location2D(3,4), new Location2D(4,4));//blue
-		controller.move(PieceType.SERGEANT, new Location2D(3,1), new Location2D(4,1));//red
-		controller.move(PieceType.SERGEANT, new Location2D(4,4), new Location2D(4,3));//blue
-		controller.move(PieceType.SERGEANT, new Location2D(4,1), new Location2D(4,2));//red 
-		controller.move(PieceType.SERGEANT, new Location2D(4,3), new Location2D(4,2));//blue kills
-		controller.move(PieceType.CAPTAIN, new Location2D(4,0), new Location2D(4,1));//red
-		controller.move(PieceType.CAPTAIN, new Location2D(4,5), new Location2D(4,4));//blue
-		controller.move(PieceType.CAPTAIN, new Location2D(4,1), new Location2D(4,2));//red
-		controller.move(PieceType.CAPTAIN, new Location2D(4,4), new Location2D(4,3));//blue
-		controller.move(PieceType.CAPTAIN, new Location2D(4,2), new Location2D(4,3));//red kills
-		controller.move(PieceType.CAPTAIN, new Location2D(5,5), new Location2D(5,4));//blue
-		controller.move(PieceType.CAPTAIN, new Location2D(5,0), new Location2D(5,1));//red
-		controller.move(PieceType.CAPTAIN, new Location2D(5,4), new Location2D(5,3));//blue
-		controller.move(PieceType.CAPTAIN, new Location2D(5,1), new Location2D(5,2));//red
-		controller.move(PieceType.CAPTAIN, new Location2D(5,3), new Location2D(5,2));//blue kills
-		controller.move(PieceType.COLONEL, new Location2D(3,0), new Location2D(3,1));//red
-		controller.move(PieceType.COLONEL, new Location2D(3,5), new Location2D(3,4));//blue
-		controller.move(PieceType.COLONEL, new Location2D(3,1), new Location2D(4,1));//red
-		controller.move(PieceType.COLONEL, new Location2D(3,4), new Location2D(4,4));//blue
-		controller.move(PieceType.COLONEL, new Location2D(4,1), new Location2D(4,2));//red 
-		controller.move(PieceType.COLONEL, new Location2D(4,4), new Location2D(4,3));//blue
-		MoveResult result = controller.move(PieceType.COLONEL, new Location2D(4,2), new Location2D(4,3));//red kills
-		
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
+				new Location2D(0, 2));// red
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
+				new Location2D(0, 3));// blue
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 2),
+				new Location2D(0, 3));// red kills
+		controller.move(PieceType.LIEUTENANT, new Location2D(1, 4),
+				new Location2D(1, 3));// blue
+		controller.move(PieceType.LIEUTENANT, new Location2D(1, 1),
+				new Location2D(1, 2));// red
+		controller.move(PieceType.LIEUTENANT, new Location2D(1, 3),
+				new Location2D(1, 2));// blue kills
+		controller.move(PieceType.LIEUTENANT, new Location2D(2, 1),
+				new Location2D(1, 1));// red
+		controller.move(PieceType.LIEUTENANT, new Location2D(2, 4),
+				new Location2D(1, 4));// blue
+		controller.move(PieceType.LIEUTENANT, new Location2D(1, 1),
+				new Location2D(1, 2));// red
+		controller.move(PieceType.LIEUTENANT, new Location2D(1, 4),
+				new Location2D(1, 3));// blue
+		controller.move(PieceType.LIEUTENANT, new Location2D(1, 2),
+				new Location2D(1, 3));// red kills
+		controller.move(PieceType.MARSHAL, new Location2D(1, 5),
+				new Location2D(1, 4));// blue
+		controller.move(PieceType.MARSHAL, new Location2D(1, 0),
+				new Location2D(1, 1));// red
+		controller.move(PieceType.MARSHAL, new Location2D(1, 4),
+				new Location2D(1, 3));// blue
+		controller.move(PieceType.MARSHAL, new Location2D(1, 1),
+				new Location2D(1, 2));// red
+		controller.move(PieceType.MARSHAL, new Location2D(1, 3),
+				new Location2D(1, 2));// blue kills
+		controller.move(PieceType.COLONEL, new Location2D(2, 0),
+				new Location2D(2, 1));// red
+		controller.move(PieceType.COLONEL, new Location2D(2, 5),
+				new Location2D(2, 4));// blue
+		controller.move(PieceType.COLONEL, new Location2D(2, 1),
+				new Location2D(1, 1));// red
+		controller.move(PieceType.COLONEL, new Location2D(2, 4),
+				new Location2D(1, 4));// blue
+		controller.move(PieceType.COLONEL, new Location2D(1, 1),
+				new Location2D(1, 2));// red
+		controller.move(PieceType.COLONEL, new Location2D(1, 4),
+				new Location2D(1, 3));// blue
+		controller.move(PieceType.COLONEL, new Location2D(1, 2),
+				new Location2D(1, 3));// red kills
+		controller.move(PieceType.SERGEANT, new Location2D(5, 4),
+				new Location2D(5, 3));// blue
+		controller.move(PieceType.SERGEANT, new Location2D(5, 1),
+				new Location2D(5, 2));// red
+		controller.move(PieceType.SERGEANT, new Location2D(5, 3),
+				new Location2D(5, 2));// blue kills
+		controller.move(PieceType.SERGEANT, new Location2D(4, 1),
+				new Location2D(4, 2));// red
+		controller.move(PieceType.SERGEANT, new Location2D(4, 4),
+				new Location2D(4, 3));// blue
+		controller.move(PieceType.SERGEANT, new Location2D(4, 2),
+				new Location2D(4, 3));// red kills
+		controller.move(PieceType.SERGEANT, new Location2D(3, 4),
+				new Location2D(4, 4));// blue
+		controller.move(PieceType.SERGEANT, new Location2D(3, 1),
+				new Location2D(4, 1));// red
+		controller.move(PieceType.SERGEANT, new Location2D(4, 4),
+				new Location2D(4, 3));// blue
+		controller.move(PieceType.SERGEANT, new Location2D(4, 1),
+				new Location2D(4, 2));// red
+		controller.move(PieceType.SERGEANT, new Location2D(4, 3),
+				new Location2D(4, 2));// blue kills
+		controller.move(PieceType.CAPTAIN, new Location2D(4, 0),
+				new Location2D(4, 1));// red
+		controller.move(PieceType.CAPTAIN, new Location2D(4, 5),
+				new Location2D(4, 4));// blue
+		controller.move(PieceType.CAPTAIN, new Location2D(4, 1),
+				new Location2D(4, 2));// red
+		controller.move(PieceType.CAPTAIN, new Location2D(4, 4),
+				new Location2D(4, 3));// blue
+		controller.move(PieceType.CAPTAIN, new Location2D(4, 2),
+				new Location2D(4, 3));// red kills
+		controller.move(PieceType.CAPTAIN, new Location2D(5, 5),
+				new Location2D(5, 4));// blue
+		controller.move(PieceType.CAPTAIN, new Location2D(5, 0),
+				new Location2D(5, 1));// red
+		controller.move(PieceType.CAPTAIN, new Location2D(5, 4),
+				new Location2D(5, 3));// blue
+		controller.move(PieceType.CAPTAIN, new Location2D(5, 1),
+				new Location2D(5, 2));// red
+		controller.move(PieceType.CAPTAIN, new Location2D(5, 3),
+				new Location2D(5, 2));// blue kills
+		controller.move(PieceType.COLONEL, new Location2D(3, 0),
+				new Location2D(3, 1));// red
+		controller.move(PieceType.COLONEL, new Location2D(3, 5),
+				new Location2D(3, 4));// blue
+		controller.move(PieceType.COLONEL, new Location2D(3, 1),
+				new Location2D(4, 1));// red
+		controller.move(PieceType.COLONEL, new Location2D(3, 4),
+				new Location2D(4, 4));// blue
+		controller.move(PieceType.COLONEL, new Location2D(4, 1),
+				new Location2D(4, 2));// red
+		controller.move(PieceType.COLONEL, new Location2D(4, 4),
+				new Location2D(4, 3));// blue
+		MoveResult result = controller.move(PieceType.COLONEL, new Location2D(
+				4, 2), new Location2D(4, 3));// red kills
+
 		// check that the game status is DRAW/game ends
-		assertEquals(MoveResultStatus.DRAW, result.getStatus());		
+		assertEquals(MoveResultStatus.DRAW, result.getStatus());
 	}
 
 	/**
@@ -1286,7 +1339,7 @@ public class GammaStrategyGameControllerTest {
 	 * @throws StrategyException
 	 *             if an invalid move is made. This is the expected behavior.
 	 */
-	@Test(expected=StrategyException.class)
+	@Test(expected = StrategyException.class)
 	public void testImmediateRedMoveRepetition() throws StrategyException {
 		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
@@ -1294,13 +1347,37 @@ public class GammaStrategyGameControllerTest {
 		PieceType movingPiece = PieceType.LIEUTENANT;
 		Location location1 = new Location2D(0, 1);
 		Location location2 = new Location2D(0, 2);
-		
-		// Move the red piece back and forth while the blue pieces do other things.
+
+		// Move the red piece back and forth while the blue pieces do other
+		// things.
 		controller.move(movingPiece, location1, location2);
-		controller.move(PieceType.SERGEANT, new Location2D(5, 4), new Location2D(5, 3));
+		controller.move(PieceType.SERGEANT, new Location2D(5, 4),
+				new Location2D(5, 3));
 		controller.move(movingPiece, location2, location1);
-		controller.move(PieceType.SERGEANT, new Location2D(5, 3), new Location2D(5, 2));
+		controller.move(PieceType.SERGEANT, new Location2D(5, 3),
+				new Location2D(5, 2));
 		// This move is invalid
+		controller.move(movingPiece, location1, location2);
+		assertTrue(true);
+	}
+
+	/**
+	 * Test that you cannont move onto a choke point (which are synonomous
+	 * with invalid locations)
+	 * 
+	 * @throws StrategyException
+	 * 				invalid move should throw an exception
+	 */
+	@Test(expected = StrategyRuntimeException.class)
+	public void cannotMovePieceOntoAChokePoint() throws StrategyException{
+		StrategyGameController controller = factory.makeGammaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		PieceType movingPiece = PieceType.LIEUTENANT;
+		Location location1 = new Location2D(2, 1);
+		Location location2 = new Location2D(2, 2); //this is the choke point
+		
+		//this move is invalid move
 		controller.move(movingPiece, location1, location2);
 		assertTrue(true);
 	}
