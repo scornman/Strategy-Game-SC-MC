@@ -6,6 +6,7 @@ import strategy.common.StrategyRuntimeException;
 import strategy.game.common.Location;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
+import strategy.game.common.PieceType;
 
 public class Board {
 	private Map<Location, Piece> pieceMap;
@@ -93,5 +94,9 @@ public class Board {
 
 		putPiece(from, null);
 		putPiece(to, piece);
+	}
+	
+	public boolean containsPiece(Piece piece){
+		return pieceMap.containsValue(piece);
 	}
 }

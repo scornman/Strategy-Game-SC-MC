@@ -18,6 +18,6 @@ public interface GameResultBehavior {
 	 * @param toLocation
 	 * @return
 	 */
-	public MoveResultStatus getGameStatus(Location fromLocation, Location toLocation);
+	public MoveResultStatus getGameStatus();
 	
 }

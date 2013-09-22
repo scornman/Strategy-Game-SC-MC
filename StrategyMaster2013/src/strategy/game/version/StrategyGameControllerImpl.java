@@ -105,8 +105,7 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 		}
 
 		// check the game status
-		MoveResultStatus gameStatus = gameResultBehavior
-				.getGameStatus(from, to);
+		MoveResultStatus gameStatus = gameResultBehavior.getGameStatus();
 		MoveResult result = new MoveResult(gameStatus, battleWinner);
 		// update whose turn it is
 		currentColor = turnUpdateBehavior.updateTurn(currentColor);

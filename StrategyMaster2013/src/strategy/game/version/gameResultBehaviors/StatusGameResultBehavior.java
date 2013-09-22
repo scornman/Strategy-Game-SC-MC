@@ -22,19 +22,15 @@ public class StatusGameResultBehavior implements GameResultBehavior{
 	 * @return the battle result.
 	 */
 	@Override
-	public MoveResultStatus getGameStatus(Location fromLocation,
-			Location toLocation) {
-		final Piece defendPiece = gameBoard.getPieceAt(toLocation);
-
+	public MoveResultStatus getGameStatus() {
 		MoveResultStatus status = null;
 
-		if (defendPiece.getType() == PieceType.FLAG) {
-			if (defendPiece.getOwner() == PlayerColor.BLUE) {
-				status = MoveResultStatus.RED_WINS;
-			} else {
-				status = MoveResultStatus.BLUE_WINS;
-			}
+		if (!gameBoard.containsPiece(new Piece(PieceType.FLAG, PlayerColor.BLUE))) {
+			status = MoveResultStatus.RED_WINS;
+		} else if (!gameBoard.containsPiece(new Piece(PieceType.FLAG, PlayerColor.RED))){
+			status = MoveResultStatus.BLUE_WINS;
 		} else {
+			//else no winner
 			status = MoveResultStatus.OK;
 		}
 
