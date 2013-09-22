@@ -1042,12 +1042,12 @@ public class GammaStrategyGameControllerTest {
 				new Location2D(1, 2));
 		controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
 				new Location2D(0, 3));
-		controller.move(PieceType.SERGEANT, new Location2D(3, 1),
-				new Location2D(3, 2));
+		controller.move(PieceType.SERGEANT, new Location2D(4, 1),
+				new Location2D(4, 2));
 		controller.move(PieceType.LIEUTENANT, new Location2D(0, 3),
 				new Location2D(0, 2));
-		controller.move(PieceType.SERGEANT, new Location2D(3, 2),
-				new Location2D(3, 3));
+		controller.move(PieceType.SERGEANT, new Location2D(4, 2),
+				new Location2D(4, 3));
 		MoveResult result = controller.move(PieceType.LIEUTENANT,
 				new Location2D(0, 2), new Location2D(0, 1));
 		// check that the game status is BLUE_WINS/game ends
