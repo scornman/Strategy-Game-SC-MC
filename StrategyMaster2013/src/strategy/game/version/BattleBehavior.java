@@ -3,7 +3,8 @@
  */
 package strategy.game.version;
 
-import strategy.game.common.Piece;
+import strategy.game.common.Location;
+import strategy.game.common.PieceLocationDescriptor;
 
 /**
  * @author Madalyn
@@ -12,9 +13,17 @@ import strategy.game.common.Piece;
 public interface BattleBehavior {
 	
 	/**
-	 * @TODO
+	 * checks to see if there is a battle
+	 * @param fromLocation will give the attacking piece
+	 * @param toLocation will give the defending piece
 	 * @return
 	 */
-	public Piece getBattleWinner();
+	public boolean isBattle(Location fromLocation, Location toLocation);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public PieceLocationDescriptor getBattleWinner(Location fromLocation, Location toLocation);
 
 }

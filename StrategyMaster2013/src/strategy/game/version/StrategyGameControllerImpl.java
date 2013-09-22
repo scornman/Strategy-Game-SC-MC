@@ -4,13 +4,14 @@
 package strategy.game.version;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
+import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
 import strategy.game.StrategyGameController;
 import strategy.game.common.Location;
 import strategy.game.common.MoveResult;
+import strategy.game.common.MoveResultStatus;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
@@ -27,6 +28,7 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 	private final GameResultBehavior gameResultBehavior;
 	private final Board gameBoard;
 	private boolean gameStarted;
+	private PlayerColor currentColor;
 	
 	/**
 	 *  
@@ -46,7 +48,7 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 		this.gameResultBehavior = gameResultBehavior;
 		this.gameBoard = gameBoard;
 		gameStarted = false;
-		
+		currentColor = PlayerColor.RED; //TODO:every game starts with red. if this changes change this		
 	}
 
 	@Override
@@ -69,7 +71,13 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 			}
 		}
 		
-		return null;
+		PieceLocationDescriptor battleWinner = battleBehavior.getBattleWinner(from, to);
+		MoveResultStatus gameStatus = gameResultBehavior.getGameStatus(from, to);
+		MoveResult result = new MoveResult(gameStatus, battleWinner);
+		
+		currentColor = turnUpdateBehavior.updateTurn(battleWinner);
+		
+		return result;
 	}
 
 	@Override
