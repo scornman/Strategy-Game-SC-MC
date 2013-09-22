@@ -36,6 +36,7 @@ import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributi
 import strategy.game.version.validateConfigurationBehaviors.GammaStartLocationsConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.NoPiecesStartAtSameLocationConfigValidator;
 import strategy.game.version.validateMoveBehaviors.CorrectPieceTypeMoveValidator;
+import strategy.game.version.validateMoveBehaviors.MoveRepetitionRuleValidator;
 import strategy.game.version.validateMoveBehaviors.MovingOnTurnMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotAttackingOwnTeamMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotMovingFlagMoveValidator;
@@ -149,6 +150,7 @@ public class StrategyGameFactory {
 		moveValidators.add(new NotMovingFlagMoveValidator());
 		moveValidators.add(new MovingOnTurnMoveValidator(gameBoard));
 		moveValidators.add(new CorrectPieceTypeMoveValidator(gameBoard));
+		moveValidators.add(new MoveRepetitionRuleValidator());
 
 		TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 

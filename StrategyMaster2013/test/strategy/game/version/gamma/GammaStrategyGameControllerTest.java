@@ -1149,7 +1149,7 @@ public class GammaStrategyGameControllerTest {
 				attackerLocation);
 		controller.move(PieceType.SERGEANT, new Location2D(4, 4),
 				defenderLocation);
-		
+
 		// Make the attack
 		MoveResult result = controller.move(PieceType.LIEUTENANT,
 				attackerLocation, defenderLocation);
@@ -1175,7 +1175,8 @@ public class GammaStrategyGameControllerTest {
 	@Test
 	public void testAttackingBlueSergeantShouldLoseToRedLieutenant()
 			throws StrategyException {
-		swapTwoPiecesInStartConfiguration(PlayerColor.RED, new Location2D(2, 1), new Location2D(4, 1));
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
+				new Location2D(2, 1), new Location2D(4, 1));
 		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
@@ -1207,6 +1208,33 @@ public class GammaStrategyGameControllerTest {
 		// state.
 		assertEquals(defendPiece, controller.getPieceAt(attackerLocation));
 		assertEquals(null, controller.getPieceAt(defenderLocation));
+	}
+
+	/**
+	 * Tests that the move repetition rule is properly implemented, by having
+	 * the red player immediately move a piece from one position to a second
+	 * position, back to the first position, and then to the second position
+	 * again.
+	 * 
+	 * @throws StrategyException
+	 *             if an invalid move is made. This is the expected behavior.
+	 */
+	@Test(expected=StrategyException.class)
+	public void testImmediateRedMoveRepetition() throws StrategyException {
+		StrategyGameController controller = factory.makeGammaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		PieceType movingPiece = PieceType.LIEUTENANT;
+		Location location1 = new Location2D(0, 1);
+		Location location2 = new Location2D(0, 2);
+		
+		// Move the red piece back and forth while the blue pieces do other things.
+		controller.move(movingPiece, location1, location2);
+		controller.move(PieceType.SERGEANT, new Location2D(5, 4), new Location2D(5, 3));
+		controller.move(movingPiece, location2, location1);
+		controller.move(PieceType.SERGEANT, new Location2D(5, 3), new Location2D(5, 2));
+		// This move is invalid
+		controller.move(movingPiece, location1, location2);
 	}
 
 }
