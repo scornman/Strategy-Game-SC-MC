@@ -632,8 +632,8 @@ public class GammaStrategyGameControllerTest {
 		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
-		Location fromLocation = new Location2D(3, 3);
-		Location toLocation = new Location2D(3, 4);
+		Location fromLocation = new Location2D(4, 3);
+		Location toLocation = new Location2D(4, 4);
 		controller.move(PieceType.COLONEL, fromLocation, toLocation);
 	}
 
