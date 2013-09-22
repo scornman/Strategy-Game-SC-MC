@@ -1270,11 +1270,10 @@ public class GammaStrategyGameControllerTest {
 		controller.move(PieceType.COLONEL, new Location2D(3,4), new Location2D(4,4));//blue
 		controller.move(PieceType.COLONEL, new Location2D(4,1), new Location2D(4,2));//red 
 		controller.move(PieceType.COLONEL, new Location2D(4,4), new Location2D(4,3));//blue
-		controller.move(PieceType.COLONEL, new Location2D(4,2), new Location2D(4,3));//red kills
+		MoveResult result = controller.move(PieceType.COLONEL, new Location2D(4,2), new Location2D(4,3));//red kills
 		
-		
-		
-		
+		// check that the game status is DRAW/game ends
+		assertEquals(MoveResultStatus.DRAW, result.getStatus());		
 	}
 
 }

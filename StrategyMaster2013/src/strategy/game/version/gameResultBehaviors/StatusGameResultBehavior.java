@@ -24,15 +24,30 @@ public class StatusGameResultBehavior implements GameResultBehavior{
 	public MoveResultStatus getGameStatus() {
 		MoveResultStatus status = null;
 
+		//if the blue flag is gone, red wins
 		if (!gameBoard.containsPiece(new Piece(PieceType.FLAG, PlayerColor.BLUE))) {
 			status = MoveResultStatus.RED_WINS;
+			
+		//if the red flag is gone, blue wins	
 		} else if (!gameBoard.containsPiece(new Piece(PieceType.FLAG, PlayerColor.RED))){
 			status = MoveResultStatus.BLUE_WINS;
+			
+		//no winner
 		} else {
-			//else no winner
-			status = MoveResultStatus.OK;
+			for(PieceType type : PieceType.values()){
+				//if there is a piece type besides flag on the board, 
+				//the game isn't over yet
+				if (type != PieceType.FLAG){
+					if ( gameBoard.containsPiece(new Piece(type, PlayerColor.RED)) ||
+						 gameBoard.containsPiece(new Piece(type, PlayerColor.BLUE)) ){
+						return MoveResultStatus.OK;
+					}					
+				}
+			}
+			//if there are only flags on the board, it's a draw
+			status = MoveResultStatus.DRAW;
 		}
-
+		
 		return status;
 	}
 }
