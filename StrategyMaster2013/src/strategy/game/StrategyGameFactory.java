@@ -34,6 +34,7 @@ import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
 import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributionConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.GammaStartLocationsConfigValidator;
+import strategy.game.version.validateConfigurationBehaviors.NoPiecesStartAtSameLocationConfigValidator;
 import strategy.game.version.validateMoveBehaviors.NotAttackingOwnTeamMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotMovingFlagMoveValidator;
 import strategy.game.version.validateMoveBehaviors.OneSpaceInDirectionMoveValidator;
@@ -128,6 +129,17 @@ public class StrategyGameFactory {
 				startingRedConfig, startingBlueConfig));
 		configValidators.add(new GammaStartLocationsConfigValidator(
 				startingRedConfig, startingBlueConfig));
+		// Combine the two configurations into one total configuration for
+		// passing to the NoPiecesStartAtSameLocationConfigValidator
+		Collection<PieceLocationDescriptor> totalStartingConfig = new ArrayList<PieceLocationDescriptor>();
+		for (PieceLocationDescriptor iPLD : startingRedConfig) {
+			totalStartingConfig.add(iPLD);
+		}
+		for (PieceLocationDescriptor iPLD : startingBlueConfig) {
+			totalStartingConfig.add(iPLD);
+		}
+		configValidators.add(new NoPiecesStartAtSameLocationConfigValidator(
+				totalStartingConfig));
 
 		Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
 		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
