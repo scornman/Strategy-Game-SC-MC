@@ -3,15 +3,16 @@
  */
 package strategy.game.version;
 
+import strategy.common.PlayerColor;
 import strategy.game.common.Location;
 import strategy.game.common.PieceType;
 
 /**
  * @author Madalyn
- *
+ * 
  */
 public interface ValidateMoveBehavior {
-	
+
 	/**
 	 * @TODO
 	 * @param piece
@@ -19,6 +20,7 @@ public interface ValidateMoveBehavior {
 	 * @param to
 	 * @return
 	 */
-	public boolean isMoveValid(PieceType piece, Location from, Location to);
+	public boolean isMoveValid(PieceType piece, Location from, Location to,
+			PlayerColor currentColor);
 
 }
