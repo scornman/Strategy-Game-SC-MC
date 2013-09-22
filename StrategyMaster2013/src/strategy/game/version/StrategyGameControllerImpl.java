@@ -84,9 +84,9 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 			throw new StrategyException(
 					"Cannot move before the game is started.");
 		}
-
-		for (ValidateMoveBehavior moveValidator : moveValidators) {
-			if (!moveValidator.isMoveValid(piece, from, to)) {
+		
+		for(ValidateMoveBehavior moveValidator : moveValidators){
+			if(!moveValidator.isMoveValid(piece, from, to, currentColor)){
 				throw new StrategyException("That move is not valid.");
 			}
 		}
