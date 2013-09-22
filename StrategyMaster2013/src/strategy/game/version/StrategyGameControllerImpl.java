@@ -69,8 +69,8 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 
 	@Override
 	public Piece getPieceAt(Location location) {
-		// TODO Auto-generated method stub
-		return null;
+		final Piece piece = gameBoard.getPieceAt(location);
+		return piece;
 	}
 
 }
