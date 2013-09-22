@@ -1362,6 +1362,46 @@ public class GammaStrategyGameControllerTest {
 	}
 
 	/**
+	 * Tests that the move repetition rule is properly implemented, by having
+	 * the blue player move a piece from one position to a second position, back
+	 * to the first position, and then to the second position again, after
+	 * moving other pieces first.
+	 * 
+	 * @throws StrategyException
+	 *             if an invalid move is made. This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testBlueMoveRepetitionAfterOtherMoves()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeGammaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		PieceType movingPiece = PieceType.SERGEANT;
+		Location location1 = new Location2D(4, 4);
+		Location location2 = new Location2D(4, 3);
+		// Make a few unimportant moves
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
+				new Location2D(0, 2));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
+				new Location2D(0, 3));
+		controller.move(PieceType.LIEUTENANT, new Location2D(0, 2),
+				new Location2D(0, 3));
+
+		// Move the blue piece back and forth while the blue pieces do other
+		// things.
+		controller.move(movingPiece, location1, location2);
+		controller.move(PieceType.SERGEANT, new Location2D(4, 1),
+				new Location2D(4, 2));
+		controller.move(movingPiece, location2, location1);
+		controller.move(PieceType.SERGEANT, new Location2D(4, 2),
+				new Location2D(4, 3));
+
+		// This move is invalid
+		controller.move(movingPiece, location1, location2);
+		assertTrue(true);
+	}
+
+	/**
 	 * Test that you cannot move onto a choke point (which are synonymous
 	 * with invalid locations)
 	 * 
