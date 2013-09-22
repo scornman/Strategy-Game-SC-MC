@@ -30,6 +30,7 @@ import strategy.game.version.ValidateMoveBehavior;
 import strategy.game.version.alpha.AlphaStrategyGameController;
 import strategy.game.version.beta.BetaStrategyGameController;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
+import strategy.game.version.validateMoveBehaviors.NotAttackingOwnTeamMoveValidator;
 
 /**
  * <p>
@@ -103,33 +104,39 @@ public class StrategyGameFactory {
 	public StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
-
-		Collection<ValidateConfigurationBehavior> configValidators = null;
-		Collection<ValidateMoveBehavior> moveValidators = null;
-		TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
-		BattleBehavior battleBehavior = null;
-		GameResultBehavior gameResultBehavior = null;
-		Board gameBoard = null;
-
+		
 		Collection<Location> chokePoints = new ArrayList<Location>();
 		chokePoints.add(new Location2D(2, 2));
 		chokePoints.add(new Location2D(2, 3));
 		chokePoints.add(new Location2D(3, 2));
 		chokePoints.add(new Location2D(3, 3));
-
 		Map<Location, Piece> pieceMap = makeBoard(	startingRedConfig,
 													startingBlueConfig, 
 													6, 
 													6, 
 													chokePoints	);
+		
+		Board gameBoard = new Board(pieceMap);
+		
+		Collection<ValidateConfigurationBehavior> configValidators = null;
+		
+		Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
+		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
+		
+		TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
+		
+		BattleBehavior battleBehavior = null;
+		
+		GameResultBehavior gameResultBehavior = null;
+		
+
 
 		return new StrategyGameControllerImpl(	configValidators, 
 												moveValidators,
 												turnUpdateBehavior, 
 												battleBehavior, 
 												gameResultBehavior,
-												gameBoard, 
-												pieceMap	);
+												gameBoard	);
 	}
 
 	private HashMap<Location, Piece> makeBoard(

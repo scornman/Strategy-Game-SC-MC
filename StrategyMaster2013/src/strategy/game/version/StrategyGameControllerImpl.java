@@ -38,8 +38,7 @@ public class StrategyGameControllerImpl implements StrategyGameController{
 										TurnUpdateBehavior turnUpdateBehavior,
 										BattleBehavior battleBehavior,
 										GameResultBehavior gameResultBehavior,
-										Board gameBoard,
-										Map<Location, Piece> pieceMap	) {
+										Board gameBoard	) {
 		// TODO Auto-generated constructor stub
 		this.configValidators = configValidators;
 		this.moveValidators = moveValidators;
