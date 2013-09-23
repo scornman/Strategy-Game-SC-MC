@@ -58,7 +58,7 @@ public class BetaBattleController {
 	 * 
 	 * @return a map that maps piece type to rank.
 	 */
-	private Map<PieceType, Integer> setupPieceRanks() {
+	private static Map<PieceType, Integer> setupPieceRanks() {
 		final Map<PieceType, Integer> pieceRanks = new HashMap<PieceType, Integer>();
 		pieceRanks.put(PieceType.MARSHAL, 12);
 		pieceRanks.put(PieceType.COLONEL, 10);

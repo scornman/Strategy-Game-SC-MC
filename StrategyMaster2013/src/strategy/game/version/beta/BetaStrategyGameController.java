@@ -339,7 +339,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	 * @return a collection containing all of the pieces that the red player
 	 *         should begin the game with.
 	 */
-	private Collection<Piece> getCorrectRedPieces() {
+	private static Collection<Piece> getCorrectRedPieces() {
 		final Collection<Piece> pieces = new ArrayList<Piece>();
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
@@ -364,7 +364,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	 * @return a collection containing all of the pieces that the blue player
 	 *         should begin the game with.
 	 */
-	private Collection<Piece> getCorrectBluePieces() {
+	private static Collection<Piece> getCorrectBluePieces() {
 		final Collection<Piece> pieces = new ArrayList<Piece>();
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
@@ -391,7 +391,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	 *            the second list of pieces to compare.
 	 * @return true if the
 	 */
-	private boolean containSamePieces(Collection<Piece> pieces1,
+	private static boolean containSamePieces(Collection<Piece> pieces1,
 			Collection<Piece> pieces2) {
 		// Ensure that the two collections have the correct number of pieces.
 		if (pieces1.size() != pieces2.size()) {
@@ -436,7 +436,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	 * @return true if the given location is a valid starting location for a
 	 *         piece of the specified color, false otherwise.
 	 */
-	private boolean isValidStartingLocation(Location startLocation,
+	private static boolean isValidStartingLocation(Location startLocation,
 			PlayerColor color) {
 		final int xCoord = startLocation.getCoordinate(Coordinate.X_COORDINATE);
 		final int yCoord = startLocation.getCoordinate(Coordinate.Y_COORDINATE);

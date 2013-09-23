@@ -103,7 +103,7 @@ public class GammaStartLocationsConfigValidator implements
 	 * @return true if the given location is a valid starting location for a
 	 *         piece of the specified color, false otherwise.
 	 */
-	private boolean isValidStartingLocation(Location startLocation,
+	private static boolean isValidStartingLocation(Location startLocation,
 			PlayerColor color) {
 		final int xCoord = startLocation.getCoordinate(Coordinate.X_COORDINATE);
 		final int yCoord = startLocation.getCoordinate(Coordinate.Y_COORDINATE);

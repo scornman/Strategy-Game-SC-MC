@@ -114,7 +114,7 @@ public class GammaPieceDistributionConfigValidator implements
 	 * @return a collection containing all of the pieces that the red player
 	 *         should begin the game with.
 	 */
-	private Collection<Piece> getCorrectRedPieces() {
+	private static Collection<Piece> getCorrectRedPieces() {
 		final Collection<Piece> pieces = new ArrayList<Piece>();
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
@@ -139,7 +139,7 @@ public class GammaPieceDistributionConfigValidator implements
 	 * @return a collection containing all of the pieces that the blue player
 	 *         should begin the game with.
 	 */
-	private Collection<Piece> getCorrectBluePieces() {
+	private static Collection<Piece> getCorrectBluePieces() {
 		final Collection<Piece> pieces = new ArrayList<Piece>();
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
 		pieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
@@ -166,7 +166,7 @@ public class GammaPieceDistributionConfigValidator implements
 	 *            the second list of pieces to compare.
 	 * @return true if the
 	 */
-	private boolean containSamePieces(Collection<Piece> pieces1,
+	private static boolean containSamePieces(Collection<Piece> pieces1,
 			Collection<Piece> pieces2) {
 		// Ensure that the two collections have the correct number of pieces.
 		if (pieces1.size() != pieces2.size()) {

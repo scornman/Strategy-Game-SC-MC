@@ -15,7 +15,6 @@ import strategy.game.common.PieceType;
 public interface ValidateMoveBehavior {
 
 	/**
-	 * @TODO
 	 * @param piece
 	 * @param from
 	 * @param to

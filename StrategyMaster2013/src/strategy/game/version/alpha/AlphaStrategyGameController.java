@@ -85,7 +85,7 @@ public class AlphaStrategyGameController implements StrategyGameController
 	 * @throws StrategyException if the location's coordinates do not match
 	 * 		the expected values.
 	 */
-	private void checkLocationCoordinates(Location location, int x, int y) 
+	private static void checkLocationCoordinates(Location location, int x, int y) 
 			throws StrategyException
 	{
 		final int locationX = location.getCoordinate(Coordinate.X_COORDINATE);

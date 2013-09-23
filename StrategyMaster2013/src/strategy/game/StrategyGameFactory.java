@@ -78,7 +78,7 @@ public class StrategyGameFactory {
 	 * 
 	 * @return the created Alpha Strategy game
 	 */
-	public StrategyGameController makeAlphaStrategyGame() {
+	public static StrategyGameController makeAlphaStrategyGame() {
 		final StrategyGameController controller = new AlphaStrategyGameController();
 		return controller;
 	}
@@ -95,7 +95,7 @@ public class StrategyGameFactory {
 	 * @throws StrategyException
 	 *             if either configuration is correct
 	 */
-	public StrategyGameController makeBetaStrategyGame(
+	public static StrategyGameController makeBetaStrategyGame(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration)
 			throws StrategyException {
@@ -165,7 +165,7 @@ public class StrategyGameFactory {
 				gameBoard);
 	}
 
-	private Map<Location, Piece> makeBoard(
+	private static Map<Location, Piece> makeBoard(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration,
 			int BOARD_SIZE_X, int BOARD_SIZE_Y, Collection<Location> chokePoints) {
