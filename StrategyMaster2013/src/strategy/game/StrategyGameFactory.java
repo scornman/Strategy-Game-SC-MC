@@ -112,7 +112,7 @@ public class StrategyGameFactory {
 	 * @return a StrategyGameController for a gamma strategy game
 	 * @throws StrategyException
 	 */
-	public StrategyGameController makeGammaStrategyGame(
+	public static StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig)
 			throws StrategyException {
