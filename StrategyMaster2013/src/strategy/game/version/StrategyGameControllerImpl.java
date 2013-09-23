@@ -30,9 +30,16 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 	private boolean gameStarted;
 	private PlayerColor currentColor;
 
+
 	/**
+	 * Constructor for StrategyGameControllerImpl
+	 * @param configValidators
+	 * @param moveValidators
+	 * @param turnUpdateBehavior
+	 * @param battleBehavior
+	 * @param gameResultBehavior
+	 * @param gameBoard
 	 * @throws StrategyException
-	 * 
 	 */
 	public StrategyGameControllerImpl(
 			Collection<ValidateConfigurationBehavior> configValidators,

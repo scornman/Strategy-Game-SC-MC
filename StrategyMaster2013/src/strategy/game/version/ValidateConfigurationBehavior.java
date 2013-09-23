@@ -17,6 +17,6 @@ public interface ValidateConfigurationBehavior {
 	 * Determines whether the starting piece configurations are valid according
 	 * to some configuration rule.
 	 */
-	public boolean isConfigurationValid();
+	boolean isConfigurationValid();
 
 }

@@ -21,6 +21,10 @@ import strategy.game.common.PieceType;
 public class Board {
 	private Map<Location, Piece> pieceMap;
 
+	/**
+	 * Constructor for Board
+	 * @param pieceMap locations of all pieces
+	 */
 	public Board(Map<Location, Piece> pieceMap) {
 		this.pieceMap = pieceMap;
 	}
@@ -96,8 +100,6 @@ public class Board {
 	 *            the location of the piece before the move.
 	 * @param to
 	 *            the location the piece wants to move to.
-	 * @param piece
-	 *            the piece that is moving.
 	 */
 	public void updatePositions(Location from, Location to) {
 		Piece piece = getPieceAt(from);
@@ -106,6 +108,11 @@ public class Board {
 		putPiece(to, piece);
 	}
 	
+	/**
+	 * does the board contain a piece
+	 * @param piece to see if in board
+	 * @return boolean true if piece in board, else false
+	 */
 	public boolean containsPiece(Piece piece){
 		return pieceMap.containsValue(piece);
 	}
