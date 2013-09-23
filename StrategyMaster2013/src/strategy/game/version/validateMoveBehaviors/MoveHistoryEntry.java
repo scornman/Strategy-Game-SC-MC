@@ -24,9 +24,9 @@ import strategy.game.common.PieceType;
  */
 public class MoveHistoryEntry {
 
-	private PieceType piece;
-	private Location from;
-	private Location to;
+	private final PieceType piece;
+	private final Location from;
+	private final Location to;
 
 	/**
 	 * Creates a new MoveHistoryEntry object.

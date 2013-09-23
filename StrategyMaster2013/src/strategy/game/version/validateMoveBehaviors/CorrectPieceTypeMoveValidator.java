@@ -42,8 +42,8 @@ public class CorrectPieceTypeMoveValidator implements ValidateMoveBehavior {
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) {
-		Piece movingPiece = gameBoard.getPieceAt(from);
-		return (piece == movingPiece.getType());
+		final Piece movingPiece = gameBoard.getPieceAt(from);
+		return(piece == movingPiece.getType());
 	}
 
 }

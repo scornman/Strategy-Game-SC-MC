@@ -4,7 +4,7 @@
 package strategy.game.version;
 
 import strategy.common.PlayerColor;
-import strategy.game.common.PieceLocationDescriptor;
+
 
 /**
  * @author Madalyn

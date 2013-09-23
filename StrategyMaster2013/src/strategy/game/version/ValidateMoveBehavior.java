@@ -23,7 +23,7 @@ public interface ValidateMoveBehavior {
 	 * @return true if the move is valid according to this condition, false
 	 *         otherwise.
 	 */
-	public boolean isMoveValid(PieceType piece, Location from, Location to,
+	boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor);
 
 }

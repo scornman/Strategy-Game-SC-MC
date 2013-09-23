@@ -29,8 +29,8 @@ import strategy.game.version.Board;
  * 
  */
 public class GammaBattleBehavior implements BattleBehavior {
-	private Board gameBoard;
-	private Map<PieceType, Integer> rankMap;
+	private final Board gameBoard;
+	private final Map<PieceType, Integer> rankMap;
 
 	/**
 	 * Constructor for GammaBattleBehavior
@@ -82,8 +82,8 @@ public class GammaBattleBehavior implements BattleBehavior {
 	@Override
 	public PieceLocationDescriptor getBattleWinner(Location fromLocation,
 			Location toLocation) {
-		Piece attackPiece = gameBoard.getPieceAt(fromLocation);
-		Piece defendPiece = gameBoard.getPieceAt(toLocation);
+		final Piece attackPiece = gameBoard.getPieceAt(fromLocation);
+		final Piece defendPiece = gameBoard.getPieceAt(toLocation);
 
 		final int attackerRank = rankMap.get(attackPiece.getType());
 		final int defenderRank = rankMap.get(defendPiece.getType());

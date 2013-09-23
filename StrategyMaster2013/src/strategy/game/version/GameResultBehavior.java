@@ -3,7 +3,6 @@
  */
 package strategy.game.version;
 
-import strategy.game.common.Location;
 import strategy.game.common.MoveResultStatus;
 
 /**

@@ -17,7 +17,7 @@ import strategy.game.version.Board;
 import strategy.game.version.ValidateMoveBehavior;
 
 public class MovingOnTurnMoveValidator implements ValidateMoveBehavior{
-	private Board gameBoard;
+	private final Board gameBoard;
 	
 	public MovingOnTurnMoveValidator(Board gameBoard) {
 		// TODO Auto-generated constructor stub
@@ -30,7 +30,7 @@ public class MovingOnTurnMoveValidator implements ValidateMoveBehavior{
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) {
-		PlayerColor pieceColor = gameBoard.getPieceAt(from).getOwner();
+		final PlayerColor pieceColor = gameBoard.getPieceAt(from).getOwner();
 		
 		if(pieceColor != currentColor){
 			return false;
