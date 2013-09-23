@@ -14,6 +14,10 @@ public class GammaBattleBehavior implements BattleBehavior {
 	private Board gameBoard;
 	private Map<PieceType, Integer> rankMap;
 
+	/**
+	 * Constructor for GammaBattleBehavior
+	 * @param gameBoard takes in the board
+	 */
 	public GammaBattleBehavior(Board gameBoard) {
 		this.gameBoard = gameBoard;
 		rankMap = setupPieceRanks();

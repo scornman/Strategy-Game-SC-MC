@@ -8,6 +8,7 @@ import strategy.game.common.PieceLocationDescriptor;
 
 /**
  * @author Madalyn
+ * @version 9/22/13
  *
  */
 public interface BattleBehavior {
@@ -16,14 +17,16 @@ public interface BattleBehavior {
 	 * checks to see if there is a battle
 	 * @param fromLocation will give the attacking piece
 	 * @param toLocation will give the defending piece
-	 * @return
+	 * @return boolean true if battle, false if no battle
 	 */
-	public boolean isBattle(Location fromLocation, Location toLocation);
+	boolean isBattle(Location fromLocation, Location toLocation);
 	
 	/**
 	 * 
-	 * @return
+	 * @param fromLocation will give the attacking piece
+	 * @param toLoaction will give the defending piece
+	 * @return PieceLocationDescriptor of the piece that won the battle
 	 */
-	public PieceLocationDescriptor getBattleWinner(Location fromLocation, Location toLocation);
+	PieceLocationDescriptor getBattleWinner(Location fromLocation, Location toLocation);
 
 }

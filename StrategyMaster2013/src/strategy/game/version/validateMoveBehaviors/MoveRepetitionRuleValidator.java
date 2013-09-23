@@ -1,6 +1,7 @@
 package strategy.game.version.validateMoveBehaviors;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import strategy.common.PlayerColor;
 import strategy.game.common.Location;
@@ -16,9 +17,9 @@ import strategy.game.version.ValidateMoveBehavior;
 public class MoveRepetitionRuleValidator implements ValidateMoveBehavior {
 
 	// Stores the last move made for each player
-	private HashMap<PlayerColor, MoveHistoryEntry> lastMoveMap;
+	private Map<PlayerColor, MoveHistoryEntry> lastMoveMap;
 	// Stores the second-to-last move made for each player.
-	private HashMap<PlayerColor, MoveHistoryEntry> secondToLastMoveMap;
+	private Map<PlayerColor, MoveHistoryEntry> secondToLastMoveMap;
 
 	public MoveRepetitionRuleValidator() {
 		lastMoveMap = new HashMap<PlayerColor, MoveHistoryEntry>();

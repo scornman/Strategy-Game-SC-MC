@@ -109,7 +109,7 @@ public class StrategyGameFactory {
 	 * 
 	 * @param startingRedConfig
 	 * @param startingBlueConfig
-	 * @return
+	 * @return StrategyGameController for a gamma strategy game
 	 * @throws StrategyException
 	 */
 	public StrategyGameController makeGammaStrategyGame(
@@ -164,7 +164,7 @@ public class StrategyGameFactory {
 				gameBoard);
 	}
 
-	private HashMap<Location, Piece> makeBoard(
+	private Map<Location, Piece> makeBoard(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration,
 			int BOARD_SIZE_X, int BOARD_SIZE_Y, Collection<Location> chokePoints) {

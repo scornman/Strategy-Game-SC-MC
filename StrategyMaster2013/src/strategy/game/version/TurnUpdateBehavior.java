@@ -16,5 +16,5 @@ public interface TurnUpdateBehavior {
 	 * @TODO
 	 * @return the color whose turn it is
 	 */
-	public PlayerColor updateTurn(PlayerColor currentColor);
+	PlayerColor updateTurn(PlayerColor currentColor);
 }

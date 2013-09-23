@@ -12,12 +12,12 @@ import strategy.game.common.MoveResultStatus;
  */
 public interface GameResultBehavior {
 	
+
 	/**
-	 * @TODO
-	 * @param fromLocation
-	 * @param toLocation
-	 * @return
+	 * gets the status of the game
+	 * lets know if game is over/not and winner/no winner
+	 * @return MoveResultStatus
 	 */
-	public MoveResultStatus getGameStatus();
+	MoveResultStatus getGameStatus();
 	
 }
