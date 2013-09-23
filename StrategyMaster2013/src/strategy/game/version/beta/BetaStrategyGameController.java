@@ -300,7 +300,7 @@ public class BetaStrategyGameController implements StrategyGameController {
 	 * @return true if both configurations contain the correct piece types,
 	 *         false otherwise.
 	 */
-	private static boolean configurationsContainCorrectPieces(
+	private boolean configurationsContainCorrectPieces(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration) {
 		// First, extract the Piece objects from the PieceLocationDescriptor
