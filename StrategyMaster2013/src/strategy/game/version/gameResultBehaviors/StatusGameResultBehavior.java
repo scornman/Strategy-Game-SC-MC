@@ -23,6 +23,7 @@ import strategy.game.version.GameResultBehavior;
  * 
  * @author Madalyn
  * @author scornman
+ * @version 9/22/13
  * 
  */
 public class StatusGameResultBehavior implements GameResultBehavior {
