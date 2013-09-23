@@ -8,6 +8,7 @@ import strategy.game.common.MoveResultStatus;
 
 /**
  * @author Madalyn
+ * @version 9/22/13
  *
  */
 public interface GameResultBehavior {

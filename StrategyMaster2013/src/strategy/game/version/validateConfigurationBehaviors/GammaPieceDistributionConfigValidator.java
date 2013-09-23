@@ -26,6 +26,7 @@ import strategy.game.version.ValidateConfigurationBehavior;
  * piece.
  * 
  * @author scornman
+ * @version 9/22/13
  * 
  */
 public class GammaPieceDistributionConfigValidator implements

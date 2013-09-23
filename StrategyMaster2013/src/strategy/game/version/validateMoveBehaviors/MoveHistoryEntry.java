@@ -19,6 +19,7 @@ import strategy.game.common.PieceType;
  * history of past moves.
  * 
  * @author scornman
+ * @version 9/22/13
  * 
  */
 public class MoveHistoryEntry {

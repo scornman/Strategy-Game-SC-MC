@@ -25,6 +25,7 @@ import strategy.game.version.ValidateConfigurationBehavior;
  * configurations start in the same locations on the board.
  * 
  * @author scornman
+ * @version 9/22/13
  * 
  */
 public class NoPiecesStartAtSameLocationConfigValidator implements

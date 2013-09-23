@@ -24,7 +24,7 @@ public interface BattleBehavior {
 	/**
 	 * 
 	 * @param fromLocation will give the attacking piece
-	 * @param toLoaction will give the defending piece
+	 * @param toLocation will give the defending piece
 	 * @return PieceLocationDescriptor of the piece that won the battle
 	 */
 	PieceLocationDescriptor getBattleWinner(Location fromLocation, Location toLocation);

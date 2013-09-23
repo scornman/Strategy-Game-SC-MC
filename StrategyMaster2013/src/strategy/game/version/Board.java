@@ -18,12 +18,21 @@ import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
 
+/**
+ * The game board that keeps track of all of the pieces and their locations.
+ * 
+ * @author scornman
+ * @author Madalyn
+ * 
+ */
 public class Board {
 	private Map<Location, Piece> pieceMap;
 
 	/**
 	 * Constructor for Board
-	 * @param pieceMap locations of all pieces
+	 * 
+	 * @param pieceMap
+	 *            locations of all pieces
 	 */
 	public Board(Map<Location, Piece> pieceMap) {
 		this.pieceMap = pieceMap;
@@ -107,13 +116,15 @@ public class Board {
 		putPiece(from, null);
 		putPiece(to, piece);
 	}
-	
+
 	/**
 	 * does the board contain a piece
-	 * @param piece to see if in board
+	 * 
+	 * @param piece
+	 *            to see if in board
 	 * @return boolean true if piece in board, else false
 	 */
-	public boolean containsPiece(Piece piece){
+	public boolean containsPiece(Piece piece) {
 		return pieceMap.containsValue(piece);
 	}
 }

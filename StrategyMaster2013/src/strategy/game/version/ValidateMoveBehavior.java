@@ -9,6 +9,7 @@ import strategy.game.common.PieceType;
 
 /**
  * @author Madalyn
+ * @version 9/22/13
  * 
  */
 public interface ValidateMoveBehavior {
@@ -18,7 +19,9 @@ public interface ValidateMoveBehavior {
 	 * @param piece
 	 * @param from
 	 * @param to
-	 * @return
+	 * @param currentColor
+	 * @return true if the move is valid according to this condition, false
+	 *         otherwise.
 	 */
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor);

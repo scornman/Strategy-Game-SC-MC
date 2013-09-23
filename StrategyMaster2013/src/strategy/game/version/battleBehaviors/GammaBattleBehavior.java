@@ -20,13 +20,23 @@ import strategy.game.common.PieceType;
 import strategy.game.version.BattleBehavior;
 import strategy.game.version.Board;
 
+/**
+ * 
+ * Battle behavior implementation for Gamma Strategy.
+ * 
+ * @author Madalyn
+ * @author scornman
+ * 
+ */
 public class GammaBattleBehavior implements BattleBehavior {
 	private Board gameBoard;
 	private Map<PieceType, Integer> rankMap;
 
 	/**
 	 * Constructor for GammaBattleBehavior
-	 * @param gameBoard takes in the board
+	 * 
+	 * @param gameBoard
+	 *            takes in the board
 	 */
 	public GammaBattleBehavior(Board gameBoard) {
 		this.gameBoard = gameBoard;

@@ -18,6 +18,7 @@ import strategy.game.common.PieceType;
 
 /**
  * @author Madalyn
+ * @version 9/22/13
  * 
  */
 public class StrategyGameControllerImpl implements StrategyGameController {

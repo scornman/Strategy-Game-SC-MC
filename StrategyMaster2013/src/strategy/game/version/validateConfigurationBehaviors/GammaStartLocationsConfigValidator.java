@@ -24,6 +24,7 @@ import strategy.game.version.ValidateConfigurationBehavior;
  * respective colors.
  * 
  * @author scornman
+ * @version 9/22/13
  * 
  */
 public class GammaStartLocationsConfigValidator implements

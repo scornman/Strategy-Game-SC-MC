@@ -109,7 +109,7 @@ public class StrategyGameFactory {
 	 * 
 	 * @param startingRedConfig
 	 * @param startingBlueConfig
-	 * @return StrategyGameController for a gamma strategy game
+	 * @return a StrategyGameController for a gamma strategy game
 	 * @throws StrategyException
 	 */
 	public StrategyGameController makeGammaStrategyGame(

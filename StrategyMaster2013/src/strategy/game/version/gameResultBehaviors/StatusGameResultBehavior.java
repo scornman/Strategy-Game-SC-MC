@@ -17,16 +17,29 @@ import strategy.game.common.PieceType;
 import strategy.game.version.Board;
 import strategy.game.version.GameResultBehavior;
 
-public class StatusGameResultBehavior implements GameResultBehavior{
+/**
+ * Implementation of the game result behavior that includes end game conditions
+ * for the flags being captured or nobody having legal moves.
+ * 
+ * @author Madalyn
+ * @author scornman
+ * 
+ */
+public class StatusGameResultBehavior implements GameResultBehavior {
 	private Board gameBoard;
-	
+
+	/**
+	 * Creates a new StatusGameResultBehavior object.
+	 * 
+	 * @param gameBoard
+	 *            the board for the game
+	 */
 	public StatusGameResultBehavior(Board gameBoard) {
 		this.gameBoard = gameBoard;
 	}
 
 	/**
-	 * Determine the result of the battle.
-	 * only wins if the flag is captured
+	 * Determine the result of the battle. only wins if the flag is captured
 	 * 
 	 * @return the battle result.
 	 */
@@ -34,30 +47,34 @@ public class StatusGameResultBehavior implements GameResultBehavior{
 	public MoveResultStatus getGameStatus() {
 		MoveResultStatus status = null;
 
-		//if the blue flag is gone, red wins
-		if (!gameBoard.containsPiece(new Piece(PieceType.FLAG, PlayerColor.BLUE))) {
+		// if the blue flag is gone, red wins
+		if (!gameBoard
+				.containsPiece(new Piece(PieceType.FLAG, PlayerColor.BLUE))) {
 			status = MoveResultStatus.RED_WINS;
-			
-		//if the red flag is gone, blue wins	
-		} else if (!gameBoard.containsPiece(new Piece(PieceType.FLAG, PlayerColor.RED))){
+
+			// if the red flag is gone, blue wins
+		} else if (!gameBoard.containsPiece(new Piece(PieceType.FLAG,
+				PlayerColor.RED))) {
 			status = MoveResultStatus.BLUE_WINS;
-			
-		//no winner
+
+			// no winner
 		} else {
-			for(PieceType type : PieceType.values()){
-				//if there is a piece type besides flag on the board, 
-				//the game isn't over yet
-				if (type != PieceType.FLAG){
-					if ( gameBoard.containsPiece(new Piece(type, PlayerColor.RED)) ||
-						 gameBoard.containsPiece(new Piece(type, PlayerColor.BLUE)) ){
+			for (PieceType type : PieceType.values()) {
+				// if there is a piece type besides flag on the board,
+				// the game isn't over yet
+				if (type != PieceType.FLAG) {
+					if (gameBoard
+							.containsPiece(new Piece(type, PlayerColor.RED))
+							|| gameBoard.containsPiece(new Piece(type,
+									PlayerColor.BLUE))) {
 						return MoveResultStatus.OK;
-					}					
+					}
 				}
 			}
-			//if there are only flags on the board, it's a draw
+			// if there are only flags on the board, it's a draw
 			status = MoveResultStatus.DRAW;
 		}
-		
+
 		return status;
 	}
 }

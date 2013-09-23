@@ -22,6 +22,7 @@ import strategy.game.version.ValidateMoveBehavior;
  * Move validator that implements the move repetition rule.
  * 
  * @author scornman
+ * @version 9/22/13
  * 
  */
 public class MoveRepetitionRuleValidator implements ValidateMoveBehavior {

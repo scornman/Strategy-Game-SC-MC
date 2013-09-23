@@ -22,16 +22,17 @@ import strategy.game.version.ValidateMoveBehavior;
  * the from location on the board.
  * 
  * @author scornman
+ * @version 9/22/13
  * 
  */
 public class CorrectPieceTypeMoveValidator implements ValidateMoveBehavior {
 
 	Board gameBoard;
-	
+
 	/**
 	 * Creates a new CorrectPieceTypeMoveValidator object.
 	 * 
-	 * @param gameBoard
+	 * @param board
 	 *            the board.
 	 */
 	public CorrectPieceTypeMoveValidator(Board board) {
@@ -42,7 +43,7 @@ public class CorrectPieceTypeMoveValidator implements ValidateMoveBehavior {
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) {
 		Piece movingPiece = gameBoard.getPieceAt(from);
-		return(piece == movingPiece.getType());
+		return (piece == movingPiece.getType());
 	}
 
 }
