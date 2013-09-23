@@ -7,9 +7,7 @@ import strategy.game.version.ValidateMoveBehavior;
 
 public class NotMovingFlagMoveValidator implements ValidateMoveBehavior {
 
-	public NotMovingFlagMoveValidator() {
-		// TODO Auto-generated constructor stub
-	}
+	
 
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,

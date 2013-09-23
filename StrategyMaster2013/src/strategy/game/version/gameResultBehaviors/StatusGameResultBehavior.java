@@ -8,8 +8,12 @@ import strategy.game.version.Board;
 import strategy.game.version.GameResultBehavior;
 
 public class StatusGameResultBehavior implements GameResultBehavior{
-	private Board gameBoard;
+	private final Board gameBoard;
 	
+	/**
+	 * Constructor for StatusGameResultBehavior
+	 * @param gameBoard
+	 */
 	public StatusGameResultBehavior(Board gameBoard) {
 		this.gameBoard = gameBoard;
 	}

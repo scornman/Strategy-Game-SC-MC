@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import strategy.common.PlayerColor;
-import strategy.game.common.Coordinate;
+
+
 import strategy.game.common.Location;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.version.ValidateConfigurationBehavior;

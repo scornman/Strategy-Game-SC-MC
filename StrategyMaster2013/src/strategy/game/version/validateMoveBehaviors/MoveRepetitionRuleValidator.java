@@ -17,9 +17,9 @@ import strategy.game.version.ValidateMoveBehavior;
 public class MoveRepetitionRuleValidator implements ValidateMoveBehavior {
 
 	// Stores the last move made for each player
-	private Map<PlayerColor, MoveHistoryEntry> lastMoveMap;
+	private final Map<PlayerColor, MoveHistoryEntry> lastMoveMap;
 	// Stores the second-to-last move made for each player.
-	private Map<PlayerColor, MoveHistoryEntry> secondToLastMoveMap;
+	private final Map<PlayerColor, MoveHistoryEntry> secondToLastMoveMap;
 
 	public MoveRepetitionRuleValidator() {
 		lastMoveMap = new HashMap<PlayerColor, MoveHistoryEntry>();
@@ -31,11 +31,11 @@ public class MoveRepetitionRuleValidator implements ValidateMoveBehavior {
 			PlayerColor currentColor) {
 		boolean isValid;
 		// Create the new move history entry to add
-		MoveHistoryEntry currentMove = new MoveHistoryEntry(piece, from, to);
+		final MoveHistoryEntry currentMove = new MoveHistoryEntry(piece, from, to);
 		// If the current player has already made at least 2 moves.
 		if (secondToLastMoveMap.containsKey(currentColor)) {
-			MoveHistoryEntry lastMove = lastMoveMap.get(currentColor);
-			MoveHistoryEntry secondToLastMove = secondToLastMoveMap
+			final MoveHistoryEntry lastMove = lastMoveMap.get(currentColor);
+			final MoveHistoryEntry secondToLastMove = secondToLastMoveMap
 					.get(currentColor);
 			// If this move is the reverse of the last move and the same as the
 			// second to last move

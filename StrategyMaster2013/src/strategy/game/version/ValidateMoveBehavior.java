@@ -20,7 +20,7 @@ public interface ValidateMoveBehavior {
 	 * @param to
 	 * @return
 	 */
-	public boolean isMoveValid(PieceType piece, Location from, Location to,
+	boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor);
 
 }

@@ -9,7 +9,7 @@ import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
 
 public class Board {
-	private Map<Location, Piece> pieceMap;
+	private final Map<Location, Piece> pieceMap;
 
 	/**
 	 * Constructor for Board
@@ -78,7 +78,7 @@ public class Board {
 
 		// If there is a winner that survived the battle
 		if (battleWinner != null) {
-			Location moveLocation = battleWinner.getLocation();
+			final Location moveLocation = battleWinner.getLocation();
 			putPiece(moveLocation, battleWinner.getPiece());
 		}
 	}
@@ -92,7 +92,7 @@ public class Board {
 	 *            the location the piece wants to move to.
 	 */
 	public void updatePositions(Location from, Location to) {
-		Piece piece = getPieceAt(from);
+		final Piece piece = getPieceAt(from);
 
 		putPiece(from, null);
 		putPiece(to, piece);

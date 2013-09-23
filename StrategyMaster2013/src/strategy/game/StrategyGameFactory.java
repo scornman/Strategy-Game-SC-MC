@@ -117,24 +117,25 @@ public class StrategyGameFactory {
 			Collection<PieceLocationDescriptor> startingBlueConfig)
 			throws StrategyException {
 
-		Collection<Location> chokePoints = new ArrayList<Location>();
+		final Collection<Location> chokePoints = new ArrayList<Location>();
 		chokePoints.add(new Location2D(2, 2));
 		chokePoints.add(new Location2D(2, 3));
 		chokePoints.add(new Location2D(3, 2));
 		chokePoints.add(new Location2D(3, 3));
-		Map<Location, Piece> pieceMap = makeBoard(startingRedConfig,
+		final Map<Location, Piece> pieceMap = makeBoard(startingRedConfig,
 				startingBlueConfig, 6, 6, chokePoints);
 
-		Board gameBoard = new Board(pieceMap);
+		final Board gameBoard = new Board(pieceMap);
 
-		Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
+		final Collection<ValidateConfigurationBehavior> configValidators = 
+				new ArrayList<ValidateConfigurationBehavior>();
 		configValidators.add(new GammaPieceDistributionConfigValidator(
 				startingRedConfig, startingBlueConfig));
 		configValidators.add(new GammaStartLocationsConfigValidator(
 				startingRedConfig, startingBlueConfig));
 		// Combine the two configurations into one total configuration for
 		// passing to the NoPiecesStartAtSameLocationConfigValidator
-		Collection<PieceLocationDescriptor> totalStartingConfig = new ArrayList<PieceLocationDescriptor>();
+		final Collection<PieceLocationDescriptor> totalStartingConfig = new ArrayList<PieceLocationDescriptor>();
 		for (PieceLocationDescriptor iPLD : startingRedConfig) {
 			totalStartingConfig.add(iPLD);
 		}
@@ -144,7 +145,7 @@ public class StrategyGameFactory {
 		configValidators.add(new NoPiecesStartAtSameLocationConfigValidator(
 				totalStartingConfig));
 
-		Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
+		final Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
 		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
 		moveValidators.add(new OneSpaceInDirectionMoveValidator());
 		moveValidators.add(new NotMovingFlagMoveValidator());
@@ -152,11 +153,11 @@ public class StrategyGameFactory {
 		moveValidators.add(new CorrectPieceTypeMoveValidator(gameBoard));
 		moveValidators.add(new MoveRepetitionRuleValidator());
 
-		TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
+		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 
-		BattleBehavior battleBehavior = new GammaBattleBehavior(gameBoard);
+		final BattleBehavior battleBehavior = new GammaBattleBehavior(gameBoard);
 
-		GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
+		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
 				gameBoard);
 
 		return new StrategyGameControllerImpl(configValidators, moveValidators,
@@ -169,7 +170,7 @@ public class StrategyGameFactory {
 			Collection<PieceLocationDescriptor> blueConfiguration,
 			int BOARD_SIZE_X, int BOARD_SIZE_Y, Collection<Location> chokePoints) {
 
-		Map<Location, Piece> pieceMap = new HashMap<Location, Piece>();
+		final Map<Location, Piece> pieceMap = new HashMap<Location, Piece>();
 
 		// create the locations on the board by the dimensions given
 		for (int i = 0; i < BOARD_SIZE_X; i++) {
@@ -199,6 +200,6 @@ public class StrategyGameFactory {
 			pieceMap.remove(chokePoint);
 		}
 
-		return (HashMap<Location, Piece>) pieceMap;
+		return pieceMap;
 	}
 }
