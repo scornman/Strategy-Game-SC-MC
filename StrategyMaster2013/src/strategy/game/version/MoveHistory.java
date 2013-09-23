@@ -1,5 +1,15 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package strategy.game.version;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +50,18 @@ public class MoveHistory {
 	 */
 	public void addEntry(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) {
-		MoveHistoryEntry newEntry = new MoveHistoryEntry(piece, from, to);
+		final MoveHistoryEntry newEntry = new MoveHistoryEntry(piece, from, to);
 
 		List<MoveHistoryEntry> currentColorHistory = historyMap
 				.get(currentColor);
-		currentColorHistory.add(newEntry);
+		if(currentColorHistory != null) {
+			currentColorHistory.add(newEntry);
+		} else {
+			currentColorHistory = new ArrayList<MoveHistoryEntry>();
+			currentColorHistory.add(newEntry);
+			historyMap.put(currentColor, currentColorHistory);
+		}
+		
 	}
 
 	/**
@@ -55,7 +72,7 @@ public class MoveHistory {
 	 * @return a history entry for the most recent move made by the player.
 	 */
 	public MoveHistoryEntry getLastMove(PlayerColor currentColor) {
-		List<MoveHistoryEntry> currentColorHistory = historyMap
+		final List<MoveHistoryEntry> currentColorHistory = historyMap
 				.get(currentColor);
 		if (currentColorHistory == null || currentColorHistory.size() < 1) {
 			return null;
@@ -73,7 +90,7 @@ public class MoveHistory {
 	 *         player.
 	 */
 	public MoveHistoryEntry getSecondToLastMove(PlayerColor currentColor) {
-		List<MoveHistoryEntry> currentColorHistory = historyMap
+		final List<MoveHistoryEntry> currentColorHistory = historyMap
 				.get(currentColor);
 		if (currentColorHistory == null || currentColorHistory.size() < 2) {
 			return null;

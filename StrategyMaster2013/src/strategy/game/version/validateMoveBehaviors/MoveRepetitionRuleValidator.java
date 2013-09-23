@@ -10,12 +10,10 @@
 
 package strategy.game.version.validateMoveBehaviors;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import strategy.common.PlayerColor;
 import strategy.game.common.Location;
 import strategy.game.common.PieceType;
+import strategy.game.version.MoveHistory;
 import strategy.game.version.MoveHistoryEntry;
 import strategy.game.version.ValidateMoveBehavior;
 
@@ -28,14 +26,16 @@ import strategy.game.version.ValidateMoveBehavior;
  */
 public class MoveRepetitionRuleValidator implements ValidateMoveBehavior {
 
-	// Stores the last move made for each player
-	private final Map<PlayerColor, MoveHistoryEntry> lastMoveMap;
-	// Stores the second-to-last move made for each player.
-	private final Map<PlayerColor, MoveHistoryEntry> secondToLastMoveMap;
+	final MoveHistory moveHistory;
 
-	public MoveRepetitionRuleValidator() {
-		lastMoveMap = new HashMap<PlayerColor, MoveHistoryEntry>();
-		secondToLastMoveMap = new HashMap<PlayerColor, MoveHistoryEntry>();
+	/**
+	 * Creates a new MoveRepetitionRuleValidator object.
+	 * 
+	 * @param moveHistory
+	 *            the history of all past moves in the current game.
+	 */
+	public MoveRepetitionRuleValidator(MoveHistory moveHistory) {
+		this.moveHistory = moveHistory;
 	}
 
 	@Override
@@ -43,12 +43,13 @@ public class MoveRepetitionRuleValidator implements ValidateMoveBehavior {
 			PlayerColor currentColor) {
 		boolean isValid;
 		// Create the new move history entry to add
-		final MoveHistoryEntry currentMove = new MoveHistoryEntry(piece, from, to);
+		final MoveHistoryEntry currentMove = new MoveHistoryEntry(piece, from,
+				to);
+		final MoveHistoryEntry secondToLastMove = moveHistory
+				.getSecondToLastMove(currentColor);
+		final MoveHistoryEntry lastMove = moveHistory.getLastMove(currentColor);
 		// If the current player has already made at least 2 moves.
-		if (secondToLastMoveMap.containsKey(currentColor)) {
-			final MoveHistoryEntry lastMove = lastMoveMap.get(currentColor);
-			final MoveHistoryEntry secondToLastMove = secondToLastMoveMap
-					.get(currentColor);
+		if (moveHistory.getSecondToLastMove(currentColor) != null) {
 			// If this move is the reverse of the last move and the same as the
 			// second to last move
 			if (currentMove.isOppositeMove(lastMove)
@@ -63,29 +64,7 @@ public class MoveRepetitionRuleValidator implements ValidateMoveBehavior {
 			isValid = true;
 		}
 
-		updateMoveHistories(currentMove, currentColor);
-
 		return isValid;
 	}
 
-	/**
-	 * Updates the move history maps to store records of the current move and
-	 * the last move.
-	 * 
-	 * @param currentMove
-	 *            the current move.
-	 * @param currentColor
-	 *            the color of the player whose turn it is.
-	 */
-	private void updateMoveHistories(MoveHistoryEntry currentMove,
-			PlayerColor currentColor) {
-		// If this is not the first move.
-		if (lastMoveMap.containsKey(currentColor)) {
-			secondToLastMoveMap
-					.put(currentColor, lastMoveMap.get(currentColor));
-			lastMoveMap.put(currentColor, currentMove);
-		} else {
-			lastMoveMap.put(currentColor, currentMove);
-		}
-	}
 }

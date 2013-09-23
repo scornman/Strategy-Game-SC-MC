@@ -30,6 +30,7 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 	private final Board gameBoard;
 	private boolean gameStarted;
 	private PlayerColor currentColor;
+	private final MoveHistory moveHistory;
 
 	/**
 	 * Constructor for StrategyGameControllerImpl
@@ -40,6 +41,7 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 	 * @param battleBehavior
 	 * @param gameResultBehavior
 	 * @param gameBoard
+	 * @param moveHistory
 	 * @throws StrategyException
 	 */
 	public StrategyGameControllerImpl(
@@ -47,7 +49,7 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 			Collection<ValidateMoveBehavior> moveValidators,
 			TurnUpdateBehavior turnUpdateBehavior,
 			BattleBehavior battleBehavior,
-			GameResultBehavior gameResultBehavior, Board gameBoard)
+			GameResultBehavior gameResultBehavior, Board gameBoard, MoveHistory moveHistory)
 			throws StrategyException {
 		// TODO Auto-generated constructor stub
 		this.configValidators = configValidators;
@@ -59,6 +61,8 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 		gameStarted = false;
 		currentColor = PlayerColor.RED; // TODO:every game starts with red. if
 										// this changes change this
+		// Create the move history for the game
+		this.moveHistory = moveHistory;
 
 		// Ensure that the starting piece configurations are valid before
 		// proceeding
@@ -98,10 +102,9 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 				throw new StrategyException("That move is not valid.");
 			}
 		}
-		
-		// Update the move history 
-		// TODO
-		
+
+		// Update the move history to include this move.
+		moveHistory.addEntry(piece, from, to, currentColor);
 
 		PieceLocationDescriptor battleWinner;
 

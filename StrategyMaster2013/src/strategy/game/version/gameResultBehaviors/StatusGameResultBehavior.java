@@ -40,6 +40,9 @@ public class StatusGameResultBehavior implements GameResultBehavior {
 	 * 
 	 * @param gameBoard
 	 *            the board for the game
+	 * @param moveValidators
+	 *            the set of validators that the game is using to check the
+	 *            validity of moves.
 	 */
 	public StatusGameResultBehavior(Board gameBoard,
 			Collection<ValidateMoveBehavior> moveValidators) {
@@ -83,20 +86,6 @@ public class StatusGameResultBehavior implements GameResultBehavior {
 				return MoveResultStatus.OK;
 			}
 
-			// for (PieceType type : PieceType.values()) {
-			// // if there is a piece type besides flag on the board,
-			// // the game isn't over yet
-			// if (type != PieceType.FLAG) {
-			// if (gameBoard
-			// .containsPiece(new Piece(type, PlayerColor.RED))
-			// || gameBoard.containsPiece(new Piece(type,
-			// PlayerColor.BLUE))) {
-			// return MoveResultStatus.OK;
-			// }
-			// }
-			// }
-			// // if there are only flags on the board, it's a draw
-			// status = MoveResultStatus.DRAW;
 		}
 
 		return status;
@@ -139,11 +128,11 @@ public class StatusGameResultBehavior implements GameResultBehavior {
 	 */
 	private boolean isValidMove(Location from, Location to, PlayerColor color)
 			throws StrategyException {
-		Piece movingPiece = gameBoard.getPieceAt(from);
+		final Piece movingPiece = gameBoard.getPieceAt(from);
 
 		// If there is a piece to attempt to move.
 		if (movingPiece != null) {
-			PieceType movingPieceType = movingPiece.getType();
+			final PieceType movingPieceType = movingPiece.getType();
 
 			for (ValidateMoveBehavior validator : moveValidators) {
 				if (!(validator.isMoveValid(movingPieceType, from, to, color))) {

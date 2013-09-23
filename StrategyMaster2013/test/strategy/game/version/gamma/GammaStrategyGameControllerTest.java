@@ -1452,7 +1452,7 @@ public class GammaStrategyGameControllerTest {
 	 */
 	@Test
 	public void testRedWinsIfBlueHasOnlyFlagLeft() throws StrategyException {
-		// Put the red marshall in the front row.
+		// Put the red marshal in the front row.
 		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
 				new Location2D(1, 0), new Location2D(0, 1));
 		StrategyGameController controller = factory.makeGammaStrategyGame(

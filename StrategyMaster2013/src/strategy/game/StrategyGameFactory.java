@@ -23,6 +23,7 @@ import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.version.BattleBehavior;
 import strategy.game.version.Board;
 import strategy.game.version.GameResultBehavior;
+import strategy.game.version.MoveHistory;
 import strategy.game.version.StrategyGameControllerImpl;
 import strategy.game.version.TurnUpdateBehavior;
 import strategy.game.version.ValidateConfigurationBehavior;
@@ -126,6 +127,8 @@ public class StrategyGameFactory {
 				startingBlueConfig, 6, 6, chokePoints);
 
 		final Board gameBoard = new Board(pieceMap);
+		
+		final MoveHistory moveHistory = new MoveHistory();
 
 		final Collection<ValidateConfigurationBehavior> configValidators = 
 				new ArrayList<ValidateConfigurationBehavior>();
@@ -151,7 +154,7 @@ public class StrategyGameFactory {
 		moveValidators.add(new NotMovingFlagMoveValidator());
 		moveValidators.add(new MovingOnTurnMoveValidator(gameBoard));
 		moveValidators.add(new CorrectPieceTypeMoveValidator(gameBoard));
-		moveValidators.add(new MoveRepetitionRuleValidator());
+		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
 
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 
@@ -162,7 +165,7 @@ public class StrategyGameFactory {
 
 		return new StrategyGameControllerImpl(configValidators, moveValidators,
 				turnUpdateBehavior, battleBehavior, gameResultBehavior,
-				gameBoard);
+				gameBoard, moveHistory);
 	}
 
 	private static Map<Location, Piece> makeBoard(
