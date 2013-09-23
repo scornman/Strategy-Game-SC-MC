@@ -17,9 +17,20 @@ import strategy.game.common.PieceType;
 import strategy.game.version.Board;
 import strategy.game.version.ValidateMoveBehavior;
 
+/**
+ * Class for NotAttackingOwnTeamValidator
+ * makes sure player doesn't attempt to move onto space with teammate
+ * @author Madalyn
+ * @version 9/22/13
+ *
+ */
 public class NotAttackingOwnTeamMoveValidator implements ValidateMoveBehavior {
 	private final Board gameBoard;
 
+	/**
+	 * Constructor for NotAttackingOwnTeamMoveValidator
+	 * @param gameBoard
+	 */
 	public NotAttackingOwnTeamMoveValidator(Board gameBoard) {
 		this.gameBoard = gameBoard;
 	}

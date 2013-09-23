@@ -4,7 +4,6 @@
 package strategy.game.version;
 
 import java.util.Collection;
-import java.util.Map;
 
 import strategy.common.PlayerColor;
 import strategy.common.StrategyException;

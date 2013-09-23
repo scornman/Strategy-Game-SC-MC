@@ -14,6 +14,12 @@ import strategy.common.PlayerColor;
 
 import strategy.game.version.TurnUpdateBehavior;
 
+/**
+ * implmentation of the TurnUpdate via AlternateTeamTurnBehavior
+ * @author Madalyn
+ * @version 9/22/13
+ *
+ */
 public class AlternateTeamTurnBehavior implements TurnUpdateBehavior{
 
 	@Override

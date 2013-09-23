@@ -16,9 +16,20 @@ import strategy.game.common.PieceType;
 import strategy.game.version.Board;
 import strategy.game.version.ValidateMoveBehavior;
 
+/**
+ * Class MovingOnTurnMoveValidator
+ * make sure player only moves when it's their turn
+ * @author Madalyn
+ * @version 9/22/13
+ *
+ */
 public class MovingOnTurnMoveValidator implements ValidateMoveBehavior{
 	private final Board gameBoard;
 	
+	/**
+	 * Constructor for MovingOnTurnMoveValidator
+	 * @param gameBoard for all pieces
+	 */
 	public MovingOnTurnMoveValidator(Board gameBoard) {
 		// TODO Auto-generated constructor stub
 		this.gameBoard = gameBoard;

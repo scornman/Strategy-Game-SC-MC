@@ -16,6 +16,13 @@ import strategy.game.common.Location;
 import strategy.game.common.PieceType;
 import strategy.game.version.ValidateMoveBehavior;
 
+/**
+ * Class OneSpaceInDirectionMoveValidator
+ * piece cannot move more than one space at a time
+ * @author Madalyn
+ * @version 9/22/13
+ *
+ */
 public class OneSpaceInDirectionMoveValidator implements ValidateMoveBehavior {
 
 	@Override

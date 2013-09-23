@@ -26,6 +26,7 @@ import strategy.game.version.Board;
  * 
  * @author Madalyn
  * @author scornman
+ * @version 9/22/13
  * 
  */
 public class GammaBattleBehavior implements BattleBehavior {

@@ -26,7 +26,7 @@ import strategy.game.version.GameResultBehavior;
  * 
  */
 public class StatusGameResultBehavior implements GameResultBehavior {
-	private Board gameBoard;
+	private final Board gameBoard;
 
 	/**
 	 * Creates a new StatusGameResultBehavior object.

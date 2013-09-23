@@ -16,13 +16,13 @@ import strategy.common.StrategyRuntimeException;
 import strategy.game.common.Location;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
-import strategy.game.common.PieceType;
 
 /**
  * The game board that keeps track of all of the pieces and their locations.
  * 
  * @author scornman
  * @author Madalyn
+ * @version 9/22/13
  * 
  */
 public class Board {
