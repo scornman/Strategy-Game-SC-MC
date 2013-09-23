@@ -8,7 +8,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package strategy.game.version.validateMoveBehaviors;
+package strategy.game.version;
 
 import strategy.game.common.Coordinate;
 import strategy.game.common.Location;

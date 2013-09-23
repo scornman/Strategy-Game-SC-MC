@@ -3,6 +3,7 @@
  */
 package strategy.game.version;
 
+import strategy.common.StrategyException;
 import strategy.game.common.MoveResultStatus;
 
 /**
@@ -17,7 +18,8 @@ public interface GameResultBehavior {
 	 * gets the status of the game
 	 * lets know if game is over/not and winner/no winner
 	 * @return MoveResultStatus
+	 * @throws StrategyException 
 	 */
-	MoveResultStatus getGameStatus();
+	MoveResultStatus getGameStatus() throws StrategyException;
 	
 }

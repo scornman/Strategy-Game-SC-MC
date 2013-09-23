@@ -98,6 +98,10 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 				throw new StrategyException("That move is not valid.");
 			}
 		}
+		
+		// Update the move history 
+		// TODO
+		
 
 		PieceLocationDescriptor battleWinner;
 

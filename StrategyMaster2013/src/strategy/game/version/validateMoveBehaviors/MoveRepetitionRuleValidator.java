@@ -16,6 +16,7 @@ import java.util.Map;
 import strategy.common.PlayerColor;
 import strategy.game.common.Location;
 import strategy.game.common.PieceType;
+import strategy.game.version.MoveHistoryEntry;
 import strategy.game.version.ValidateMoveBehavior;
 
 /**

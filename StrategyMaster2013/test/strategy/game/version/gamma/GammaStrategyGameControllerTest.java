@@ -1402,45 +1402,119 @@ public class GammaStrategyGameControllerTest {
 	}
 
 	/**
-	 * Test that you cannot move onto a choke point (which are synonymous
-	 * with invalid locations)
+	 * Test that you cannot move onto a choke point (which are synonymous with
+	 * invalid locations)
 	 * 
 	 * @throws StrategyException
-	 * 				invalid move should throw an exception
+	 *             invalid move should throw an exception
 	 */
 	@Test(expected = StrategyException.class)
-	public void cannotMovePieceOntoAChokePoint() throws StrategyException{
+	public void cannotMovePieceOntoAChokePoint() throws StrategyException {
 		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		PieceType movingPiece = PieceType.LIEUTENANT;
 		Location location1 = new Location2D(2, 1);
-		Location location2 = new Location2D(2, 2); //this is the choke point
-		
-		//this move is invalid move
+		Location location2 = new Location2D(2, 2); // this is the choke point
+
+		// this move is invalid move
 		controller.move(movingPiece, location1, location2);
 		assertTrue(true);
 	}
-	
+
 	/**
-	 * Test that you cannot move a choke point (which are synonymous
-	 * with invalid locations)
+	 * Test that you cannot move a choke point (which are synonymous with
+	 * invalid locations)
 	 * 
 	 * @throws StrategyException
-	 * 				invalid move should throw an exception
+	 *             invalid move should throw an exception
 	 */
 	@Test(expected = StrategyException.class)
-	public void cannotMoveAChokePoint() throws StrategyException{
+	public void cannotMoveAChokePoint() throws StrategyException {
 		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		PieceType movingPiece = PieceType.CHOKE_POINT;
-		Location location1 = new Location2D(2, 2); //this is the choke point
-		Location location2 = new Location2D(1, 2); 
-		
-		//this move is invalid move
+		Location location1 = new Location2D(2, 2); // this is the choke point
+		Location location2 = new Location2D(1, 2);
+
+		// this move is invalid move
 		controller.move(movingPiece, location1, location2);
 		assertTrue(true);
+	}
+
+	/**
+	 * Tests that red wins if blue cannot make a legal move, because the only
+	 * remaining blue piece is the flag, but red can make a legal move.
+	 * 
+	 * @throws StrategyException
+	 *             if an invalid move is made.
+	 */
+	@Test
+	public void testRedWinsIfBlueHasOnlyFlagLeft() throws StrategyException {
+		// Put the red marshall in the front row.
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
+				new Location2D(1, 0), new Location2D(0, 1));
+		StrategyGameController controller = factory.makeGammaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// Perform the sequence of moves that will lead to the battle.
+		controller.move(PieceType.MARSHAL, new Location2D(0, 1),
+				new Location2D(0, 2)); // red
+		controller.move(PieceType.SERGEANT, new Location2D(4, 4),
+				new Location2D(4, 3)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(0, 2),
+				new Location2D(0, 3)); // red
+		controller.move(PieceType.SERGEANT, new Location2D(4, 3),
+				new Location2D(4, 4)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(0, 3),
+				new Location2D(0, 4)); // red
+		controller.move(PieceType.SERGEANT, new Location2D(5, 4),
+				new Location2D(5, 3)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(0, 4),
+				new Location2D(1, 4)); // red
+		controller.move(PieceType.SERGEANT, new Location2D(5, 3),
+				new Location2D(5, 4)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(1, 4),
+				new Location2D(2, 4)); // red
+		controller.move(PieceType.SERGEANT, new Location2D(4, 4),
+				new Location2D(4, 3)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(2, 4),
+				new Location2D(3, 4)); // red
+		controller.move(PieceType.SERGEANT, new Location2D(4, 3),
+				new Location2D(4, 4)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(3, 4),
+				new Location2D(4, 4)); // red
+		controller.move(PieceType.COLONEL, new Location2D(2, 5),
+				new Location2D(2, 4)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(4, 4),
+				new Location2D(5, 4)); // red
+		controller.move(PieceType.COLONEL, new Location2D(2, 4),
+				new Location2D(2, 5)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(5, 4),
+				new Location2D(5, 5)); // red
+		controller.move(PieceType.COLONEL, new Location2D(3, 5),
+				new Location2D(3, 4)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(5, 5),
+				new Location2D(4, 5)); // red
+		controller.move(PieceType.COLONEL, new Location2D(3, 4),
+				new Location2D(3, 5)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(4, 5),
+				new Location2D(3, 5)); // red
+		controller.move(PieceType.MARSHAL, new Location2D(1, 5),
+				new Location2D(1, 4)); // blue
+		controller.move(PieceType.MARSHAL, new Location2D(3, 5),
+				new Location2D(2, 5)); // red
+		controller.move(PieceType.MARSHAL, new Location2D(1, 4),
+				new Location2D(1, 5)); // blue
+
+		MoveResult result = controller.move(PieceType.MARSHAL, new Location2D(
+				2, 5), new Location2D(1, 5)); // red marshal attacks blue
+												// marshal, the last blue
+												// piece.
+
+		// check that the game status is RED_WINS/game ends
+		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
 	}
 
 }

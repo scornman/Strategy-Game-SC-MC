@@ -11,6 +11,7 @@
 package strategy.game.version;
 
 import java.util.Map;
+import java.util.Set;
 
 import strategy.common.StrategyException;
 import strategy.game.common.Location;
@@ -131,5 +132,14 @@ public class Board {
 	 */
 	public boolean containsPiece(Piece piece) {
 		return pieceMap.containsValue(piece);
+	}
+
+	/**
+	 * Accesses the set of all valid locations on the board.
+	 * 
+	 * @return the set of all valid locations on the board.
+	 */
+	public Set<Location> getValidLocations() {
+		return pieceMap.keySet();
 	}
 }

@@ -158,7 +158,7 @@ public class StrategyGameFactory {
 		final BattleBehavior battleBehavior = new GammaBattleBehavior(gameBoard);
 
 		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
-				gameBoard);
+				gameBoard, moveValidators);
 
 		return new StrategyGameControllerImpl(configValidators, moveValidators,
 				turnUpdateBehavior, battleBehavior, gameResultBehavior,
