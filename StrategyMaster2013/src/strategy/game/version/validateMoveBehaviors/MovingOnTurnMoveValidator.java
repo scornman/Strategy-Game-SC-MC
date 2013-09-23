@@ -11,6 +11,7 @@
 package strategy.game.version.validateMoveBehaviors;
 
 import strategy.common.PlayerColor;
+import strategy.common.StrategyException;
 import strategy.game.common.Location;
 import strategy.game.common.PieceType;
 import strategy.game.version.Board;
@@ -37,10 +38,11 @@ public class MovingOnTurnMoveValidator implements ValidateMoveBehavior{
 
 	/**
 	 * move is valid only if it is the player's turn
+	 * @throws StrategyException if one of the locations given is not a valid location on the board.
 	 */
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
-			PlayerColor currentColor) {
+			PlayerColor currentColor) throws StrategyException {
 		final PlayerColor pieceColor = gameBoard.getPieceAt(from).getOwner();
 		
 		if(pieceColor != currentColor){

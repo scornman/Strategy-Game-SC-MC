@@ -78,7 +78,7 @@ public class StrategyGameFactory {
 	 * 
 	 * @return the created Alpha Strategy game
 	 */
-	public static StrategyGameController makeAlphaStrategyGame() {
+	public StrategyGameController makeAlphaStrategyGame() {
 		final StrategyGameController controller = new AlphaStrategyGameController();
 		return controller;
 	}
@@ -95,7 +95,7 @@ public class StrategyGameFactory {
 	 * @throws StrategyException
 	 *             if either configuration is correct
 	 */
-	public static StrategyGameController makeBetaStrategyGame(
+	public StrategyGameController makeBetaStrategyGame(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration)
 			throws StrategyException {
@@ -112,7 +112,7 @@ public class StrategyGameFactory {
 	 * @return a StrategyGameController for a gamma strategy game
 	 * @throws StrategyException
 	 */
-	public static StrategyGameController makeGammaStrategyGame(
+	public StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig)
 			throws StrategyException {

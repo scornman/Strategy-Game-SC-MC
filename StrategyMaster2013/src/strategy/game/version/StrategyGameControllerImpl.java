@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
+import strategy.common.StrategyRuntimeException;
 import strategy.game.StrategyGameController;
 import strategy.game.common.Location;
 import strategy.game.common.MoveResult;
@@ -30,9 +31,9 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 	private boolean gameStarted;
 	private PlayerColor currentColor;
 
-
 	/**
 	 * Constructor for StrategyGameControllerImpl
+	 * 
 	 * @param configValidators
 	 * @param moveValidators
 	 * @param turnUpdateBehavior
@@ -91,9 +92,9 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 			throw new StrategyException(
 					"Cannot move before the game is started.");
 		}
-		
-		for(ValidateMoveBehavior moveValidator : moveValidators){
-			if(!(moveValidator.isMoveValid(piece, from, to, currentColor))){
+
+		for (ValidateMoveBehavior moveValidator : moveValidators) {
+			if (!(moveValidator.isMoveValid(piece, from, to, currentColor))) {
 				throw new StrategyException("That move is not valid.");
 			}
 		}
@@ -122,7 +123,13 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 
 	@Override
 	public Piece getPieceAt(Location location) {
-		final Piece piece = gameBoard.getPieceAt(location);
+		final Piece piece;
+		try {
+			piece = gameBoard.getPieceAt(location);
+		} catch (StrategyException e) {
+			// Convert caught StrategyException into a StrategyRuntimeException
+			throw new StrategyRuntimeException(e.getMessage());
+		}
 		return piece;
 	}
 

@@ -12,7 +12,7 @@ package strategy.game.version;
 
 import java.util.Map;
 
-import strategy.common.StrategyRuntimeException;
+import strategy.common.StrategyException;
 import strategy.game.common.Location;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
@@ -44,11 +44,13 @@ public class Board {
 	 * @param location
 	 *            the location to check
 	 * @return the piece at the specified location.
+	 * @throws StrategyException
+	 *             if a location is given that does not exist on the board.
 	 */
-	public Piece getPieceAt(Location location) {
+	public Piece getPieceAt(Location location) throws StrategyException {
 		// if location is not on the board, throw exception
 		if (!(isValidLocation(location))) {
-			throw new StrategyRuntimeException(
+			throw new StrategyException(
 					"That location does not exist on the board.");
 		}
 		return pieceMap.get(location);
@@ -109,8 +111,11 @@ public class Board {
 	 *            the location of the piece before the move.
 	 * @param to
 	 *            the location the piece wants to move to.
+	 * @throws StrategyException
+	 *             if one of the given locations does not exist on the board.
 	 */
-	public void updatePositions(Location from, Location to) {
+	public void updatePositions(Location from, Location to)
+			throws StrategyException {
 		final Piece piece = getPieceAt(from);
 
 		putPiece(from, null);

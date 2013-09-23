@@ -13,6 +13,7 @@ package strategy.game.version.battleBehaviors;
 import java.util.HashMap;
 import java.util.Map;
 
+import strategy.common.StrategyException;
 import strategy.game.common.Location;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
@@ -61,7 +62,7 @@ public class GammaBattleBehavior implements BattleBehavior {
 	}
 
 	@Override
-	public boolean isBattle(Location fromLocation, Location toLocation) {
+	public boolean isBattle(Location fromLocation, Location toLocation) throws StrategyException {
 		// check if there is a piece in the toLocation
 		if (gameBoard.getPieceAt(toLocation) != null) {
 			return true;
@@ -79,10 +80,11 @@ public class GammaBattleBehavior implements BattleBehavior {
 	 * @param defendPiece
 	 *            the piece that is defending.
 	 * @return the piece that wins the battle.
+	 * @throws StrategyException 
 	 */
 	@Override
 	public PieceLocationDescriptor getBattleWinner(Location fromLocation,
-			Location toLocation) {
+			Location toLocation) throws StrategyException {
 		final Piece attackPiece = gameBoard.getPieceAt(fromLocation);
 		final Piece defendPiece = gameBoard.getPieceAt(toLocation);
 

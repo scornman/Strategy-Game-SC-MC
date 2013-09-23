@@ -11,6 +11,7 @@
 package strategy.game.version.validateMoveBehaviors;
 
 import strategy.common.PlayerColor;
+import strategy.common.StrategyException;
 import strategy.game.common.Location;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceType;
@@ -18,17 +19,19 @@ import strategy.game.version.Board;
 import strategy.game.version.ValidateMoveBehavior;
 
 /**
- * Class for NotAttackingOwnTeamValidator
- * makes sure player doesn't attempt to move onto space with teammate
+ * Class for NotAttackingOwnTeamValidator makes sure player doesn't attempt to
+ * move onto space with teammate
+ * 
  * @author Madalyn
  * @version 9/22/13
- *
+ * 
  */
 public class NotAttackingOwnTeamMoveValidator implements ValidateMoveBehavior {
 	private final Board gameBoard;
 
 	/**
 	 * Constructor for NotAttackingOwnTeamMoveValidator
+	 * 
 	 * @param gameBoard
 	 */
 	public NotAttackingOwnTeamMoveValidator(Board gameBoard) {
@@ -37,10 +40,14 @@ public class NotAttackingOwnTeamMoveValidator implements ValidateMoveBehavior {
 
 	/**
 	 * makes sure that the piece the player is attacking is not its own team
+	 * 
+	 * @throws StrategyException
+	 *             if one of the locations given is not a valid location on the
+	 *             board.
 	 */
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
-			PlayerColor currentColor) {
+			PlayerColor currentColor) throws StrategyException {
 		final Piece attackingPiece = gameBoard.getPieceAt(from);
 		final Piece defendingPiece = gameBoard.getPieceAt(to);
 

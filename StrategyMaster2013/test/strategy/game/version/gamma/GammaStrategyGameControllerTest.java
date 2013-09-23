@@ -1408,7 +1408,7 @@ public class GammaStrategyGameControllerTest {
 	 * @throws StrategyException
 	 * 				invalid move should throw an exception
 	 */
-	@Test(expected = StrategyRuntimeException.class)
+	@Test(expected = StrategyException.class)
 	public void cannotMovePieceOntoAChokePoint() throws StrategyException{
 		StrategyGameController controller = factory.makeGammaStrategyGame(
 				startingRedConfig, startingBlueConfig);
@@ -1416,6 +1416,27 @@ public class GammaStrategyGameControllerTest {
 		PieceType movingPiece = PieceType.LIEUTENANT;
 		Location location1 = new Location2D(2, 1);
 		Location location2 = new Location2D(2, 2); //this is the choke point
+		
+		//this move is invalid move
+		controller.move(movingPiece, location1, location2);
+		assertTrue(true);
+	}
+	
+	/**
+	 * Test that you cannot move a choke point (which are synonymous
+	 * with invalid locations)
+	 * 
+	 * @throws StrategyException
+	 * 				invalid move should throw an exception
+	 */
+	@Test(expected = StrategyException.class)
+	public void cannotMoveAChokePoint() throws StrategyException{
+		StrategyGameController controller = factory.makeGammaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		PieceType movingPiece = PieceType.CHOKE_POINT;
+		Location location1 = new Location2D(2, 2); //this is the choke point
+		Location location2 = new Location2D(1, 2); 
 		
 		//this move is invalid move
 		controller.move(movingPiece, location1, location2);

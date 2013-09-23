@@ -11,6 +11,7 @@
 package strategy.game.version.validateMoveBehaviors;
 
 import strategy.common.PlayerColor;
+import strategy.common.StrategyException;
 import strategy.game.common.Location;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceType;
@@ -41,7 +42,7 @@ public class CorrectPieceTypeMoveValidator implements ValidateMoveBehavior {
 
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
-			PlayerColor currentColor) {
+			PlayerColor currentColor) throws StrategyException {
 		final Piece movingPiece = gameBoard.getPieceAt(from);
 		return(piece == movingPiece.getType());
 	}
