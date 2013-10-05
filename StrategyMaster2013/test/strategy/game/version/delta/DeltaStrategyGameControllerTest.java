@@ -159,8 +159,241 @@ public class DeltaStrategyGameControllerTest {
 	@Before
 	public void setUp() {
 		factory = StrategyGameFactory.getInstance();
-		//startingRedConfig = setupValidRedConfiguration();
-		//startingBlueConfig = setupValidBlueConfiguration();
+		startingRedConfig = setupValidRedConfiguration();
+		startingBlueConfig = setupValidBlueConfiguration();
+	}
+	
+	/**
+	 * Helper method that sets up a valid starting configuration for red pieces
+	 * that test cases can use.
+	 * 
+	 * @return the collection of red pieces and their corresponding starting
+	 *         locations.
+	 */
+	private Collection<PieceLocationDescriptor> setupValidRedConfiguration() {
+		// Set up the starting configuration for the red pieces
+		Collection<PieceLocationDescriptor> redConfiguration = new ArrayList<PieceLocationDescriptor>();
+		ArrayList<Piece> redPieces = new ArrayList<Piece>();
+		ArrayList<Location> redLocations = new ArrayList<Location>();
+		// Red flag (1)
+		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
+		redLocations.add(loc83);
+		// Red Bombs (6)
+		redPieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		redLocations.add(loc93);
+		redPieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		redLocations.add(loc20);
+		redPieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		redLocations.add(loc30);
+		redPieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		redLocations.add(loc40);
+		redPieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		redLocations.add(loc50);
+		redPieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		redLocations.add(loc60);
+		// Red Marshal (1)
+		redPieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
+		redLocations.add(loc03);
+		// Red General
+		redPieces.add(new Piece(PieceType.GENERAL, PlayerColor.RED));
+		redLocations.add(loc23);
+		// Red Colonels
+		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
+		redLocations.add(loc33);
+		redPieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
+		redLocations.add(loc63);
+		// Red Majors
+		redPieces.add(new Piece(PieceType.MAJOR, PlayerColor.RED));
+		redLocations.add(loc21);
+		redPieces.add(new Piece(PieceType.MAJOR, PlayerColor.RED));
+		redLocations.add(loc73);
+		redPieces.add(new Piece(PieceType.MAJOR, PlayerColor.RED));
+		redLocations.add(loc72);
+		// Red Captains
+		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		redLocations.add(loc81);
+		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		redLocations.add(loc82);
+		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		redLocations.add(loc91);
+		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		redLocations.add(loc92);		
+		// Red Lieutenants
+		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		redLocations.add(loc71);
+		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		redLocations.add(loc70);
+		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		redLocations.add(loc80);
+		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		redLocations.add(loc90);		
+		// Red Sergeants
+		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		redLocations.add(loc51);
+		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		redLocations.add(loc52);
+		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		redLocations.add(loc61);
+		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		redLocations.add(loc62);
+		// Red Miners (5)
+		redPieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		redLocations.add(loc53);
+		redPieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		redLocations.add(loc31);
+		redPieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		redLocations.add(loc32);
+		redPieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		redLocations.add(loc41);
+		redPieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		redLocations.add(loc42);
+		// Red Scouts (8)
+		redPieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		redLocations.add(loc43);
+		redPieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		redLocations.add(loc00);
+		redPieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		redLocations.add(loc01);
+		redPieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		redLocations.add(loc02);
+		redPieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		redLocations.add(loc10);
+		redPieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		redLocations.add(loc11);
+		redPieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		redLocations.add(loc12);
+		redPieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		redLocations.add(loc22);
+		// Red Spy (1)
+		redPieces.add(new Piece(PieceType.SPY, PlayerColor.RED));
+		redLocations.add(loc13);
+		
+		// Combine the pieces with their locations
+		for (int i = 0; i < redPieces.size(); i++) {
+			Piece iPiece = redPieces.get(i);
+			Location iLocation = redLocations.get(i);
+			redConfiguration
+					.add(new PieceLocationDescriptor(iPiece, iLocation));
+		}
+
+		return redConfiguration;
+	}
+
+	/**
+	 * Helper method that sets up a valid starting configuration for blue pieces
+	 * that test cases can use.
+	 * 
+	 * @return the collection of red pieces and their corresponding starting
+	 *         locations.
+	 */
+	private Collection<PieceLocationDescriptor> setupValidBlueConfiguration() {
+		// Set up the starting configuration for the blue pieces
+		Collection<PieceLocationDescriptor> blueConfiguration = new ArrayList<PieceLocationDescriptor>();
+		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
+		ArrayList<Location> blueLocations = new ArrayList<Location>();
+		
+		// Red flag (1)
+		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
+		blueLocations.add(loc46);
+		// Red Bombs (6)
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		blueLocations.add(loc56);
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		blueLocations.add(loc29);
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		blueLocations.add(loc39);
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		blueLocations.add(loc49);
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		blueLocations.add(loc59);
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		blueLocations.add(loc69);
+		// Red Marshal (1)
+		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
+		blueLocations.add(loc16);
+		// Red General
+		bluePieces.add(new Piece(PieceType.GENERAL, PlayerColor.RED));
+		blueLocations.add(loc26);
+		// Red Colonels
+		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
+		blueLocations.add(loc36);
+		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
+		blueLocations.add(loc66);
+		// Red Majors
+		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.RED));
+		blueLocations.add(loc28);
+		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.RED));
+		blueLocations.add(loc76);
+		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.RED));
+		blueLocations.add(loc77);
+		// Red Captains
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		blueLocations.add(loc87);
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		blueLocations.add(loc88);
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		blueLocations.add(loc97);
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		blueLocations.add(loc98);		
+		// Red Lieutenants
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		blueLocations.add(loc78);
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		blueLocations.add(loc79);
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		blueLocations.add(loc89);
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		blueLocations.add(loc99);		
+		// Red Sergeants
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		blueLocations.add(loc57);
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		blueLocations.add(loc58);
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		blueLocations.add(loc67);
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		blueLocations.add(loc68);
+		// Red Miners (5)
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		blueLocations.add(loc96);
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		blueLocations.add(loc37);
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		blueLocations.add(loc38);
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		blueLocations.add(loc47);
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		blueLocations.add(loc48);
+		// Red Scouts (8)
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		blueLocations.add(loc86);
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		blueLocations.add(loc07);
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		blueLocations.add(loc08);
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		blueLocations.add(loc09);
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		blueLocations.add(loc17);
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		blueLocations.add(loc18);
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		blueLocations.add(loc19);
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		blueLocations.add(loc27);
+		// Red Spy (1)
+		bluePieces.add(new Piece(PieceType.SPY, PlayerColor.RED));
+		blueLocations.add(loc06);		
+		
+		// Combine the pieces with their locations
+		for (int i = 0; i < bluePieces.size(); i++) {
+			Piece iPiece = bluePieces.get(i);
+			Location iLocation = blueLocations.get(i);
+			blueConfiguration
+					.add(new PieceLocationDescriptor(iPiece, iLocation));
+		}
+
+		return blueConfiguration;
 	}
 
 
