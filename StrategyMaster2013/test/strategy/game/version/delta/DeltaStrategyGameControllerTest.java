@@ -292,97 +292,97 @@ public class DeltaStrategyGameControllerTest {
 		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
 		ArrayList<Location> blueLocations = new ArrayList<Location>();
 		
-		// Red flag (1)
-		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
+		// Blue flag (1)
+		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
 		blueLocations.add(loc46);
-		// Red Bombs (6)
-		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		// Blue Bombs (6)
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.BLUE));
 		blueLocations.add(loc56);
-		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.BLUE));
 		blueLocations.add(loc29);
-		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.BLUE));
 		blueLocations.add(loc39);
-		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.BLUE));
 		blueLocations.add(loc49);
-		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.BLUE));
 		blueLocations.add(loc59);
-		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.BLUE));
 		blueLocations.add(loc69);
-		// Red Marshal (1)
-		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.RED));
+		// Blue Marshal (1)
+		bluePieces.add(new Piece(PieceType.MARSHAL, PlayerColor.BLUE));
 		blueLocations.add(loc16);
-		// Red General
-		bluePieces.add(new Piece(PieceType.GENERAL, PlayerColor.RED));
+		// Blue General
+		bluePieces.add(new Piece(PieceType.GENERAL, PlayerColor.BLUE));
 		blueLocations.add(loc26);
-		// Red Colonels
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
+		// Blue Colonels
+		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
 		blueLocations.add(loc36);
-		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.COLONEL, PlayerColor.BLUE));
 		blueLocations.add(loc66);
-		// Red Majors
-		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.RED));
+		// Blue Majors
+		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.BLUE));
 		blueLocations.add(loc28);
-		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.BLUE));
 		blueLocations.add(loc76);
-		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.MAJOR, PlayerColor.BLUE));
 		blueLocations.add(loc77);
-		// Red Captains
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		// Blue Captains
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
 		blueLocations.add(loc87);
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
 		blueLocations.add(loc88);
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
 		blueLocations.add(loc97);
-		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.BLUE));
 		blueLocations.add(loc98);		
-		// Red Lieutenants
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		// Blue Lieutenants
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
 		blueLocations.add(loc78);
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
 		blueLocations.add(loc79);
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
 		blueLocations.add(loc89);
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
 		blueLocations.add(loc99);		
-		// Red Sergeants
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		// Blue Sergeants
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
 		blueLocations.add(loc57);
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
 		blueLocations.add(loc58);
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
 		blueLocations.add(loc67);
-		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
 		blueLocations.add(loc68);
-		// Red Miners (5)
-		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		// Blue Miners (5)
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
 		blueLocations.add(loc96);
-		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
 		blueLocations.add(loc37);
-		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
 		blueLocations.add(loc38);
-		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
 		blueLocations.add(loc47);
-		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
 		blueLocations.add(loc48);
-		// Red Scouts (8)
-		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		// Blue Scouts (8)
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.BLUE));
 		blueLocations.add(loc86);
-		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.BLUE));
 		blueLocations.add(loc07);
-		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.BLUE));
 		blueLocations.add(loc08);
-		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.BLUE));
 		blueLocations.add(loc09);
-		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.BLUE));
 		blueLocations.add(loc17);
-		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.BLUE));
 		blueLocations.add(loc18);
-		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.BLUE));
 		blueLocations.add(loc19);
-		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.RED));
+		bluePieces.add(new Piece(PieceType.SCOUT, PlayerColor.BLUE));
 		blueLocations.add(loc27);
-		// Red Spy (1)
-		bluePieces.add(new Piece(PieceType.SPY, PlayerColor.RED));
+		// Blue Spy (1)
+		bluePieces.add(new Piece(PieceType.SPY, PlayerColor.BLUE));
 		blueLocations.add(loc06);		
 		
 		// Combine the pieces with their locations
@@ -608,28 +608,28 @@ public class DeltaStrategyGameControllerTest {
 		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
-//	/**
-//	 * Tests that the factory method makeDeltaStrategyGame fails with a
-//	 * StrategyException if the starting configuration does not contain the
-//	 * correct number of red pieces.
-//	 * 
-//	 * @throws StrategyException
-//	 *             if the factory method is given an invalid configuration for
-//	 *             either side. This is the expected behavior.
-//	 */
-//	@Test(expected = StrategyException.class)
-//	public void testControllerCreationFailsWhenWrongNumberOfRedPieces()
-//			throws StrategyException {
-//		Piece pieceToRemove = new Piece(PieceType.SERGEANT, PlayerColor.RED);
-//		Location location = new Location2D(4, 1);
-//		PieceLocationDescriptor pldToRemove = new PieceLocationDescriptor(
-//				pieceToRemove, location);
-//		assertTrue(startingRedConfig.remove(pldToRemove));
-//
-//		// Create the controller
-//		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
-//	}
-//
+	/**
+	 * Tests that the factory method makeDeltaStrategyGame fails with a
+	 * StrategyException if the starting configuration does not contain the
+	 * correct number of red pieces.
+	 * 
+	 * @throws StrategyException
+	 *             if the factory method is given an invalid configuration for
+	 *             either side. This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testControllerCreationFailsWhenWrongNumberOfRedPieces()
+			throws StrategyException {
+		Piece pieceToRemove = new Piece(PieceType.SERGEANT, PlayerColor.RED);
+		Location location = new Location2D(5, 1);
+		PieceLocationDescriptor pldToRemove = new PieceLocationDescriptor(
+				pieceToRemove, location);
+		assertTrue(startingRedConfig.remove(pldToRemove));
+
+		// Create the controller
+		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
+	}
+
 //	/**
 //	 * Tests that the factory method makeDeltaStrategyGame fails with a
 //	 * StrategyException if the starting configuration does not contain the
