@@ -29,7 +29,6 @@ public class OneSpaceInDirectionMoveValidator implements ValidateMoveBehavior {
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) {
 		try {
-			// @TODO: does this check for diagonal?
 			if (from.distanceTo(to) != 1) {
 				return false;
 			}

@@ -20,6 +20,7 @@ import strategy.game.common.Location;
 import strategy.game.common.Location2D;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
+import strategy.game.common.PieceType;
 import strategy.game.version.BattleBehavior;
 import strategy.game.version.Board;
 import strategy.game.version.GameResultBehavior;
@@ -129,11 +130,10 @@ public class StrategyGameFactory {
 				startingBlueConfig, 6, 6, chokePoints);
 
 		final Board gameBoard = new Board(pieceMap);
-		
+
 		final MoveHistory moveHistory = new MoveHistory();
 
-		final Collection<ValidateConfigurationBehavior> configValidators = 
-				new ArrayList<ValidateConfigurationBehavior>();
+		final Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
 		configValidators.add(new GammaPieceDistributionConfigValidator(
 				startingRedConfig, startingBlueConfig));
 		configValidators.add(new GammaStartLocationsConfigValidator(
@@ -170,7 +170,6 @@ public class StrategyGameFactory {
 				gameBoard, moveHistory);
 	}
 
-	
 	/**
 	 * Create a new delta strategy game
 	 * 
@@ -183,29 +182,28 @@ public class StrategyGameFactory {
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig)
 			throws StrategyException {
-		
+
 		final Collection<Location> chokePoints = new ArrayList<Location>();
-		chokePoints.add(new Location2D(2,4));
-		chokePoints.add(new Location2D(2,5));
-		chokePoints.add(new Location2D(3,4));
-		chokePoints.add(new Location2D(3,5));
-		chokePoints.add(new Location2D(6,4));
-		chokePoints.add(new Location2D(6,4));
-		chokePoints.add(new Location2D(7,4));
-		chokePoints.add(new Location2D(7,5));
+		chokePoints.add(new Location2D(2, 4));
+		chokePoints.add(new Location2D(2, 5));
+		chokePoints.add(new Location2D(3, 4));
+		chokePoints.add(new Location2D(3, 5));
+		chokePoints.add(new Location2D(6, 4));
+		chokePoints.add(new Location2D(6, 4));
+		chokePoints.add(new Location2D(7, 4));
+		chokePoints.add(new Location2D(7, 5));
 		final Map<Location, Piece> pieceMap = makeBoard(startingRedConfig,
 				startingBlueConfig, 10, 10, chokePoints);
 		final Board gameBoard = new Board(pieceMap);
-		
+
 		final MoveHistory moveHistory = new MoveHistory();
-		
-		final Collection<ValidateConfigurationBehavior> configValidators = 
-				new ArrayList<ValidateConfigurationBehavior>();
+
+		final Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
 		configValidators.add(new DeltaPieceDistributionConfigValidator(
 				startingRedConfig, startingBlueConfig));
 		configValidators.add(new DeltaStartLocationsConfigValidator(
 				startingRedConfig, startingBlueConfig));
-		
+
 		// Combine the two configurations into one total configuration for
 		// passing to the NoPiecesStartAtSameLocationConfigValidator
 		final Collection<PieceLocationDescriptor> totalStartingConfig = new ArrayList<PieceLocationDescriptor>();
@@ -219,24 +217,30 @@ public class StrategyGameFactory {
 				totalStartingConfig));
 
 		final Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
+		// Validators for movement behaviors common to all piece types.
 		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
-		moveValidators.add(new OneSpaceInDirectionMoveValidator());
 		moveValidators.add(new NotMovingFlagMoveValidator());
 		moveValidators.add(new MovingOnTurnMoveValidator(gameBoard));
 		moveValidators.add(new CorrectPieceTypeMoveValidator(gameBoard));
 		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
+		// For movement behavior that varies based on the piece type
+		Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
+		validatorsByPiece.put(PieceType.SCOUT,
+				new SeveralSpacesInOneDirectionMoveValidator());
+		moveValidators.add(new DependsOnPieceTypeMoveValidator(
+				validatorsByPiece, new OneSpaceInDirectionMoveValidator()));
 
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 		final BattleBehavior battleBehavior = new GammaBattleBehavior(gameBoard);
 		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
 				gameBoard, moveValidators);
-		
+
 		return new StrategyGameControllerImpl(configValidators, moveValidators,
 				turnUpdateBehavior, battleBehavior, gameResultBehavior,
 				gameBoard, moveHistory);
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param redConfiguration
@@ -252,7 +256,7 @@ public class StrategyGameFactory {
 			int BOARD_SIZE_X, int BOARD_SIZE_Y, Collection<Location> chokePoints) {
 
 		final Map<Location, Piece> pieceMap = new HashMap<Location, Piece>();
-		
+
 		// create the locations on the board by the dimensions given
 		for (int i = 0; i < BOARD_SIZE_X; i++) {
 			for (int j = 0; j < BOARD_SIZE_Y; j++) {
