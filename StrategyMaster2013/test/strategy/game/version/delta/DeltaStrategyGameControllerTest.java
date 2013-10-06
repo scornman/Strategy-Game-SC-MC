@@ -630,193 +630,193 @@ public class DeltaStrategyGameControllerTest {
 		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
 	}
 
-//	/**
-//	 * Tests that the factory method makeDeltaStrategyGame fails with a
-//	 * StrategyException if the starting configuration does not contain the
-//	 * correct number of blue pieces.
-//	 * 
-//	 * @throws StrategyException
-//	 *             if the factory method is given an invalid configuration for
-//	 *             either side. This is the expected behavior.
-//	 */
-//	@Test(expected = StrategyException.class)
-//	public void testControllerCreationFailsWhenWrongNumberOfBluePieces()
-//			throws StrategyException {
-//		Piece pieceToRemove = new Piece(PieceType.MARSHAL, PlayerColor.BLUE);
-//		Location location = new Location2D(1, 5);
-//		PieceLocationDescriptor pldToRemove = new PieceLocationDescriptor(
-//				pieceToRemove, location);
-//		assertTrue(startingBlueConfig.remove(pldToRemove));
-//
-//		// Create the controller
-//		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
-//	}
-//
-//	/**
-//	 * Tests that the factory method makeDeltaStrategyGame fails with a
-//	 * StrategyException if the starting configuration does not contain the
-//	 * correct number of each type of red piece.
-//	 * 
-//	 * @throws StrategyException
-//	 *             if the factory method is given an invalid configuration for
-//	 *             either side. This is the expected behavior.
-//	 */
-//	@Test(expected = StrategyException.class)
-//	public void testControllerCreationFailsWhenWrongRedPieceTypes()
-//			throws StrategyException {
-//		Piece pieceToReplace = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
-//		Piece replacementPiece = new Piece(PieceType.COLONEL, PlayerColor.RED);
-//		Location pieceLocation = new Location2D(2, 1);
-//		replacePieceInStartConfiguration(startingRedConfig, pieceToReplace,
-//				replacementPiece, pieceLocation);
-//
-//		// Create the controller
-//		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
-//	}
-//
-//	/**
-//	 * Tests that the factory method makeDeltaStrategyGame fails with a
-//	 * StrategyException if the starting configuration does not contain the
-//	 * correct number of each type of blue piece.
-//	 * 
-//	 * @throws StrategyException
-//	 *             if the factory method is given an invalid configuration for
-//	 *             either side. This is the expected behavior.
-//	 */
-//	@Test(expected = StrategyException.class)
-//	public void testControllerCreationFailsWhenWrongBluePieceTypes()
-//			throws StrategyException {
-//		Piece pieceToReplace = new Piece(PieceType.CAPTAIN, PlayerColor.BLUE);
-//		Piece replacementPiece = new Piece(PieceType.MAJOR, PlayerColor.BLUE);
-//		Location pieceLocation = new Location2D(3, 5);
-//		replacePieceInStartConfiguration(startingBlueConfig, pieceToReplace,
-//				replacementPiece, pieceLocation);
-//
-//		// Create the controller
-//		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
-//	}
-//
-//	/**
-//	 * Tests Piece getPieceAt(Location location); bluePieces.add(new
-//	 * Piece(PieceType.FLAG, PlayerColor.BLUE)); blueLocations.add(new
-//	 * Location2D(0, 5));
-//	 * 
-//	 * getPieceAt(new Location(0,5)) should return Piece(PieceType.FLAG,
-//	 * PlayerColor.BLUE);
-//	 * 
-//	 * @throws StrategyException
-//	 */
-//	@Test
-//	public void getPieceAtLocationShouldReturnBlueFlag()
-//			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
-//				startingRedConfig, startingBlueConfig);
-//		Piece piece = new Piece(PieceType.FLAG, PlayerColor.BLUE);
-//
-//		assertEquals(piece, ctrlr.getPieceAt(new Location2D(0, 5)));
-//	}
-//
-//	/**
-//	 * Tests Piece getPieceAt(Location location);
-//	 * 
-//	 * getPieceAt(new Location(1,0)) should return Piece(PieceType.MARSHAL,
-//	 * PlayerColor.RED);
-//	 * 
-//	 * @throws StrategyException
-//	 */
-//	@Test
-//	public void getPieceAtLocationShouldReturnRedMarshal()
-//			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
-//				startingRedConfig, startingBlueConfig);
-//		Piece piece = new Piece(PieceType.MARSHAL, PlayerColor.RED);
-//
-//		assertEquals(piece, ctrlr.getPieceAt(new Location2D(1, 0)));
-//	}
-//
-//	/**
-//	 * getPieceAt returns null if there is no piece at the specified location.
-//	 * 
-//	 * getPiece at (3,3) should be null (there is no piece currently on (3,3))
-//	 * 
-//	 * @throws StrategyException
-//	 */
-//	@Test
-//	public void getPieceAtLocationShouldReturnNullIfNoPiecePresent()
-//			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
-//				startingRedConfig, startingBlueConfig);
-//		assertEquals(null, ctrlr.getPieceAt(new Location2D(4, 3)));
-//	}
-//
-//	/**
-//	 * getPieceAt should throw an error if the location does not exist on the
-//	 * board
-//	 * 
-//	 * get Piece at (6,7) should throw an exception
-//	 * 
-//	 * @throws StrategyException
-//	 */
-//	@Test(expected = StrategyRuntimeException.class)
-//	public void getPieceAtLocationNotOnBoardShouldThrowException()
-//			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
-//				startingRedConfig, startingBlueConfig);
-//		ctrlr.getPieceAt(new Location2D(6, 7));
-//	}
-//
-//	/**
-//	 * getPieceAt y-coordinate location shouldn't be negative
-//	 * 
-//	 * @throws StrategyException
-//	 */
-//	@Test(expected = StrategyRuntimeException.class)
-//	public void getPieceAtCannotHaveANegativeYCoordinate()
-//			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
-//				startingRedConfig, startingBlueConfig);
-//		ctrlr.getPieceAt(new Location2D(0, -1));
-//	}
-//
-//	/**
-//	 * getPieceAt x-coordinate location shouldn't be negative
-//	 * 
-//	 * @throws StrategyException
-//	 */
-//	@Test(expected = StrategyRuntimeException.class)
-//	public void getPieceAtCannotHaveANegativeXCoordinate()
-//			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
-//				startingRedConfig, startingBlueConfig);
-//		ctrlr.getPieceAt(new Location2D(-1, 0));
-//	}
-//
-//	/**
-//	 * getPieceAt x-coordinate and y-coordinate location shouldn't be negative
-//	 * 
-//	 * @throws StrategyException
-//	 */
-//	@Test(expected = StrategyRuntimeException.class)
-//	public void getPieceAtCannotHaveNegativeCoordinates()
-//			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
-//				startingRedConfig, startingBlueConfig);
-//		ctrlr.getPieceAt(new Location2D(-1, -1));
-//	}
-//
-//	/**
-//	 * getPieceAt x-coordinate and y-coordinate location shouldn't be negative
-//	 * 
-//	 * @throws StrategyException
-//	 */
-//	@Test(expected = StrategyRuntimeException.class)
-//	public void getPieceAtCannotHaveANegativeXCoordinateAndATooLargeYCoordinate()
-//			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
-//				startingRedConfig, startingBlueConfig);
-//		ctrlr.getPieceAt(new Location2D(-1, 10));
-//	}
-//
+	/**
+	 * Tests that the factory method makeDeltaStrategyGame fails with a
+	 * StrategyException if the starting configuration does not contain the
+	 * correct number of blue pieces.
+	 * 
+	 * @throws StrategyException
+	 *             if the factory method is given an invalid configuration for
+	 *             either side. This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testControllerCreationFailsWhenWrongNumberOfBluePieces()
+			throws StrategyException {
+		Piece pieceToRemove = new Piece(PieceType.MARSHAL, PlayerColor.BLUE);
+		Location location = new Location2D(1, 6);
+		PieceLocationDescriptor pldToRemove = new PieceLocationDescriptor(
+				pieceToRemove, location);
+		assertTrue(startingBlueConfig.remove(pldToRemove));
+
+		// Create the controller
+		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
+	}
+
+	/**
+	 * Tests that the factory method makeDeltaStrategyGame fails with a
+	 * StrategyException if the starting configuration does not contain the
+	 * correct number of each type of red piece.
+	 * 
+	 * @throws StrategyException
+	 *             if the factory method is given an invalid configuration for
+	 *             either side. This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testControllerCreationFailsWhenWrongRedPieceTypes()
+			throws StrategyException {
+		Piece pieceToReplace = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
+		Piece replacementPiece = new Piece(PieceType.COLONEL, PlayerColor.RED);
+		Location pieceLocation = new Location2D(7, 0);
+		replacePieceInStartConfiguration(startingRedConfig, pieceToReplace,
+				replacementPiece, pieceLocation);
+
+		// Create the controller
+		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
+	}
+
+	/**
+	 * Tests that the factory method makeDeltaStrategyGame fails with a
+	 * StrategyException if the starting configuration does not contain the
+	 * correct number of each type of blue piece.
+	 * 
+	 * @throws StrategyException
+	 *             if the factory method is given an invalid configuration for
+	 *             either side. This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testControllerCreationFailsWhenWrongBluePieceTypes()
+			throws StrategyException {
+		Piece pieceToReplace = new Piece(PieceType.CAPTAIN, PlayerColor.BLUE);
+		Piece replacementPiece = new Piece(PieceType.MAJOR, PlayerColor.BLUE);
+		Location pieceLocation = new Location2D(9, 8);
+		replacePieceInStartConfiguration(startingBlueConfig, pieceToReplace,
+				replacementPiece, pieceLocation);
+
+		// Create the controller
+		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
+	}
+
+	/**
+	 * Tests Piece getPieceAt(Location location); bluePieces.add(new
+	 * Piece(PieceType.FLAG, PlayerColor.BLUE)); blueLocations.add(new
+	 * Location2D(0, 5));
+	 * 
+	 * getPieceAt(new Location(0,5)) should return Piece(PieceType.FLAG,
+	 * PlayerColor.BLUE);
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void getPieceAtLocationShouldReturnBlueFlag()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		Piece piece = new Piece(PieceType.FLAG, PlayerColor.BLUE);
+
+		assertEquals(piece, ctrlr.getPieceAt(new Location2D(4, 6)));
+	}
+
+	/**
+	 * Tests Piece getPieceAt(Location location);
+	 * 
+	 * getPieceAt(new Location(1,0)) should return Piece(PieceType.MARSHAL,
+	 * PlayerColor.RED);
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void getPieceAtLocationShouldReturnRedMarshal()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		Piece piece = new Piece(PieceType.MARSHAL, PlayerColor.RED);
+
+		assertEquals(piece, ctrlr.getPieceAt(new Location2D(0, 3)));
+	}
+
+	/**
+	 * getPieceAt returns null if there is no piece at the specified location.
+	 * 
+	 * getPiece at (3,3) should be null (there is no piece currently on (3,3))
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void getPieceAtLocationShouldReturnNullIfNoPiecePresent()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		assertEquals(null, ctrlr.getPieceAt(new Location2D(4, 4)));
+	}
+
+	/**
+	 * getPieceAt should throw an error if the location does not exist on the
+	 * board
+	 * 
+	 * get Piece at (6,7) should throw an exception
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtLocationNotOnBoardShouldThrowException()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(11, 10));
+	}
+
+	/**
+	 * getPieceAt y-coordinate location shouldn't be negative
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeYCoordinate()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(0, -1));
+	}
+
+	/**
+	 * getPieceAt x-coordinate location shouldn't be negative
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeXCoordinate()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(-1, 0));
+	}
+
+	/**
+	 * getPieceAt x-coordinate and y-coordinate location shouldn't be negative
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveNegativeCoordinates()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(-1, -1));
+	}
+
+	/**
+	 * getPieceAt x-coordinate and y-coordinate location shouldn't be negative
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyRuntimeException.class)
+	public void getPieceAtCannotHaveANegativeXCoordinateAndATooLargeYCoordinate()
+			throws StrategyException {
+		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		ctrlr.getPieceAt(new Location2D(-1, 10));
+	}
+
 //	/**
 //	 * Tests that the startGame method throws an error if the game has already
 //	 * started.
