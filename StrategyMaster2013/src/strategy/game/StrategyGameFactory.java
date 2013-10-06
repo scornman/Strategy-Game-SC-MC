@@ -33,6 +33,7 @@ import strategy.game.version.battleBehaviors.GammaBattleBehavior;
 import strategy.game.version.beta.BetaStrategyGameController;
 import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
+import strategy.game.version.validateConfigurationBehaviors.DeltaStartLocationsConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributionConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.GammaStartLocationsConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.NoPiecesStartAtSameLocationConfigValidator;
@@ -199,9 +200,9 @@ public class StrategyGameFactory {
 		
 		final Collection<ValidateConfigurationBehavior> configValidators = 
 				new ArrayList<ValidateConfigurationBehavior>();
-		configValidators.add(new GammaPieceDistributionConfigValidator(
-				startingRedConfig, startingBlueConfig));
-		configValidators.add(new GammaStartLocationsConfigValidator(
+		//configValidators.add(new GammaPieceDistributionConfigValidator(
+		//		startingRedConfig, startingBlueConfig));
+		configValidators.add(new DeltaStartLocationsConfigValidator(
 				startingRedConfig, startingBlueConfig));
 		
 		// Combine the two configurations into one total configuration for

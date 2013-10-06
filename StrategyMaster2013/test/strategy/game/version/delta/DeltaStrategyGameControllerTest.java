@@ -22,8 +22,8 @@ import strategy.common.*;
 import strategy.game.common.*;
 
 /**
- * Test cases for testing the BetaStrategyGameController class and the overall
- * functionality of the Beta Strategy Game.
+ * Test cases for testing the DeltaStrategyGameController class and the overall
+ * functionality of the Delta Strategy Game.
  * 
  * @author scornman
  * @author Madalyn
@@ -154,7 +154,7 @@ public class DeltaStrategyGameControllerTest {
 	/**
 	 * Setup method that runs before each test. It sets up sample valid starting
 	 * piece configurations for both players, which can be modified and/or used
-	 * to create a BetaStrategyGameController.
+	 * to create a DeltaStrategyGameController.
 	 */
 	@Before
 	public void setUp() {
@@ -502,114 +502,114 @@ public class DeltaStrategyGameControllerTest {
 	 *************************************************************
 	 */
 	
+	/**
+	 * Tests that the factory method makeDeltaStrategyGame from the
+	 * StrategyGameFactory class successfully creates a new
+	 * DeltaStrategyGameController when given valid piece configurations. This
+	 * will therefore also exercise and test the constructor for
+	 * StrategyGameControllerImpl.
+	 * 
+	 * @throws StrategyException
+	 *             if the factory method is given an invalid configuration for
+	 *             either side.
+	 */
+	@Test
+	public void testFactoryMethodCreatesGameWhenGivenValidConfigurations()
+			throws StrategyException {
+		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
+		assertTrue(true);
+	}
+
+	/**
+	 * Tests that the factory method makeDeltaStrategyGame fails with a
+	 * StrategyException if two pieces in the starting configuration have the
+	 * same location.
+	 * 
+	 * @throws StrategyException
+	 *             if the factory method is given an invalid configuration for
+	 *             either side. This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testControllerCreationFailsWhenConfigurationContainsRedFlagAndMarshalAtSameLocation()
+			throws StrategyException {
+		Piece redMarshall = new Piece(PieceType.MARSHAL, PlayerColor.RED);
+		Location oldMarshallLocation = new Location2D(0, 3);
+		Location newMarshallLocation = new Location2D(8, 3);
+		movePieceToNewStartLocation(startingRedConfig, redMarshall,
+				oldMarshallLocation, newMarshallLocation);
+
+		// Create the controller
+		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
+	}
+
+	/**
+	 * Tests that the factory method makeDeltaStrategyGame fails with a
+	 * StrategyException if two pieces in the starting configuration have the
+	 * same location.
+	 * 
+	 * @throws StrategyException
+	 *             if the factory method is given an invalid configuration for
+	 *             either side. This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testControllerCreationFailsWhenConfigurationContainsBlueCaptainAndColonelAtSameLocation()
+			throws StrategyException {
+		Piece blueColonel = new Piece(PieceType.COLONEL, PlayerColor.BLUE);
+		Location oldColonelLocation = new Location2D(3, 6);
+		Location newColonelLocation = new Location2D(8, 7);
+		movePieceToNewStartLocation(startingBlueConfig, blueColonel,
+				oldColonelLocation, newColonelLocation);
+
+		// Create the controller
+		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
+	}
+
+	/**
+	 * Tests that the factory method makeDeltaStrategyGame fails with a
+	 * StrategyException if a red piece is not in a valid location in the
+	 * starting configuration.
+	 * 
+	 * @throws StrategyException
+	 *             if the factory method is given an invalid configuration for
+	 *             either side. This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testControllerCreationFailsWhenRedPieceAtInvalidLocation()
+			throws StrategyException {
+		Piece pieceToChange = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
+		Location oldLocation = new Location2D(7, 8);
+		Location newLocation = new Location2D(5, 4);
+		movePieceToNewStartLocation(startingRedConfig, pieceToChange,
+				oldLocation, newLocation);
+
+		// Create the controller
+		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
+	}
+
+	/**
+	 * Tests that the factory method makeDeltaStrategyGame fails with a
+	 * StrategyException if a blue piece is not in a valid location in the
+	 * starting configuration.
+	 * 
+	 * @throws StrategyException
+	 *             if the factory method is given an invalid configuration for
+	 *             either side. This is the expected behavior.
+	 */
+	@Test(expected = StrategyException.class)
+	public void testControllerCreationFailsWhenBluePieceAtInvalidLocation()
+			throws StrategyException {
+		Piece pieceToChange = new Piece(PieceType.SERGEANT, PlayerColor.BLUE);
+		Location oldLocation = new Location2D(5, 7);
+		Location newLocation = new Location2D(2, 1);
+		movePieceToNewStartLocation(startingBlueConfig, pieceToChange,
+				oldLocation, newLocation);
+
+		// Create the controller
+		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
+	}
+
 //	/**
-//	 * Tests that the factory method makeBetaStrategyGame from the
-//	 * StrategyGameFactory class successfully creates a new
-//	 * BetaStrategyGameController when given valid piece configurations. This
-//	 * will therefore also exercise and test the constructor for
-//	 * BetaStrategyGameController.
-//	 * 
-//	 * @throws StrategyException
-//	 *             if the factory method is given an invalid configuration for
-//	 *             either side.
-//	 */
-//	@Test
-//	public void testFactoryMethodCreatesGameWhenGivenValidConfigurations()
-//			throws StrategyException {
-//		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
-//		assertTrue(true);
-//	}
-//
-//	/**
-//	 * Tests that the factory method makeBetaStrategyGame fails with a
-//	 * StrategyException if two pieces in the starting configuration have the
-//	 * same location.
-//	 * 
-//	 * @throws StrategyException
-//	 *             if the factory method is given an invalid configuration for
-//	 *             either side. This is the expected behavior.
-//	 */
-//	@Test(expected = StrategyException.class)
-//	public void testControllerCreationFailsWhenConfigurationContainsRedFlagAndMarshalAtSameLocation()
-//			throws StrategyException {
-//		Piece redMarshall = new Piece(PieceType.MARSHAL, PlayerColor.RED);
-//		Location oldMarshallLocation = new Location2D(1, 0);
-//		Location newMarshallLocation = new Location2D(0, 0);
-//		movePieceToNewStartLocation(startingRedConfig, redMarshall,
-//				oldMarshallLocation, newMarshallLocation);
-//
-//		// Create the controller
-//		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
-//	}
-//
-//	/**
-//	 * Tests that the factory method makeBetaStrategyGame fails with a
-//	 * StrategyException if two pieces in the starting configuration have the
-//	 * same location.
-//	 * 
-//	 * @throws StrategyException
-//	 *             if the factory method is given an invalid configuration for
-//	 *             either side. This is the expected behavior.
-//	 */
-//	@Test(expected = StrategyException.class)
-//	public void testControllerCreationFailsWhenConfigurationContainsBlueCaptainAndColonelAtSameLocation()
-//			throws StrategyException {
-//		Piece blueColonel = new Piece(PieceType.COLONEL, PlayerColor.BLUE);
-//		Location oldColonelLocation = new Location2D(2, 5);
-//		Location newColonelLocation = new Location2D(4, 5);
-//		movePieceToNewStartLocation(startingBlueConfig, blueColonel,
-//				oldColonelLocation, newColonelLocation);
-//
-//		// Create the controller
-//		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
-//	}
-//
-//	/**
-//	 * Tests that the factory method makeBetaStrategyGame fails with a
-//	 * StrategyException if a red piece is not in a valid location in the
-//	 * starting configuration.
-//	 * 
-//	 * @throws StrategyException
-//	 *             if the factory method is given an invalid configuration for
-//	 *             either side. This is the expected behavior.
-//	 */
-//	@Test(expected = StrategyException.class)
-//	public void testControllerCreationFailsWhenRedPieceAtInvalidLocation()
-//			throws StrategyException {
-//		Piece pieceToChange = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
-//		Location oldLocation = new Location2D(1, 1);
-//		Location newLocation = new Location2D(5, 3);
-//		movePieceToNewStartLocation(startingRedConfig, pieceToChange,
-//				oldLocation, newLocation);
-//
-//		// Create the controller
-//		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
-//	}
-//
-//	/**
-//	 * Tests that the factory method makeBetaStrategyGame fails with a
-//	 * StrategyException if a blue piece is not in a valid location in the
-//	 * starting configuration.
-//	 * 
-//	 * @throws StrategyException
-//	 *             if the factory method is given an invalid configuration for
-//	 *             either side. This is the expected behavior.
-//	 */
-//	@Test(expected = StrategyException.class)
-//	public void testControllerCreationFailsWhenBluePieceAtInvalidLocation()
-//			throws StrategyException {
-//		Piece pieceToChange = new Piece(PieceType.SERGEANT, PlayerColor.BLUE);
-//		Location oldLocation = new Location2D(5, 4);
-//		Location newLocation = new Location2D(2, 1);
-//		movePieceToNewStartLocation(startingBlueConfig, pieceToChange,
-//				oldLocation, newLocation);
-//
-//		// Create the controller
-//		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
-//	}
-//
-//	/**
-//	 * Tests that the factory method makeBetaStrategyGame fails with a
+//	 * Tests that the factory method makeDeltaStrategyGame fails with a
 //	 * StrategyException if the starting configuration does not contain the
 //	 * correct number of red pieces.
 //	 * 
@@ -627,11 +627,11 @@ public class DeltaStrategyGameControllerTest {
 //		assertTrue(startingRedConfig.remove(pldToRemove));
 //
 //		// Create the controller
-//		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
+//		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
 //	}
 //
 //	/**
-//	 * Tests that the factory method makeBetaStrategyGame fails with a
+//	 * Tests that the factory method makeDeltaStrategyGame fails with a
 //	 * StrategyException if the starting configuration does not contain the
 //	 * correct number of blue pieces.
 //	 * 
@@ -649,11 +649,11 @@ public class DeltaStrategyGameControllerTest {
 //		assertTrue(startingBlueConfig.remove(pldToRemove));
 //
 //		// Create the controller
-//		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
+//		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
 //	}
 //
 //	/**
-//	 * Tests that the factory method makeBetaStrategyGame fails with a
+//	 * Tests that the factory method makeDeltaStrategyGame fails with a
 //	 * StrategyException if the starting configuration does not contain the
 //	 * correct number of each type of red piece.
 //	 * 
@@ -671,11 +671,11 @@ public class DeltaStrategyGameControllerTest {
 //				replacementPiece, pieceLocation);
 //
 //		// Create the controller
-//		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
+//		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
 //	}
 //
 //	/**
-//	 * Tests that the factory method makeBetaStrategyGame fails with a
+//	 * Tests that the factory method makeDeltaStrategyGame fails with a
 //	 * StrategyException if the starting configuration does not contain the
 //	 * correct number of each type of blue piece.
 //	 * 
@@ -693,7 +693,7 @@ public class DeltaStrategyGameControllerTest {
 //				replacementPiece, pieceLocation);
 //
 //		// Create the controller
-//		factory.makeGammaStrategyGame(startingRedConfig, startingBlueConfig);
+//		factory.makeDeltaStrategyGame(startingRedConfig, startingBlueConfig);
 //	}
 //
 //	/**
@@ -709,7 +709,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test
 //	public void getPieceAtLocationShouldReturnBlueFlag()
 //			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
+//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		Piece piece = new Piece(PieceType.FLAG, PlayerColor.BLUE);
 //
@@ -727,7 +727,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test
 //	public void getPieceAtLocationShouldReturnRedMarshal()
 //			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
+//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		Piece piece = new Piece(PieceType.MARSHAL, PlayerColor.RED);
 //
@@ -744,7 +744,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test
 //	public void getPieceAtLocationShouldReturnNullIfNoPiecePresent()
 //			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
+//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		assertEquals(null, ctrlr.getPieceAt(new Location2D(4, 3)));
 //	}
@@ -760,7 +760,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyRuntimeException.class)
 //	public void getPieceAtLocationNotOnBoardShouldThrowException()
 //			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
+//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		ctrlr.getPieceAt(new Location2D(6, 7));
 //	}
@@ -773,7 +773,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyRuntimeException.class)
 //	public void getPieceAtCannotHaveANegativeYCoordinate()
 //			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
+//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		ctrlr.getPieceAt(new Location2D(0, -1));
 //	}
@@ -786,7 +786,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyRuntimeException.class)
 //	public void getPieceAtCannotHaveANegativeXCoordinate()
 //			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
+//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		ctrlr.getPieceAt(new Location2D(-1, 0));
 //	}
@@ -799,7 +799,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyRuntimeException.class)
 //	public void getPieceAtCannotHaveNegativeCoordinates()
 //			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
+//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		ctrlr.getPieceAt(new Location2D(-1, -1));
 //	}
@@ -812,7 +812,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyRuntimeException.class)
 //	public void getPieceAtCannotHaveANegativeXCoordinateAndATooLargeYCoordinate()
 //			throws StrategyException {
-//		StrategyGameController ctrlr = factory.makeGammaStrategyGame(
+//		StrategyGameController ctrlr = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		ctrlr.getPieceAt(new Location2D(-1, 10));
 //	}
@@ -826,7 +826,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testStartGameThrowsExceptionIfGameAlreadyStarted()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		// Start the game.
 //		controller.startGame();
@@ -846,7 +846,7 @@ public class DeltaStrategyGameControllerTest {
 //	public void testMoveThrowsExceptionIfGameNotYetStarted()
 //			throws StrategyException {
 //		// Create the controller
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		// Create the piece to attempt to move.
 //		PieceType typeToMove = PieceType.CAPTAIN;
@@ -867,7 +867,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfNoPieceAtFromLocation()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(4, 3);
@@ -887,7 +887,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfFromLocationIsNull()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = null;
@@ -906,7 +906,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfToLocationIsNull()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(1, 1);
@@ -924,7 +924,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfPieceTypeIsNull()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(1, 1);
@@ -943,7 +943,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfFromLocationHasWrongPieceType()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(1, 1);
@@ -963,7 +963,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfBlueMovesFirst()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		// Attempt to move a blue piece when red should have the first turn.
@@ -983,7 +983,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfRedMakesFirstTwoMoves()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location firstFromLocation = new Location2D(0, 1);
@@ -1010,7 +1010,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfBlueMovesTwiceInARow()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location firstFromLocation = new Location2D(0, 1);
@@ -1049,7 +1049,7 @@ public class DeltaStrategyGameControllerTest {
 //				lieutenantLocation);
 //		movePieceToNewStartLocation(startingRedConfig, lieutenantPiece,
 //				lieutenantLocation, flagLocation);
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //
@@ -1069,7 +1069,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfRedPieceMovesToOtherRedPiece()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		// Attempt to move red marshal to location containing red lieutenant.
@@ -1089,7 +1089,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testMoveThrowsExceptionIfBluePieceMovesToOtherBluePiece()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		// First, make a valid move for red.
@@ -1112,7 +1112,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test
 //	public void testMoveSuccessfullyMovesPieceToDestinationOnValidMoveToBlankSpace()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(4, 1);
@@ -1135,7 +1135,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void throwExceptionIfPieceTriesToMoveToDiagonalLocation()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(1, 1);
@@ -1151,7 +1151,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void throwExceptionIfPieceTriesToMoveTooManySpacesX()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(1, 1);
@@ -1167,7 +1167,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void throwExceptionIfPieceTriesToMoveTooManySpacesY()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(1, 1);
@@ -1182,7 +1182,7 @@ public class DeltaStrategyGameControllerTest {
 //	 */
 //	@Test
 //	public void pieceTriesToMoveOneSpacesX() throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //
@@ -1209,7 +1209,7 @@ public class DeltaStrategyGameControllerTest {
 //	 */
 //	@Test
 //	public void pieceTriesToMoveOneSpacesY() throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(1, 1);
@@ -1230,7 +1230,7 @@ public class DeltaStrategyGameControllerTest {
 //		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,
 //				new Location2D(0, 5), new Location2D(0, 4));
 //
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //
@@ -1265,7 +1265,7 @@ public class DeltaStrategyGameControllerTest {
 //		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
 //				new Location2D(0, 0), new Location2D(0, 1));
 //
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //
@@ -1303,7 +1303,7 @@ public class DeltaStrategyGameControllerTest {
 //		// move blue sargent
 //		// red attacks blue sargent
 //		// null battle winner
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //
@@ -1327,7 +1327,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test
 //	public void testMoveToEmptySpaceProducesNullBattleWinner()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(4, 1);
@@ -1350,7 +1350,7 @@ public class DeltaStrategyGameControllerTest {
 //	 */
 //	@Test
 //	public void testMoveToEmptySpaceProducesOkStatus() throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		Location fromLocation = new Location2D(4, 1);
@@ -1374,7 +1374,7 @@ public class DeltaStrategyGameControllerTest {
 //			throws StrategyException {
 //		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
 //				new Location2D(2, 1), new Location2D(4, 1));
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //
@@ -1415,7 +1415,7 @@ public class DeltaStrategyGameControllerTest {
 //			throws StrategyException {
 //		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
 //				new Location2D(2, 1), new Location2D(4, 1));
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //
@@ -1457,7 +1457,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test
 //	public void gameEndsInDrawWhenOnlyTwoFlagsLeftOnBoard()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		// Perform the sequence of moves that will lead to the battle.
@@ -1579,7 +1579,7 @@ public class DeltaStrategyGameControllerTest {
 //	 */
 //	@Test(expected = StrategyException.class)
 //	public void testImmediateRedMoveRepetition() throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		PieceType movingPiece = PieceType.LIEUTENANT;
@@ -1611,7 +1611,7 @@ public class DeltaStrategyGameControllerTest {
 //	@Test(expected = StrategyException.class)
 //	public void testBlueMoveRepetitionAfterOtherMoves()
 //			throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		PieceType movingPiece = PieceType.SERGEANT;
@@ -1648,7 +1648,7 @@ public class DeltaStrategyGameControllerTest {
 //	 */
 //	@Test(expected = StrategyException.class)
 //	public void cannotMovePieceOntoAChokePoint() throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		PieceType movingPiece = PieceType.LIEUTENANT;
@@ -1669,7 +1669,7 @@ public class DeltaStrategyGameControllerTest {
 //	 */
 //	@Test(expected = StrategyException.class)
 //	public void cannotMoveAChokePoint() throws StrategyException {
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		PieceType movingPiece = PieceType.CHOKE_POINT;
@@ -1693,7 +1693,7 @@ public class DeltaStrategyGameControllerTest {
 //		// Put the red marshal in the front row.
 //		swapTwoPiecesInStartConfiguration(PlayerColor.RED,
 //				new Location2D(1, 0), new Location2D(0, 1));
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		// Perform the sequence of moves that will lead to the battle.
@@ -1770,7 +1770,7 @@ public class DeltaStrategyGameControllerTest {
 //				new Location2D(1, 0), new Location2D(0, 0));
 //		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,
 //				new Location2D(1, 5), new Location2D(0, 5));
-//		StrategyGameController controller = factory.makeGammaStrategyGame(
+//		StrategyGameController controller = factory.makeDeltaStrategyGame(
 //				startingRedConfig, startingBlueConfig);
 //		controller.startGame();
 //		// Perform the sequence of moves that will lead to the battle.
