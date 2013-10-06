@@ -1088,124 +1088,123 @@ public class DeltaStrategyGameControllerTest {
 		controller.move(PieceType.GENERAL, blueFromLocation, blueToLocation);
 	}
 
-	// /**
-	// * Tests that the move method successfully changes the location of the
-	// piece
-	// * that is moved.
-	// *
-	// * @throws StrategyException
-	// * if one of the arguments passed to the move method is invalid.
-	// */
-	// @Test
-	// public void
-	// testMoveSuccessfullyMovesPieceToDestinationOnValidMoveToBlankSpace()
-	// throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// Location fromLocation = new Location2D(4, 1);
-	// Location toLocation = new Location2D(4, 2);
-	// // Get the piece at the from location
-	// Piece movingPiece = new Piece(PieceType.SERGEANT, PlayerColor.RED);
-	// // Make a valid move to an empty space
-	// controller.move(PieceType.SERGEANT, fromLocation, toLocation);
-	// // Check that the piece is now at the to location
-	// assertEquals(movingPiece, controller.getPieceAt(toLocation));
-	// // Check that the from location is now empty
-	// assertNull(controller.getPieceAt(fromLocation));
-	// }
-	//
-	// /**
-	// * Should throw an error if piece tries to move to location not next to it
-	// *
-	// * @throws StrategyException
-	// */
-	// @Test(expected = StrategyException.class)
-	// public void throwExceptionIfPieceTriesToMoveToDiagonalLocation()
-	// throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// Location fromLocation = new Location2D(1, 1);
-	// Location toLocation = new Location2D(3, 5);
-	// controller.move(PieceType.LIEUTENANT, fromLocation, toLocation);
-	// }
-	//
-	// /**
-	// * Should throw an error if piece tries to move to far in the x location
-	// *
-	// * @throws StrategyException
-	// */
-	// @Test(expected = StrategyException.class)
-	// public void throwExceptionIfPieceTriesToMoveTooManySpacesX()
-	// throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// Location fromLocation = new Location2D(1, 1);
-	// Location toLocation = new Location2D(3, 1);
-	// controller.move(PieceType.LIEUTENANT, fromLocation, toLocation);
-	// }
-	//
-	// /**
-	// * Should throw an error if piece tries to move to far in the y location
-	// *
-	// * @throws StrategyException
-	// */
-	// @Test(expected = StrategyException.class)
-	// public void throwExceptionIfPieceTriesToMoveTooManySpacesY()
-	// throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// Location fromLocation = new Location2D(1, 1);
-	// Location toLocation = new Location2D(1, 3);
-	// controller.move(PieceType.LIEUTENANT, fromLocation, toLocation);
-	// }
-	//
-	// /**
-	// * Should be valid if piece tries to move one space X
-	// *
-	// * @throws StrategyException
-	// */
-	// @Test
-	// public void pieceTriesToMoveOneSpacesX() throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	//
-	// // First, move red piece up, so that it can move sideways on the next
-	// // turn.
-	// Location fromLocation1 = new Location2D(1, 1);
-	// Location toLocation1 = new Location2D(1, 2);
-	// controller.move(PieceType.LIEUTENANT, fromLocation1, toLocation1);
-	// // Next, move a blue piece to be valid.
-	// Location fromLocation2 = new Location2D(0, 4);
-	// Location toLocation2 = new Location2D(0, 3);
-	// controller.move(PieceType.LIEUTENANT, fromLocation2, toLocation2);
-	// // Finally, move the red piece to the side.
-	// Location fromLocation3 = new Location2D(1, 2);
-	// Location toLocation3 = new Location2D(0, 2);
-	// controller.move(PieceType.LIEUTENANT, fromLocation3, toLocation3);
-	// assertTrue(true);
-	// }
-	//
-	// /**
-	// * Should be valid if piece tries to move one space Y
-	// *
-	// * @throws StrategyException
-	// */
-	// @Test
-	// public void pieceTriesToMoveOneSpacesY() throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// Location fromLocation = new Location2D(1, 1);
-	// Location toLocation = new Location2D(1, 2);
-	// controller.move(PieceType.LIEUTENANT, fromLocation, toLocation);
-	// assertTrue(true);
-	// }
-	//
+	/**
+	 * Tests that the move method successfully changes the location of the piece
+	 * that is moved.
+	 * 
+	 * @throws StrategyException
+	 *             if one of the arguments passed to the move method is invalid.
+	 */
+	@Test
+	public void testMoveSuccessfullyMovesPieceToDestinationOnValidMoveToBlankSpace()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(0, 3);
+		Location toLocation = new Location2D(0, 4);
+		// Get the piece at the from location
+		Piece movingPiece = new Piece(PieceType.MARSHAL, PlayerColor.RED);
+		// Make a valid move to an empty space
+		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
+		// Check that the piece is now at the to location
+		assertEquals(movingPiece, controller.getPieceAt(toLocation));
+		// Check that the from location is now empty
+		assertNull(controller.getPieceAt(fromLocation));
+	}
+
+	/**
+	 * Should throw an error if a piece that is not a scout tries to move to
+	 * location not next to it
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyException.class)
+	public void throwExceptionIfPieceTriesToMoveToDiagonalLocation()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(0, 3);
+		Location toLocation = new Location2D(9, 5);
+		controller.move(PieceType.MARSHAL, fromLocation, toLocation);
+	}
+
+	/**
+	 * Should throw an error if piece tries to move to far in the x location
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyException.class)
+	public void throwExceptionIfPieceTriesToMoveTooManySpacesX()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(5, 3);
+		Location toLocation = new Location2D(3, 3);
+		controller.move(PieceType.MINER, fromLocation, toLocation);
+	}
+
+	/**
+	 * Should throw an error if piece tries to move to far in the y location
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyException.class)
+	public void throwExceptionIfPieceTriesToMoveTooManySpacesY()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(5, 3);
+		Location toLocation = new Location2D(5, 5);
+		controller.move(PieceType.MINER, fromLocation, toLocation);
+	}
+
+	/**
+	 * Should be valid if piece tries to move one space X
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void pieceTriesToMoveOneSpacesX() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// First, move red piece up, so that it can move sideways on the next
+		// turn.
+		Location fromLocation1 = new Location2D(1, 3);
+		Location toLocation1 = new Location2D(1, 4);
+		controller.move(PieceType.SPY, fromLocation1, toLocation1);
+		// Next, move a blue piece to be valid.
+		Location fromLocation2 = new Location2D(9, 6);
+		Location toLocation2 = new Location2D(9, 5);
+		controller.move(PieceType.MINER, fromLocation2, toLocation2);
+		// Finally, move the red piece to the side.
+		Location fromLocation3 = new Location2D(1, 4);
+		Location toLocation3 = new Location2D(0, 4);
+		controller.move(PieceType.SPY, fromLocation3, toLocation3);
+		assertTrue(true);
+	}
+
+	/**
+	 * Should be valid if piece tries to move one space Y
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void pieceTriesToMoveOneSpacesY() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = new Location2D(1, 3);
+		Location toLocation = new Location2D(1, 4);
+		controller.move(PieceType.SPY, fromLocation, toLocation);
+		assertTrue(true);
+	}
+
 	// /**
 	// * tests that game ends in RED_WINS after red captures the blue flag
 	// *

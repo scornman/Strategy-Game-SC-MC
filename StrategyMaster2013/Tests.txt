@@ -57,3 +57,6 @@ New Tests to do:
 - Check that winning bombs don't move
 - Check that attacking Marshal beats flag
 - Check that attacking flag beats marshal
+
+If time:
+Look again at throwExceptionIfPieceTriesToMoveTooManySpacesX: it doesn't quite test what it should.
