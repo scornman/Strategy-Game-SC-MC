@@ -40,11 +40,13 @@ import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributi
 import strategy.game.version.validateConfigurationBehaviors.GammaStartLocationsConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.NoPiecesStartAtSameLocationConfigValidator;
 import strategy.game.version.validateMoveBehaviors.CorrectPieceTypeMoveValidator;
+import strategy.game.version.validateMoveBehaviors.DependsOnPieceTypeMoveValidator;
 import strategy.game.version.validateMoveBehaviors.MoveRepetitionRuleValidator;
 import strategy.game.version.validateMoveBehaviors.MovingOnTurnMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotAttackingOwnTeamMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotMovingFlagMoveValidator;
 import strategy.game.version.validateMoveBehaviors.OneSpaceInDirectionMoveValidator;
+import strategy.game.version.validateMoveBehaviors.SeveralSpacesInOneDirectionMoveValidator;
 
 /**
  * <p>

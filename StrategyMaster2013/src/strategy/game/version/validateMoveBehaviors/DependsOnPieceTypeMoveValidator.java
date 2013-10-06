@@ -1,4 +1,4 @@
-package strategy.game;
+package strategy.game.version.validateMoveBehaviors;
 
 import java.util.Map;
 
@@ -7,7 +7,6 @@ import strategy.common.StrategyException;
 import strategy.game.common.Location;
 import strategy.game.common.PieceType;
 import strategy.game.version.ValidateMoveBehavior;
-import strategy.game.version.validateMoveBehaviors.OneSpaceInDirectionMoveValidator;
 
 /**
  * A validateMoveBehavior that changes its behavior based on the type of piece

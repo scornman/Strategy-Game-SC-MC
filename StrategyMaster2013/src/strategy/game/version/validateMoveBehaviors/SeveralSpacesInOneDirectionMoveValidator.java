@@ -1,4 +1,4 @@
-package strategy.game;
+package strategy.game.version.validateMoveBehaviors;
 
 import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
