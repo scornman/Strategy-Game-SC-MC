@@ -1205,79 +1205,62 @@ public class DeltaStrategyGameControllerTest {
 		assertTrue(true);
 	}
 
-	// /**
-	// * tests that game ends in RED_WINS after red captures the blue flag
-	// *
-	// * @throws StrategyException
-	// */
-	// @Test
-	// public void gameEndsInRedWinsAfterRedCapturesBlueFlag()
-	// throws StrategyException {
-	//
-	// swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,
-	// new Location2D(0, 5), new Location2D(0, 4));
-	//
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	//
-	// // move red lt
-	// // move random blue piece
-	// // move red lt
-	// // move random blue piece
-	// // capture flag
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
-	// new Location2D(0, 2));
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 4),
-	// new Location2D(4, 3));
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 2),
-	// new Location2D(0, 3));
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 3),
-	// new Location2D(4, 2));
-	// MoveResult result = controller.move(PieceType.LIEUTENANT,
-	// new Location2D(0, 3), new Location2D(0, 4));
-	// // check that the game status is RED_WINS/game ends
-	// assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
-	// }
-	//
-	// /**
-	// * tests that game ends in BLUE_WINS after blue captures the red flag
-	// *
-	// * @throws StrategyException
-	// */
-	// @Test
-	// public void gameEndsInBlueWinsAfterBlueCapturesRedFlag()
-	// throws StrategyException {
-	//
-	// swapTwoPiecesInStartConfiguration(PlayerColor.RED,
-	// new Location2D(0, 0), new Location2D(0, 1));
-	//
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	//
-	// // move random red piece
-	// // move blue lt
-	// // move random red piece
-	// // move blue lt
-	// // move random red piece
-	// // capture flag
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 1),
-	// new Location2D(1, 2));
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
-	// new Location2D(0, 3));
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 1),
-	// new Location2D(4, 2));
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 3),
-	// new Location2D(0, 2));
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 2),
-	// new Location2D(4, 3));
-	// MoveResult result = controller.move(PieceType.LIEUTENANT,
-	// new Location2D(0, 2), new Location2D(0, 1));
-	// // check that the game status is BLUE_WINS/game ends
-	// assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
-	// }
-	//
+	 /**
+	 * tests that game ends in RED_WINS after red captures the blue flag
+	 *
+	 * @throws StrategyException
+	 */
+	 @Test
+	 public void gameEndsInRedWinsAfterRedCapturesBlueFlag()
+	 throws StrategyException {
+	
+	 StrategyGameController controller = factory.makeDeltaStrategyGame(
+	 startingRedConfig, startingBlueConfig);
+	 controller.startGame();
+	
+	 // move red scout
+	 // move random blue piece
+	 // move red scout
+	 // move random blue piece
+	 // capture flag
+	 controller.move(PieceType.SCOUT, loc43, loc44);
+	 controller.move(PieceType.MARSHAL, loc16, loc15);
+	 controller.move(PieceType.SCOUT, loc44, loc45);
+	 controller.move(PieceType.MINER, loc96, loc95);
+	 MoveResult result = controller.move(PieceType.SCOUT, loc45, loc46);
+	 // check that the game status is RED_WINS/game ends
+	 assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
+	 }
+	
+	 /**
+	 * tests that game ends in BLUE_WINS after blue captures the red flag
+	 *
+	 * @throws StrategyException
+	 */
+	 @Test
+	 public void gameEndsInBlueWinsAfterBlueCapturesRedFlag()
+	 throws StrategyException {
+	
+	 StrategyGameController controller = factory.makeDeltaStrategyGame(
+	 startingRedConfig, startingBlueConfig);
+	 controller.startGame();
+	
+	 // move random red piece
+	 // move blue scout
+	 // move random red piece
+	 // move blue scout
+	 // move random red piece
+	 // capture flag
+	 controller.move(PieceType.MARSHAL, loc03, loc04);
+	 controller.move(PieceType.SCOUT, loc86, loc85);
+	 controller.move(PieceType.MARSHAL, loc04, loc14);
+	 controller.move(PieceType.SCOUT, loc85, loc84);
+	 controller.move(PieceType.MARSHAL, loc14, loc04);
+	 MoveResult result = controller.move(PieceType.SCOUT, loc84, loc83);
+	 // check that the game status is BLUE_WINS/game ends
+	 assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
+	 }
+	
 	// /**
 	// * Tests that there is null battle winner when two pieces of the same type
 	// * attack each other
