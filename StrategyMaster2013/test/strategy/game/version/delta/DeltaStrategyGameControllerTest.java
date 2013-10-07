@@ -2112,6 +2112,11 @@ public class DeltaStrategyGameControllerTest {
 		assertTrue(true);
 	}
 
+	/**
+	 * makes sure scout cannot move a valid number of spaces more than one
+	 * that is onto a chokepoint
+	 * @throws StrategyException
+	 */
 	@Test(expected = StrategyException.class)
 	public void testRedScoutCannotMoveMoreThanOneSpaceOntoAChokepoint()
 			throws StrategyException {
