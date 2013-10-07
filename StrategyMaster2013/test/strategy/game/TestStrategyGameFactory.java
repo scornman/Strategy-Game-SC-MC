@@ -21,7 +21,7 @@ public class TestStrategyGameFactory {
 	Board board;
 
 	public TestStrategyGameFactory() {
-		factory = new StrategyGameFactory();
+		factory = StrategyGameFactory.getInstance();
 		board = null;
 	}
 

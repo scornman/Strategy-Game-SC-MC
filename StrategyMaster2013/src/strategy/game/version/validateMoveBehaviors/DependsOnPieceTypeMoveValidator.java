@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package strategy.game.version.validateMoveBehaviors;
 
 import java.util.Map;
@@ -20,13 +29,13 @@ public class DependsOnPieceTypeMoveValidator implements ValidateMoveBehavior {
 	/**
 	 * Maps individual piece types to their matching move behaviors.
 	 */
-	private Map<PieceType, ValidateMoveBehavior> behaviorsByPiece;
+	private final Map<PieceType, ValidateMoveBehavior> behaviorsByPiece;
 	
 	/**
 	 * The move validator to use for all piece types not specified in the
 	 * behaviorsByPiece map.
 	 */
-	private ValidateMoveBehavior defaultBehavior;
+	private final ValidateMoveBehavior defaultBehavior;
 
 	/**
 	 * Create a new DependsOnPieceTypeMoveValidator object.

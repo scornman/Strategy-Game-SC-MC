@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package strategy.game.version.validateMoveBehaviors;
 
 import java.util.ArrayList;
@@ -13,6 +22,15 @@ import strategy.game.common.PieceType;
 import strategy.game.version.Board;
 import strategy.game.version.ValidateMoveBehavior;
 
+/**
+ *  A validateMoveBehavior that deals with pieces that can move
+ *  more than one space at a time, namely, the Scout
+ * 
+ * @author scornman
+ * @author Madalyn
+ * @version Oct 7, 2013
+ * 
+ */
 public class SeveralSpacesInOneDirectionMoveValidator implements
 		ValidateMoveBehavior {
 	private final Board gameBoard;
@@ -30,7 +48,7 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
-			PlayerColor currentColor) throws StrategyException {
+			PlayerColor currentColor) {
 
 		// if only moving one space in a single direction, the move is
 		// automatically valid.
@@ -43,7 +61,7 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 		}
 
 		// moving more than one space, special functionality
-		Coordinate changingCoordinate = getChangingCoordinate(from, to);
+		final Coordinate changingCoordinate = getChangingCoordinate(from, to);
 
 		// if null throw exception, otherwise call other method with correct
 		// params
@@ -89,9 +107,9 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 	 */
 	private boolean isMovingNotOverOtherPieces(Location from, Location to,
 			Coordinate changingCoordinate) {
-		List<Location> coordinatePairs = new ArrayList<Location>();
-		int endCoordinate = to.getCoordinate(changingCoordinate);
-		int startCoordinate = from.getCoordinate(changingCoordinate);
+		final List<Location> coordinatePairs = new ArrayList<Location>();
+		final int endCoordinate = to.getCoordinate(changingCoordinate);
+		final int startCoordinate = from.getCoordinate(changingCoordinate);
 		int lowCoordinate;
 		int highCoordinate;
 

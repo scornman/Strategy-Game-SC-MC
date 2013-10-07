@@ -70,7 +70,7 @@ public class StrategyGameFactory {
 	/**
 	 * Default private constructor to ensure this is a singleton.
 	 */
-	protected StrategyGameFactory() {
+	private StrategyGameFactory() {
 		// Intentionally left empty.
 	}
 
@@ -276,7 +276,7 @@ public class StrategyGameFactory {
 	 * @param configValidators
 	 *            the set of behaviors responsible for validating the starting
 	 *            piece configurations.
-	 * @return
+	 * @return a new StrategyGameControllerImpl()
 	 * @throws StrategyException
 	 */
 	public StrategyGameController constructDeltaStrategyFromBoardAndConfigValidators(
@@ -294,7 +294,7 @@ public class StrategyGameFactory {
 		moveValidators.add(new CorrectPieceTypeMoveValidator(gameBoard));
 		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
 		// For movement behavior that varies based on the piece type
-		Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
+		final Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
 		validatorsByPiece.put(PieceType.SCOUT,
 				new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
 		// pass in map of pieces that use unique move validators, pass in
