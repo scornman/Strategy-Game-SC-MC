@@ -1336,89 +1336,87 @@ public class DeltaStrategyGameControllerTest {
 		assertEquals(null, controller.getPieceAt(fromLocation));
 	}
 
-	// /**
-	// * Tests that the a red lieutenant should win when it attacks a blue
-	// * sergeant.
-	// */
-	// @Test
-	// public void testAttackingRedLieutenantShouldDefeatBlueSergeant()
-	// throws StrategyException {
-	// swapTwoPiecesInStartConfiguration(PlayerColor.RED,
-	// new Location2D(2, 1), new Location2D(4, 1));
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	//
-	// Location attackerLocation = new Location2D(4, 2);
-	// Location defenderLocation = new Location2D(4, 3);
-	// Piece attackPiece = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
-	//
-	// // Perform the sequence of moves that will lead to the battle.
-	// controller.move(PieceType.LIEUTENANT, new Location2D(4, 1),
-	// attackerLocation);
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 4),
-	// defenderLocation);
-	//
-	// // Make the attack
-	// MoveResult result = controller.move(PieceType.LIEUTENANT,
-	// attackerLocation, defenderLocation);
-	// // Check that the game does not end.
-	// MoveResultStatus status = result.getStatus();
-	// assertEquals(MoveResultStatus.OK, status);
-	// // Check that the red lieutenant wins and takes the place of the blue
-	// // sergeant.
-	// PieceLocationDescriptor winner = result.getBattleWinner();
-	// assertEquals(
-	// new PieceLocationDescriptor(attackPiece, defenderLocation),
-	// winner);
-	// // Check that the board has properly updated to reflect the post-battle
-	// // state.
-	// assertEquals(attackPiece, controller.getPieceAt(defenderLocation));
-	// assertEquals(null, controller.getPieceAt(attackerLocation));
-	// }
-	//
-	// /**
-	// * Tests that the a blue sergeant should lose when it attacks a red
-	// * lieutenant.
-	// */
-	// @Test
-	// public void testAttackingBlueSergeantShouldLoseToRedLieutenant()
-	// throws StrategyException {
-	// swapTwoPiecesInStartConfiguration(PlayerColor.RED,
-	// new Location2D(2, 1), new Location2D(4, 1));
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	//
-	// Location attackerLocation = new Location2D(4, 3);
-	// Location defenderLocation = new Location2D(4, 2);
-	// Piece defendPiece = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
-	//
-	// // Perform the sequence of moves that will lead to the battle.
-	// controller.move(PieceType.LIEUTENANT, new Location2D(4, 1),
-	// defenderLocation);
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 4),
-	// attackerLocation);
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
-	// new Location2D(0, 2));
-	// // Make the attack
-	// MoveResult result = controller.move(PieceType.SERGEANT,
-	// attackerLocation, defenderLocation);
-	// // Check that the game does not end.
-	// MoveResultStatus status = result.getStatus();
-	// assertEquals(MoveResultStatus.OK, status);
-	// // Check that the red lieutenant wins and takes the place of the blue
-	// // sergeant.
-	// PieceLocationDescriptor winner = result.getBattleWinner();
-	// assertEquals(
-	// new PieceLocationDescriptor(defendPiece, attackerLocation),
-	// winner);
-	// // Check that the board has properly updated to reflect the post-battle
-	// // state.
-	// assertEquals(defendPiece, controller.getPieceAt(attackerLocation));
-	// assertEquals(null, controller.getPieceAt(defenderLocation));
-	// }
-	//
+	 /**
+	 * Tests that the a red lieutenant should win when it attacks a blue
+	 * sergeant.
+	 */
+	 @Test
+	 public void testAttackingRedLieutenantShouldDefeatBlueSergeant()
+	 throws StrategyException {
+		 swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc70, loc53);
+		 swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc57, loc56);
+		 
+		 StrategyGameController controller = factory.makeDeltaStrategyGame(
+		 startingRedConfig, startingBlueConfig);
+		 controller.startGame();
+		
+		 Location attackerLocation = loc54;
+		 Location defenderLocation = loc55;
+		 Piece attackPiece = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
+		
+		 // Perform the sequence of moves that will lead to the battle.
+		 controller.move(PieceType.LIEUTENANT, loc53, loc54);
+		 controller.move(PieceType.SERGEANT, loc56, loc55);
+		
+		 // Make the attack
+		 MoveResult result = controller.move(PieceType.LIEUTENANT,
+		 attackerLocation, defenderLocation);
+		 // Check that the game does not end.
+		 MoveResultStatus status = result.getStatus();
+		 assertEquals(MoveResultStatus.OK, status);
+		 // Check that the red lieutenant wins and takes the place of the blue
+		 // sergeant.
+		 PieceLocationDescriptor winner = result.getBattleWinner();
+		 assertEquals(
+		 new PieceLocationDescriptor(attackPiece, defenderLocation),
+		 winner);
+		 // Check that the board has properly updated to reflect the post-battle
+		 // state.
+		 assertEquals(attackPiece, controller.getPieceAt(defenderLocation));
+		 assertEquals(null, controller.getPieceAt(attackerLocation));
+	 }
+	
+	 /**
+	 * Tests that the a blue sergeant should lose when it attacks a red
+	 * lieutenant.
+	 */
+	 @Test
+	 public void testAttackingBlueSergeantShouldLoseToRedLieutenant()
+	 throws StrategyException {
+		 swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc70, loc53);
+		 swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc57, loc56);
+		 
+		 StrategyGameController controller = factory.makeDeltaStrategyGame(
+		 startingRedConfig, startingBlueConfig);
+		 controller.startGame();
+		
+		 Location attackerLocation = loc55;
+		 Location defenderLocation = loc54;
+		 Piece defendPiece = new Piece(PieceType.LIEUTENANT, PlayerColor.RED);
+		
+		 // Perform the sequence of moves that will lead to the battle.
+		 controller.move(PieceType.LIEUTENANT, loc53, loc54);
+		 controller.move(PieceType.SERGEANT, loc56, loc55);
+		 controller.move(PieceType.MARSHAL, loc03, loc04); //unrelated red move
+	
+		 // Make the attack
+		 MoveResult result = controller.move(PieceType.SERGEANT,
+		 attackerLocation, defenderLocation);
+		 // Check that the game does not end.
+		 MoveResultStatus status = result.getStatus();
+		 assertEquals(MoveResultStatus.OK, status);
+		 // Check that the red lieutenant wins and takes the place of the blue
+		 // sergeant.
+		 PieceLocationDescriptor winner = result.getBattleWinner();
+		 assertEquals(
+		 new PieceLocationDescriptor(defendPiece, attackerLocation),
+		 winner);
+		 // Check that the board has properly updated to reflect the post-battle
+		 // state.
+		 assertEquals(defendPiece, controller.getPieceAt(attackerLocation));
+		 assertEquals(null, controller.getPieceAt(defenderLocation));
+	 }
+	
 	// /**
 	// * If all the pieces are off the board except the two flags then the game
 	// is
@@ -2015,5 +2013,82 @@ public class DeltaStrategyGameControllerTest {
 		MoveResult result = controller.move(PieceType.SPY, loc05, loc15);
 		assertEquals(null, result.getBattleWinner());
 	}
+	
+	/**
+	 * Test that a red scout can move two spaces in one turn
+	 * @throws StrategyException
+	 */
+	@Test
+	public void redScoutCanMoveTwoSpacesInOneTurn() throws StrategyException{
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.SCOUT, loc43, loc45);
+		assertTrue(true);
+	}
+	
+	/**
+	 * Test that a blue scout can move two spaces in one turn
+	 * @throws StrategyException
+	 */
+	@Test
+	public void blueScoutCanMoveTwoSpacesInOneTurn() throws StrategyException{
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.MINER, loc53, loc54);
+		controller.move(PieceType.SCOUT, loc86, loc84);
+		assertTrue(true);
+	}
+	
+	/**
+	 * test that a red scout cannot move onto a piece when attempting
+	 * to move more than one space
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyException.class)
+	public void redScoutCannotMoveOntoPlayerWhenMovingMoreThanOneSpace() throws StrategyException{
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.SCOUT, loc43, loc46);
+		assertTrue(true);
+	}
+	
+	/**
+	 * test that a blue scout cannot move onto a piece when attempting
+	 * to move more than one space
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyException.class)
+	public void blueScoutCannotMoveOverPieceToValidEmptyLocation() throws StrategyException{
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.MINER, loc53, loc54);
+		controller.move(PieceType.SCOUT, loc86, loc83);
+		assertTrue(true);
+	}
 
+	@Test(expected = StrategyException.class)
+	public void testRedScoutCannotMoveMoreThanOneSpaceOntoAChokepoint() throws StrategyException{
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.SCOUT, loc43, loc44);
+		controller.move(PieceType.MARSHAL, loc16, loc15); //move random blue piece
+		controller.move(PieceType.SCOUT, loc44, loc64);
+		assertTrue(true);
+	}
+	
+	
+	
+	
 }
