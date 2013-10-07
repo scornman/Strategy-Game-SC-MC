@@ -1557,121 +1557,114 @@ public class DeltaStrategyGameControllerTest {
 	// // check that the game status is DRAW/game ends
 	// assertEquals(MoveResultStatus.DRAW, result.getStatus());
 	// }
-	//
-	// /**
-	// * Tests that the move repetition rule is properly implemented, by having
-	// * the red player immediately move a piece from one position to a second
-	// * position, back to the first position, and then to the second position
-	// * again.
-	// *
-	// * @throws StrategyException
-	// * if an invalid move is made. This is the expected behavior.
-	// */
-	// @Test(expected = StrategyException.class)
-	// public void testImmediateRedMoveRepetition() throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// PieceType movingPiece = PieceType.LIEUTENANT;
-	// Location location1 = new Location2D(0, 1);
-	// Location location2 = new Location2D(0, 2);
-	//
-	// // Move the red piece back and forth while the blue pieces do other
-	// // things.
-	// controller.move(movingPiece, location1, location2);
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 4),
-	// new Location2D(5, 3));
-	// controller.move(movingPiece, location2, location1);
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 3),
-	// new Location2D(5, 2));
-	// // This move is invalid
-	// controller.move(movingPiece, location1, location2);
-	// assertTrue(true);
-	// }
-	//
-	// /**
-	// * Tests that the move repetition rule is properly implemented, by having
-	// * the blue player move a piece from one position to a second position,
-	// back
-	// * to the first position, and then to the second position again, after
-	// * moving other pieces first.
-	// *
-	// * @throws StrategyException
-	// * if an invalid move is made. This is the expected behavior.
-	// */
-	// @Test(expected = StrategyException.class)
-	// public void testBlueMoveRepetitionAfterOtherMoves()
-	// throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// PieceType movingPiece = PieceType.SERGEANT;
-	// Location location1 = new Location2D(4, 4);
-	// Location location2 = new Location2D(4, 3);
-	// // Make a few unimportant moves
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
-	// new Location2D(0, 2));
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
-	// new Location2D(0, 3));
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 2),
-	// new Location2D(0, 3));
-	//
-	// // Move the blue piece back and forth while the blue pieces do other
-	// // things.
-	// controller.move(movingPiece, location1, location2);
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 1),
-	// new Location2D(4, 2));
-	// controller.move(movingPiece, location2, location1);
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 2),
-	// new Location2D(4, 3));
-	//
-	// // This move is invalid
-	// controller.move(movingPiece, location1, location2);
-	// assertTrue(true);
-	// }
-	//
-	// /**
-	// * Test that you cannot move onto a choke point (which are synonymous with
-	// * invalid locations)
-	// *
-	// * @throws StrategyException
-	// * invalid move should throw an exception
-	// */
-	// @Test(expected = StrategyException.class)
-	// public void cannotMovePieceOntoAChokePoint() throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// PieceType movingPiece = PieceType.LIEUTENANT;
-	// Location location1 = new Location2D(2, 1);
-	// Location location2 = new Location2D(2, 2); // this is the choke point
-	//
-	// // this move is invalid move
-	// controller.move(movingPiece, location1, location2);
-	// assertTrue(true);
-	// }
-	//
-	// /**
-	// * Test that you cannot move a choke point (which are synonymous with
-	// * invalid locations)
-	// *
-	// * @throws StrategyException
-	// * invalid move should throw an exception
-	// */
-	// @Test(expected = StrategyException.class)
-	// public void cannotMoveAChokePoint() throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// PieceType movingPiece = PieceType.CHOKE_POINT;
-	// Location location1 = new Location2D(2, 2); // this is the choke point
-	// Location location2 = new Location2D(1, 2);
-	//
-	// // this move is invalid move
-	// controller.move(movingPiece, location1, location2);
-	// assertTrue(true);
-	// }
-	//
+	
+	 /**
+	 * Tests that the move repetition rule is properly implemented, by having
+	 * the red player immediately move a piece from one position to a second
+	 * position, back to the first position, and then to the second position
+	 * again.
+	 *
+	 * @throws StrategyException
+	 * if an invalid move is made. This is the expected behavior.
+	 */
+	 @Test(expected = StrategyException.class)
+	 public void testImmediateRedMoveRepetition() throws StrategyException {
+	 StrategyGameController controller = factory.makeDeltaStrategyGame(
+	 startingRedConfig, startingBlueConfig);
+	 controller.startGame();
+	 PieceType movingPiece = PieceType.MARSHAL;
+	 Location location1 = loc03;
+	 Location location2 = loc04;
+	
+	 // Move the red piece back and forth while the blue pieces do other
+	 // things.
+	 controller.move(movingPiece, location1, location2);
+	 controller.move(PieceType.MINER, loc96, loc95);
+	 controller.move(movingPiece, location2, location1);
+	 controller.move(PieceType.MINER, loc95, loc85);
+	 // This move is invalid
+	 controller.move(movingPiece, location1, location2);
+	 assertTrue(true);
+	 }
+	
+	 /**
+	 * Tests that the move repetition rule is properly implemented, by having
+	 * the blue player move a piece from one position to a second position,
+	 back
+	 * to the first position, and then to the second position again, after
+	 * moving other pieces first.
+	 *
+	 * @throws StrategyException
+	 * if an invalid move is made. This is the expected behavior.
+	 */
+	 @Test(expected = StrategyException.class)
+	 public void testBlueMoveRepetitionAfterOtherMoves()
+	 throws StrategyException {
+	 StrategyGameController controller = factory.makeDeltaStrategyGame(
+	 startingRedConfig, startingBlueConfig);
+	 controller.startGame();
+	 PieceType movingPiece = PieceType.MARSHAL;
+	 Location location1 = loc16;
+	 Location location2 = loc15;
+	 // Make a few unimportant moves
+	 controller.move(PieceType.MINER, loc53, loc54);
+	 controller.move(PieceType.SCOUT, loc86, loc85);
+	 controller.move(PieceType.MINER, loc54, loc44);
+	
+	 // Move the blue piece back and forth while the blue pieces do other
+	 // things.
+	 controller.move(movingPiece, location1, location2);
+	 controller.move(PieceType.SERGEANT, loc52, loc53);
+	 controller.move(movingPiece, location2, location1);
+	 controller.move(PieceType.SERGEANT, loc53, loc54);
+	
+	 // This move is invalid
+	 controller.move(movingPiece, location1, location2);
+	 assertTrue(true);
+	 }
+
+	 /**
+	 * Test that you cannot move onto a choke point (which are synonymous with
+	 * invalid locations)
+	 *
+	 * @throws StrategyException
+	 * invalid move should throw an exception
+	 */
+	 @Test(expected = StrategyException.class)
+	 public void cannotMovePieceOntoAChokePoint() throws StrategyException {
+	 StrategyGameController controller = factory.makeDeltaStrategyGame(
+	 startingRedConfig, startingBlueConfig);
+	 controller.startGame();
+	 PieceType movingPiece = PieceType.COLONEL;
+	 Location location1 = loc33;
+	 Location location2 = loc34; // this is the choke point
+	
+	 // this move is invalid move
+	 controller.move(movingPiece, location1, location2);
+	 assertTrue(true);
+	 }
+	
+	 /**
+	 * Test that you cannot move a choke point (which are synonymous with
+	 * invalid locations)
+	 *
+	 * @throws StrategyException
+	 * invalid move should throw an exception
+	 */
+	 @Test(expected = StrategyException.class)
+	 public void cannotMoveAChokePoint() throws StrategyException {
+	 StrategyGameController controller = factory.makeDeltaStrategyGame(
+	 startingRedConfig, startingBlueConfig);
+	 controller.startGame();
+	 PieceType movingPiece = PieceType.CHOKE_POINT;
+	 Location location1 = new Location2D(2, 4); // this is the choke point
+	 Location location2 = new Location2D(1, 4);
+	
+	 // this move is invalid move
+	 controller.move(movingPiece, location1, location2);
+	 assertTrue(true);
+	 }
+	
 	// /**
 	// * Tests that red wins if blue cannot make a legal move, because the only
 	// * remaining blue piece is the flag, but red can make a legal move.

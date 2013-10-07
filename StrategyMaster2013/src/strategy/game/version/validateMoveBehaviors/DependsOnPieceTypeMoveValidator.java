@@ -21,6 +21,7 @@ public class DependsOnPieceTypeMoveValidator implements ValidateMoveBehavior {
 	 * Maps individual piece types to their matching move behaviors.
 	 */
 	private Map<PieceType, ValidateMoveBehavior> behaviorsByPiece;
+	
 	/**
 	 * The move validator to use for all piece types not specified in the
 	 * behaviorsByPiece map.
