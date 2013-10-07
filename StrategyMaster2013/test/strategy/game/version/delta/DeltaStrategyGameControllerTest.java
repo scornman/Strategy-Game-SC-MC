@@ -1205,139 +1205,137 @@ public class DeltaStrategyGameControllerTest {
 		assertTrue(true);
 	}
 
-	 /**
+	/**
 	 * tests that game ends in RED_WINS after red captures the blue flag
-	 *
+	 * 
 	 * @throws StrategyException
 	 */
-	 @Test
-	 public void gameEndsInRedWinsAfterRedCapturesBlueFlag()
-	 throws StrategyException {
-	
-	 StrategyGameController controller = factory.makeDeltaStrategyGame(
-	 startingRedConfig, startingBlueConfig);
-	 controller.startGame();
-	
-	 // move red scout
-	 // move random blue piece
-	 // move red scout
-	 // move random blue piece
-	 // capture flag
-	 controller.move(PieceType.SCOUT, loc43, loc44);
-	 controller.move(PieceType.MARSHAL, loc16, loc15);
-	 controller.move(PieceType.SCOUT, loc44, loc45);
-	 controller.move(PieceType.MINER, loc96, loc95);
-	 MoveResult result = controller.move(PieceType.SCOUT, loc45, loc46);
-	 // check that the game status is RED_WINS/game ends
-	 assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
-	 }
-	
-	 /**
+	@Test
+	public void gameEndsInRedWinsAfterRedCapturesBlueFlag()
+			throws StrategyException {
+
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// move red scout
+		// move random blue piece
+		// move red scout
+		// move random blue piece
+		// capture flag
+		controller.move(PieceType.SCOUT, loc43, loc44);
+		controller.move(PieceType.MARSHAL, loc16, loc15);
+		controller.move(PieceType.SCOUT, loc44, loc45);
+		controller.move(PieceType.MINER, loc96, loc95);
+		MoveResult result = controller.move(PieceType.SCOUT, loc45, loc46);
+		// check that the game status is RED_WINS/game ends
+		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
+	}
+
+	/**
 	 * tests that game ends in BLUE_WINS after blue captures the red flag
-	 *
+	 * 
 	 * @throws StrategyException
 	 */
-	 @Test
-	 public void gameEndsInBlueWinsAfterBlueCapturesRedFlag()
-	 throws StrategyException {
-	
-	 StrategyGameController controller = factory.makeDeltaStrategyGame(
-	 startingRedConfig, startingBlueConfig);
-	 controller.startGame();
-	
-	 // move random red piece
-	 // move blue scout
-	 // move random red piece
-	 // move blue scout
-	 // move random red piece
-	 // capture flag
-	 controller.move(PieceType.MARSHAL, loc03, loc04);
-	 controller.move(PieceType.SCOUT, loc86, loc85);
-	 controller.move(PieceType.MARSHAL, loc04, loc14);
-	 controller.move(PieceType.SCOUT, loc85, loc84);
-	 controller.move(PieceType.MARSHAL, loc14, loc04);
-	 MoveResult result = controller.move(PieceType.SCOUT, loc84, loc83);
-	 // check that the game status is BLUE_WINS/game ends
-	 assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
-	 }
-	
-	 /**
+	@Test
+	public void gameEndsInBlueWinsAfterBlueCapturesRedFlag()
+			throws StrategyException {
+
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// move random red piece
+		// move blue scout
+		// move random red piece
+		// move blue scout
+		// move random red piece
+		// capture flag
+		controller.move(PieceType.MARSHAL, loc03, loc04);
+		controller.move(PieceType.SCOUT, loc86, loc85);
+		controller.move(PieceType.MARSHAL, loc04, loc14);
+		controller.move(PieceType.SCOUT, loc85, loc84);
+		controller.move(PieceType.MARSHAL, loc14, loc04);
+		MoveResult result = controller.move(PieceType.SCOUT, loc84, loc83);
+		// check that the game status is BLUE_WINS/game ends
+		assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
+	}
+
+	/**
 	 * Tests that there is null battle winner when two pieces of the same type
 	 * attack each other
-	 *
+	 * 
 	 */
-	 @Test
-	 public void marshalAttaksMarshalResultsInNullBattleWinner()
-	 throws StrategyException {
-	
-	 swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc16, loc06);		 
-	 // move red marshal
-	 // move blue marshal
-	 // red attacks blue marshal
-	 // null battle winner
-	 StrategyGameController controller = factory.makeDeltaStrategyGame(
-	 startingRedConfig, startingBlueConfig);
-	 controller.startGame();
-	
-	 controller.move(PieceType.MARSHAL, loc03, loc04);
-	 controller.move(PieceType.MARSHAL, loc06, loc05);
-	 MoveResult result = controller.move(PieceType.MARSHAL, loc04, loc05);
-	 // check that the game status is OK
-	 assertEquals(MoveResultStatus.OK, result.getStatus());
-	 assertNull(result.getBattleWinner());
-	 assertNull(controller.getPieceAt(loc04));
-	 assertNull(controller.getPieceAt(loc05));
-	 }
-	
-	 /**
+	@Test
+	public void marshalAttaksMarshalResultsInNullBattleWinner()
+			throws StrategyException {
+
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc16, loc06);
+		// move red marshal
+		// move blue marshal
+		// red attacks blue marshal
+		// null battle winner
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		controller.move(PieceType.MARSHAL, loc03, loc04);
+		controller.move(PieceType.MARSHAL, loc06, loc05);
+		MoveResult result = controller.move(PieceType.MARSHAL, loc04, loc05);
+		// check that the game status is OK
+		assertEquals(MoveResultStatus.OK, result.getStatus());
+		assertNull(result.getBattleWinner());
+		assertNull(controller.getPieceAt(loc04));
+		assertNull(controller.getPieceAt(loc05));
+	}
+
+	/**
 	 * Tests that the move method returns a move result containing a null
 	 * battleWinner if a piece moves to an empty location.
 	 */
-	 @Test
-	 public void testMoveToEmptySpaceProducesNullBattleWinner()
-	 throws StrategyException {
-	 StrategyGameController controller = factory.makeDeltaStrategyGame(
-	 startingRedConfig, startingBlueConfig);
-	 controller.startGame();
-	 Location fromLocation = loc53;
-	 Location toLocation = loc54;
-	 
-	 MoveResult result = controller.move(PieceType.MINER, fromLocation,
-	 toLocation);
-	 PieceLocationDescriptor winner = result.getBattleWinner();
-	 assertNull(winner);
-	 // Check that the board has properly updated to reflect the move.
-	 Piece movedPiece = new Piece(PieceType.MINER, PlayerColor.RED);
-	 assertEquals(movedPiece, controller.getPieceAt(toLocation));
-	 assertEquals(null, controller.getPieceAt(fromLocation));
-	 }
-	
-	 /**
-	 * Tests that the move method returns a move result containing an OK
-	 status
+	@Test
+	public void testMoveToEmptySpaceProducesNullBattleWinner()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = loc53;
+		Location toLocation = loc54;
+
+		MoveResult result = controller.move(PieceType.MINER, fromLocation,
+				toLocation);
+		PieceLocationDescriptor winner = result.getBattleWinner();
+		assertNull(winner);
+		// Check that the board has properly updated to reflect the move.
+		Piece movedPiece = new Piece(PieceType.MINER, PlayerColor.RED);
+		assertEquals(movedPiece, controller.getPieceAt(toLocation));
+		assertEquals(null, controller.getPieceAt(fromLocation));
+	}
+
+	/**
+	 * Tests that the move method returns a move result containing an OK status
 	 * if a piece moves to an empty location.
-	 *
+	 * 
 	 * @throws StrategyException
 	 */
-	 @Test
-	 public void testMoveToEmptySpaceProducesOkStatus() throws
-	 StrategyException {
-	 StrategyGameController controller = factory.makeDeltaStrategyGame(
-	 startingRedConfig, startingBlueConfig);
-	 controller.startGame();
-	 Location fromLocation = loc53;
-	 Location toLocation = loc54;
-	 
-	 MoveResult result = controller.move(PieceType.MINER, fromLocation,
-	 toLocation);
-	 MoveResultStatus status = result.getStatus();
-	 assertEquals(MoveResultStatus.OK, status);
-	 // Check that the board has properly updated to reflect the move.
-	 Piece movedPiece = new Piece(PieceType.MINER, PlayerColor.RED);
-	 assertEquals(movedPiece, controller.getPieceAt(toLocation));
-	 assertEquals(null, controller.getPieceAt(fromLocation));
-	 }
-	
+	@Test
+	public void testMoveToEmptySpaceProducesOkStatus() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		Location fromLocation = loc53;
+		Location toLocation = loc54;
+
+		MoveResult result = controller.move(PieceType.MINER, fromLocation,
+				toLocation);
+		MoveResultStatus status = result.getStatus();
+		assertEquals(MoveResultStatus.OK, status);
+		// Check that the board has properly updated to reflect the move.
+		Piece movedPiece = new Piece(PieceType.MINER, PlayerColor.RED);
+		assertEquals(movedPiece, controller.getPieceAt(toLocation));
+		assertEquals(null, controller.getPieceAt(fromLocation));
+	}
+
 	// /**
 	// * Tests that the a red lieutenant should win when it attacks a blue
 	// * sergeant.
@@ -1541,114 +1539,113 @@ public class DeltaStrategyGameControllerTest {
 	// // check that the game status is DRAW/game ends
 	// assertEquals(MoveResultStatus.DRAW, result.getStatus());
 	// }
-	
-	 /**
+
+	/**
 	 * Tests that the move repetition rule is properly implemented, by having
 	 * the red player immediately move a piece from one position to a second
 	 * position, back to the first position, and then to the second position
 	 * again.
-	 *
+	 * 
 	 * @throws StrategyException
-	 * if an invalid move is made. This is the expected behavior.
+	 *             if an invalid move is made. This is the expected behavior.
 	 */
-	 @Test(expected = StrategyException.class)
-	 public void testImmediateRedMoveRepetition() throws StrategyException {
-	 StrategyGameController controller = factory.makeDeltaStrategyGame(
-	 startingRedConfig, startingBlueConfig);
-	 controller.startGame();
-	 PieceType movingPiece = PieceType.MARSHAL;
-	 Location location1 = loc03;
-	 Location location2 = loc04;
-	
-	 // Move the red piece back and forth while the blue pieces do other
-	 // things.
-	 controller.move(movingPiece, location1, location2);
-	 controller.move(PieceType.MINER, loc96, loc95);
-	 controller.move(movingPiece, location2, location1);
-	 controller.move(PieceType.MINER, loc95, loc85);
-	 // This move is invalid
-	 controller.move(movingPiece, location1, location2);
-	 assertTrue(true);
-	 }
-	
-	 /**
+	@Test(expected = StrategyException.class)
+	public void testImmediateRedMoveRepetition() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		PieceType movingPiece = PieceType.MARSHAL;
+		Location location1 = loc03;
+		Location location2 = loc04;
+
+		// Move the red piece back and forth while the blue pieces do other
+		// things.
+		controller.move(movingPiece, location1, location2);
+		controller.move(PieceType.MINER, loc96, loc95);
+		controller.move(movingPiece, location2, location1);
+		controller.move(PieceType.MINER, loc95, loc85);
+		// This move is invalid
+		controller.move(movingPiece, location1, location2);
+		assertTrue(true);
+	}
+
+	/**
 	 * Tests that the move repetition rule is properly implemented, by having
-	 * the blue player move a piece from one position to a second position,
-	 back
+	 * the blue player move a piece from one position to a second position, back
 	 * to the first position, and then to the second position again, after
 	 * moving other pieces first.
-	 *
+	 * 
 	 * @throws StrategyException
-	 * if an invalid move is made. This is the expected behavior.
+	 *             if an invalid move is made. This is the expected behavior.
 	 */
-	 @Test(expected = StrategyException.class)
-	 public void testBlueMoveRepetitionAfterOtherMoves()
-	 throws StrategyException {
-	 StrategyGameController controller = factory.makeDeltaStrategyGame(
-	 startingRedConfig, startingBlueConfig);
-	 controller.startGame();
-	 PieceType movingPiece = PieceType.MARSHAL;
-	 Location location1 = loc16;
-	 Location location2 = loc15;
-	 // Make a few unimportant moves
-	 controller.move(PieceType.MINER, loc53, loc54);
-	 controller.move(PieceType.SCOUT, loc86, loc85);
-	 controller.move(PieceType.MINER, loc54, loc44);
-	
-	 // Move the blue piece back and forth while the blue pieces do other
-	 // things.
-	 controller.move(movingPiece, location1, location2);
-	 controller.move(PieceType.SERGEANT, loc52, loc53);
-	 controller.move(movingPiece, location2, location1);
-	 controller.move(PieceType.SERGEANT, loc53, loc54);
-	
-	 // This move is invalid
-	 controller.move(movingPiece, location1, location2);
-	 assertTrue(true);
-	 }
+	@Test(expected = StrategyException.class)
+	public void testBlueMoveRepetitionAfterOtherMoves()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		PieceType movingPiece = PieceType.MARSHAL;
+		Location location1 = loc16;
+		Location location2 = loc15;
+		// Make a few unimportant moves
+		controller.move(PieceType.MINER, loc53, loc54);
+		controller.move(PieceType.SCOUT, loc86, loc85);
+		controller.move(PieceType.MINER, loc54, loc44);
 
-	 /**
+		// Move the blue piece back and forth while the blue pieces do other
+		// things.
+		controller.move(movingPiece, location1, location2);
+		controller.move(PieceType.SERGEANT, loc52, loc53);
+		controller.move(movingPiece, location2, location1);
+		controller.move(PieceType.SERGEANT, loc53, loc54);
+
+		// This move is invalid
+		controller.move(movingPiece, location1, location2);
+		assertTrue(true);
+	}
+
+	/**
 	 * Test that you cannot move onto a choke point (which are synonymous with
 	 * invalid locations)
-	 *
+	 * 
 	 * @throws StrategyException
-	 * invalid move should throw an exception
+	 *             invalid move should throw an exception
 	 */
-	 @Test(expected = StrategyException.class)
-	 public void cannotMovePieceOntoAChokePoint() throws StrategyException {
-	 StrategyGameController controller = factory.makeDeltaStrategyGame(
-	 startingRedConfig, startingBlueConfig);
-	 controller.startGame();
-	 PieceType movingPiece = PieceType.COLONEL;
-	 Location location1 = loc33;
-	 Location location2 = loc34; // this is the choke point
-	
-	 // this move is invalid move
-	 controller.move(movingPiece, location1, location2);
-	 assertTrue(true);
-	 }
-	
-	 /**
+	@Test(expected = StrategyException.class)
+	public void cannotMovePieceOntoAChokePoint() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		PieceType movingPiece = PieceType.COLONEL;
+		Location location1 = loc33;
+		Location location2 = loc34; // this is the choke point
+
+		// this move is invalid move
+		controller.move(movingPiece, location1, location2);
+		assertTrue(true);
+	}
+
+	/**
 	 * Test that you cannot move a choke point (which are synonymous with
 	 * invalid locations)
-	 *
+	 * 
 	 * @throws StrategyException
-	 * invalid move should throw an exception
+	 *             invalid move should throw an exception
 	 */
-	 @Test(expected = StrategyException.class)
-	 public void cannotMoveAChokePoint() throws StrategyException {
-	 StrategyGameController controller = factory.makeDeltaStrategyGame(
-	 startingRedConfig, startingBlueConfig);
-	 controller.startGame();
-	 PieceType movingPiece = PieceType.CHOKE_POINT;
-	 Location location1 = new Location2D(2, 4); // this is the choke point
-	 Location location2 = new Location2D(1, 4);
-	
-	 // this move is invalid move
-	 controller.move(movingPiece, location1, location2);
-	 assertTrue(true);
-	 }
-	
+	@Test(expected = StrategyException.class)
+	public void cannotMoveAChokePoint() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		PieceType movingPiece = PieceType.CHOKE_POINT;
+		Location location1 = new Location2D(2, 4); // this is the choke point
+		Location location2 = new Location2D(1, 4);
+
+		// this move is invalid move
+		controller.move(movingPiece, location1, location2);
+		assertTrue(true);
+	}
+
 	// /**
 	// * Tests that red wins if blue cannot make a legal move, because the only
 	// * remaining blue piece is the flag, but red can make a legal move.
@@ -1853,5 +1850,170 @@ public class DeltaStrategyGameControllerTest {
 	// // check that the game status is BLUE_WINS/game ends
 	// assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
 	// }
+
+	/**
+	 * Tests that an attempt to move a bomb throws a StrategyException.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test(expected = StrategyException.class)
+	public void testBombCannotMove() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// Attempt to move a red bomb
+		controller.move(PieceType.BOMB, loc93, loc94);
+		assertTrue(true);
+	}
+
+	/**
+	 * Tests that an attacking marshal is defeated by a defending bomb, which
+	 * then does not move as a result of the battle.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testMarshalLosesToBomb() throws StrategyException {
+		// Line up the marshal with the bomb
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc03, loc53);
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.MARSHAL, loc53, loc54);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+		// red
+		controller.move(PieceType.MARSHAL, loc54, loc55);
+		// blue
+		controller.move(PieceType.SPY, loc05, loc04);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.MARSHAL, loc55, loc56);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.BOMB,
+				PlayerColor.BLUE), loc56), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that an attacking sergeant is defeated by a defending bomb, which
+	 * then does not move as a result of the battle.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testSergeantLosesToBomb() throws StrategyException {
+		// Line up the sergeant with the bomb
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc62, loc53);
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.SERGEANT, loc53, loc54);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+		// red
+		controller.move(PieceType.SERGEANT, loc54, loc55);
+		// blue
+		controller.move(PieceType.SPY, loc05, loc04);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.SERGEANT, loc55, loc56);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.BOMB,
+				PlayerColor.BLUE), loc56), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that an attacking miner defeats a defending bomb and takes its
+	 * position.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testMinerDefeatsBomb() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.MINER, loc53, loc54);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+		// red
+		controller.move(PieceType.MINER, loc54, loc55);
+		// blue
+		controller.move(PieceType.SPY, loc05, loc04);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.MINER, loc55, loc56);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.MINER,
+				PlayerColor.RED), loc56), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that an attacking red marshall defeats a defending blue spy and
+	 * takes its position.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testAttackingRedMarshalDefeatsBlueSpy()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.MARSHAL, loc03, loc04);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.MARSHAL, loc04, loc05);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.MARSHAL,
+				PlayerColor.RED), loc05), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that an attacking red spy defeats a defending blue marshal and
+	 * takes its position.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testAttackingRedSpyDefeatsBlueMarshal()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.SPY, loc13, loc14);
+		// blue
+		controller.move(PieceType.MARSHAL, loc16, loc15);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.SPY, loc14, loc15);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.SPY,
+				PlayerColor.RED), loc15), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that there is no battle winner when a blue spy attacks a red spy.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testNoWinnerInSpyVsSpy() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.SPY, loc13, loc14);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+		// red
+		controller.move(PieceType.SPY, loc14, loc15);
+
+		// blue attacks
+		MoveResult result = controller.move(PieceType.SPY, loc05, loc15);
+		assertEquals(null, result.getBattleWinner());
+	}
 
 }

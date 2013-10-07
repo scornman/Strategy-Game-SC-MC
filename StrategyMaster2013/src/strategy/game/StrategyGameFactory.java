@@ -30,6 +30,7 @@ import strategy.game.version.TurnUpdateBehavior;
 import strategy.game.version.ValidateConfigurationBehavior;
 import strategy.game.version.ValidateMoveBehavior;
 import strategy.game.version.alpha.AlphaStrategyGameController;
+import strategy.game.version.battleBehaviors.DeltaBattleBehavior;
 import strategy.game.version.battleBehaviors.GammaBattleBehavior;
 import strategy.game.version.beta.BetaStrategyGameController;
 import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
@@ -44,6 +45,7 @@ import strategy.game.version.validateMoveBehaviors.DependsOnPieceTypeMoveValidat
 import strategy.game.version.validateMoveBehaviors.MoveRepetitionRuleValidator;
 import strategy.game.version.validateMoveBehaviors.MovingOnTurnMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotAttackingOwnTeamMoveValidator;
+import strategy.game.version.validateMoveBehaviors.NotMovingBombMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotMovingFlagMoveValidator;
 import strategy.game.version.validateMoveBehaviors.OneSpaceInDirectionMoveValidator;
 import strategy.game.version.validateMoveBehaviors.SeveralSpacesInOneDirectionMoveValidator;
@@ -68,7 +70,7 @@ public class StrategyGameFactory {
 	/**
 	 * Default private constructor to ensure this is a singleton.
 	 */
-	private StrategyGameFactory() {
+	protected StrategyGameFactory() {
 		// Intentionally left empty.
 	}
 
@@ -222,6 +224,7 @@ public class StrategyGameFactory {
 		// Validators for movement behaviors common to all piece types.
 		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
 		moveValidators.add(new NotMovingFlagMoveValidator());
+		moveValidators.add(new NotMovingBombMoveValidator());
 		moveValidators.add(new MovingOnTurnMoveValidator(gameBoard));
 		moveValidators.add(new CorrectPieceTypeMoveValidator(gameBoard));
 		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
@@ -232,7 +235,7 @@ public class StrategyGameFactory {
 		moveValidators.add(new DependsOnPieceTypeMoveValidator(validatorsByPiece, new OneSpaceInDirectionMoveValidator()));
 
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
-		final BattleBehavior battleBehavior = new GammaBattleBehavior(gameBoard);
+		final BattleBehavior battleBehavior = new DeltaBattleBehavior(gameBoard);
 		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
 				gameBoard, moveValidators);
 

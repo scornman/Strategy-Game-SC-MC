@@ -16,19 +16,20 @@ import strategy.game.common.PieceType;
 import strategy.game.version.ValidateMoveBehavior;
 
 /**
- * Class for NotMovingFlagMoveValidator doesn't allow player to move unmoveable
- * flag
+ * Class for NotMovingBombMoveValidator doesn't allow player to move unmoveable
+ * bomb
  * 
  * @author Madalyn
+ * @author scornman
  * @version 9/22/13
  * 
  */
-public class NotMovingFlagMoveValidator implements ValidateMoveBehavior {
+public class NotMovingBombMoveValidator implements ValidateMoveBehavior {
 
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) {
-		if (piece == PieceType.FLAG) {
+		if (piece == PieceType.BOMB) {
 			return false;
 		}
 		return true;
