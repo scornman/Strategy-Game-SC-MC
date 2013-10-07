@@ -3,6 +3,9 @@ package strategy.game;
 import java.util.Collection;
 
 import strategy.common.StrategyException;
+import strategy.common.StrategyRuntimeException;
+import strategy.game.common.Location;
+import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.version.Board;
 import strategy.game.version.ValidateConfigurationBehavior;
@@ -21,7 +24,7 @@ public class TestStrategyGameFactory {
 	Board board;
 
 	public TestStrategyGameFactory() {
-		factory = new StrategyGameFactory();
+		factory = StrategyGameFactory.getInstance();
 		board = null;
 	}
 
@@ -40,7 +43,7 @@ public class TestStrategyGameFactory {
 		// Create the board.
 		final Board gameBoard = factory.constructDeltaBoard(startingRedConfig,
 				startingBlueConfig);
-		
+
 		// Store the board for later use
 		this.board = gameBoard;
 
@@ -52,6 +55,31 @@ public class TestStrategyGameFactory {
 		// Finish construction of the game.
 		return factory.constructDeltaStrategyFromBoardAndConfigValidators(
 				gameBoard, configValidators);
+	}
+
+	/**
+	 * Removes all pieces from the board. This will fail if no strategy game has
+	 * yet been created.
+	 */
+	public void clearBoard() {
+		if (board == null) {
+			throw new StrategyRuntimeException("The Board does not exist!!");
+		}
+		for (Location iLoc : board.getValidLocations()) {
+			board.putPiece(iLoc, null);
+		}
+	}
+
+	/**
+	 * Puts a new piece onto the board at the specified location.
+	 * 
+	 * @param newPiece
+	 *            the piece to add.
+	 * @param newLocation
+	 *            the location at which to add the new piece.
+	 */
+	public void putPieceOnBoard(Location newLocation, Piece newPiece) {
+		board.putPiece(newLocation, newPiece);
 	}
 
 }
