@@ -2018,6 +2018,7 @@ public class DeltaStrategyGameControllerTest {
 	
 	/**
 	 * Test that scout can move two spaces in one turn
+	 * @throws StrategyException
 	 */
 	@Test
 	public void scoutCanMoveTwoSpacesInOneTurn() throws StrategyException{
@@ -2026,6 +2027,26 @@ public class DeltaStrategyGameControllerTest {
 		controller.startGame();
 		
 		controller.move(PieceType.SCOUT, loc43, loc45);
+		assertTrue(true);
+	}
+	
+	@Test(expected = StrategyException.class)
+	public void scoutCannotMoveOntoPlayerWhenMovingMoreThanOneSpace() throws StrategyException{
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.SCOUT, loc43, loc46);
+		assertTrue(true);
+	}
+	
+	@Test(expected = StrategyException.class)
+	public void scoutCannotMoveOverPieceToValidEmptyLocation() throws StrategyException{
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.SCOUT, loc12, loc15);
 		assertTrue(true);
 	}
 
