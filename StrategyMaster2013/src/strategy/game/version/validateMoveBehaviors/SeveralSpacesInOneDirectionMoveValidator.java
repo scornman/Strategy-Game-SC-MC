@@ -90,8 +90,8 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 	private boolean isMovingNotOverOtherPieces(Location from, Location to,
 			Coordinate changingCoordinate) {
 		List<Location> coordinatePairs = new ArrayList<Location>();
-		int endCoordinate = from.getCoordinate(changingCoordinate);
-		int startCoordinate = to.getCoordinate(changingCoordinate);
+		int endCoordinate = to.getCoordinate(changingCoordinate);
+		int startCoordinate = from.getCoordinate(changingCoordinate);
 		int lowCoordinate;
 		int highCoordinate;
 
@@ -115,7 +115,7 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 			}
 		}
 
-		for (int i = 0; i <= coordinatePairs.size(); i++) {
+		for (int i = 0; i < coordinatePairs.size(); i++) {
 			try {
 				if (gameBoard.getPieceAt(coordinatePairs.get(i)) != null) {
 					return false;
