@@ -2017,11 +2017,11 @@ public class DeltaStrategyGameControllerTest {
 	}
 	
 	/**
-	 * Test that scout can move two spaces in one turn
+	 * Test that a red scout can move two spaces in one turn
 	 * @throws StrategyException
 	 */
 	@Test
-	public void scoutCanMoveTwoSpacesInOneTurn() throws StrategyException{
+	public void redScoutCanMoveTwoSpacesInOneTurn() throws StrategyException{
 		StrategyGameController controller = factory.makeDeltaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
@@ -2030,8 +2030,29 @@ public class DeltaStrategyGameControllerTest {
 		assertTrue(true);
 	}
 	
+	/**
+	 * Test that a blue scout can move two spaces in one turn
+	 * @throws StrategyException
+	 */
+	@Test
+	public void blueScoutCanMoveTwoSpacesInOneTurn() throws StrategyException{
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.MINER, loc53, loc54);
+		controller.move(PieceType.SCOUT, loc86, loc84);
+		assertTrue(true);
+	}
+	
+	/**
+	 * test that a red scout cannot move onto a piece when attempting
+	 * to move more than one space
+	 * 
+	 * @throws StrategyException
+	 */
 	@Test(expected = StrategyException.class)
-	public void scoutCannotMoveOntoPlayerWhenMovingMoreThanOneSpace() throws StrategyException{
+	public void redScoutCannotMoveOntoPlayerWhenMovingMoreThanOneSpace() throws StrategyException{
 		StrategyGameController controller = factory.makeDeltaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
@@ -2040,14 +2061,36 @@ public class DeltaStrategyGameControllerTest {
 		assertTrue(true);
 	}
 	
+	/**
+	 * test that a blue scout cannot move onto a piece when attempting
+	 * to move more than one space
+	 * 
+	 * @throws StrategyException
+	 */
 	@Test(expected = StrategyException.class)
-	public void scoutCannotMoveOverPieceToValidEmptyLocation() throws StrategyException{
+	public void blueScoutCannotMoveOverPieceToValidEmptyLocation() throws StrategyException{
 		StrategyGameController controller = factory.makeDeltaStrategyGame(
 				startingRedConfig, startingBlueConfig);
 		controller.startGame();
 		
-		controller.move(PieceType.SCOUT, loc12, loc15);
+		controller.move(PieceType.MINER, loc53, loc54);
+		controller.move(PieceType.SCOUT, loc86, loc83);
 		assertTrue(true);
 	}
 
+	@Test(expected = StrategyException.class)
+	public void testRedScoutCannotMoveMoreThanOneSpaceOntoAChokepoint() throws StrategyException{
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		controller.move(PieceType.SCOUT, loc43, loc44);
+		controller.move(PieceType.MARSHAL, loc16, loc15); //move random blue piece
+		controller.move(PieceType.SCOUT, loc44, loc64);
+		assertTrue(true);
+	}
+	
+	
+	
+	
 }
