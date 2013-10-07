@@ -29,14 +29,14 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) throws StrategyException {
 		
-		//TODO if null throw exception, otherwise call other method with correct params
 		Coordinate changingCoordinate = getChangingCoordinate(from, to);
 		
-		if(isMovingNotOverOtherPieces(from, to, changingCoordinate)){
-			return true;
-		}else{
-			return false;
+		//if null throw exception, otherwise call other method with correct params
+		if(changingCoordinate == null){
+			throw new StrategyException("You cannot move over other pieces or to invalid locations.");
 		}
+		
+		return(isMovingNotOverOtherPieces(from, to, changingCoordinate));
 	}
 	
 	/**
