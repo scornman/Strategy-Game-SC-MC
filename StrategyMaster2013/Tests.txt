@@ -55,8 +55,8 @@ X Check that bombs can't move
 - Check scout movement
 X Check that miners beat bombs, but nobody else does
 X Check that winning bombs don't move
-- Check that attacking Marshal beats flag
-- Check that attacking flag beats marshal
+X Check that attacking Marshal beats flag
+X Check that attacking flag beats marshal
 
 If time:
 Look again at throwExceptionIfPieceTriesToMoveTooManySpacesX: it doesn't quite test what it should.
