@@ -27,7 +27,7 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 	private final TurnUpdateBehavior turnUpdateBehavior;
 	private final BattleBehavior battleBehavior;
 	private final GameResultBehavior gameResultBehavior;
-	private final Board gameBoard;
+	protected final Board gameBoard;
 	private boolean gameStarted;
 	private PlayerColor currentColor;
 	private final MoveHistory moveHistory;
@@ -51,7 +51,6 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 			BattleBehavior battleBehavior,
 			GameResultBehavior gameResultBehavior, Board gameBoard, MoveHistory moveHistory)
 			throws StrategyException {
-		// TODO Auto-generated constructor stub
 		this.configValidators = configValidators;
 		this.moveValidators = moveValidators;
 		this.turnUpdateBehavior = turnUpdateBehavior;

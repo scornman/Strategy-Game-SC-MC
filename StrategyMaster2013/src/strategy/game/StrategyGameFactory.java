@@ -178,7 +178,9 @@ public class StrategyGameFactory {
 	 * Create a new delta strategy game
 	 * 
 	 * @param startingRedConfig
+	 *            the starting locations of all red pieces.
 	 * @param startingBlueConfig
+	 *            the starting locations of all blue pieces.
 	 * @return a StrategyGameController for a delta strategy game
 	 * @throws StrategyException
 	 */
@@ -187,6 +189,33 @@ public class StrategyGameFactory {
 			Collection<PieceLocationDescriptor> startingBlueConfig)
 			throws StrategyException {
 
+		// Create the board.
+		final Board gameBoard = constructDeltaBoard(startingRedConfig,
+				startingBlueConfig);
+
+		// Create the configuration validators.
+		final Collection<ValidateConfigurationBehavior> configValidators = getDeltaConfigurationValidators(
+				startingRedConfig, startingBlueConfig);
+
+		// Finish construction of the game.
+		return constructDeltaStrategyFromBoardAndConfigValidators(gameBoard,
+				configValidators);
+
+	}
+
+	/**
+	 * Creates a board for Delta Strategy based on the given starting piece
+	 * configurations.
+	 * 
+	 * @param startingRedConfig
+	 *            the starting locations of all red pieces.
+	 * @param startingBlueConfig
+	 *            the starting locations of all blue pieces.
+	 * @return the initial game board.
+	 */
+	public Board constructDeltaBoard(
+			Collection<PieceLocationDescriptor> startingRedConfig,
+			Collection<PieceLocationDescriptor> startingBlueConfig) {
 		final Collection<Location> chokePoints = new ArrayList<Location>();
 		chokePoints.add(new Location2D(2, 4));
 		chokePoints.add(new Location2D(2, 5));
@@ -200,8 +229,22 @@ public class StrategyGameFactory {
 				startingBlueConfig, 10, 10, chokePoints);
 		final Board gameBoard = new Board(pieceMap);
 
-		final MoveHistory moveHistory = new MoveHistory();
+		return gameBoard;
+	}
 
+	/**
+	 * Creates the behaviors with which a Delta Strategy game determines whether
+	 * a set of starting configurations are valid.
+	 * 
+	 * @param startingRedConfig
+	 *            the starting locations of all red pieces.
+	 * @param startingBlueConfig
+	 *            the starting locations of all blue pieces.
+	 * @return the set of configuration validation behaviors.
+	 */
+	public Collection<ValidateConfigurationBehavior> getDeltaConfigurationValidators(
+			Collection<PieceLocationDescriptor> startingRedConfig,
+			Collection<PieceLocationDescriptor> startingBlueConfig) {
 		final Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
 		configValidators.add(new DeltaPieceDistributionConfigValidator(
 				startingRedConfig, startingBlueConfig));
@@ -220,6 +263,28 @@ public class StrategyGameFactory {
 		configValidators.add(new NoPiecesStartAtSameLocationConfigValidator(
 				totalStartingConfig));
 
+		return configValidators;
+	}
+
+	/**
+	 * Handles the portion of constructing a StrategyGameController for Delta
+	 * Strategy that does not involve dealing with piece configurations.
+	 * 
+	 * @param gameBoard
+	 *            the initial board containing all pieces at their starting
+	 *            locations.
+	 * @param configValidators
+	 *            the set of behaviors responsible for validating the starting
+	 *            piece configurations.
+	 * @return
+	 * @throws StrategyException
+	 */
+	public StrategyGameController constructDeltaStrategyFromBoardAndConfigValidators(
+			Board gameBoard,
+			Collection<ValidateConfigurationBehavior> configValidators)
+			throws StrategyException {
+		final MoveHistory moveHistory = new MoveHistory();
+
 		final Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
 		// Validators for movement behaviors common to all piece types.
 		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
@@ -230,9 +295,12 @@ public class StrategyGameFactory {
 		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
 		// For movement behavior that varies based on the piece type
 		Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
-		validatorsByPiece.put(PieceType.SCOUT, new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
-		//pass in map of pieces that use unique move validators, pass in one-space-per-move validator as default
-		moveValidators.add(new DependsOnPieceTypeMoveValidator(validatorsByPiece, new OneSpaceInDirectionMoveValidator()));
+		validatorsByPiece.put(PieceType.SCOUT,
+				new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		// pass in map of pieces that use unique move validators, pass in
+		// one-space-per-move validator as default
+		moveValidators.add(new DependsOnPieceTypeMoveValidator(
+				validatorsByPiece, new OneSpaceInDirectionMoveValidator()));
 
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 		final BattleBehavior battleBehavior = new DeltaBattleBehavior(gameBoard);
@@ -242,17 +310,24 @@ public class StrategyGameFactory {
 		return new StrategyGameControllerImpl(configValidators, moveValidators,
 				turnUpdateBehavior, battleBehavior, gameResultBehavior,
 				gameBoard, moveHistory);
-
 	}
 
 	/**
+	 * Creates a game board for a given size, set of choke point locations, and
+	 * piece configurations.
 	 * 
 	 * @param redConfiguration
+	 *            the starting locations of all red pieces.
 	 * @param blueConfiguration
+	 *            the starting locations of all blue pieces.
 	 * @param BOARD_SIZE_X
+	 *            the size of the board in the X Dimension.
 	 * @param BOARD_SIZE_Y
+	 *            the size of the board in the Y Dimension.
 	 * @param chokePoints
-	 * @return
+	 *            a list of all locations within the dimensions that are choke
+	 *            points, and thus invalid locations.
+	 * @return the newly-created game board.
 	 */
 	private static Map<Location, Piece> makeBoard(
 			Collection<PieceLocationDescriptor> redConfiguration,
