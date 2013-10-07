@@ -1588,210 +1588,43 @@ public class DeltaStrategyGameControllerTest {
 		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
 	}
 
-	// /**
-	// * Tests that red wins if blue cannot make a legal move, because the only
-	// * remaining blue piece is the flag, but red can make a legal move.
-	// *
-	// * @throws StrategyException
-	// * if an invalid move is made.
-	// */
-	// @Test
-	// public void testRedWinsIfBlueHasOnlyFlagLeft() throws StrategyException {
-	// // Put the red marshal in the front row.
-	// swapTwoPiecesInStartConfiguration(PlayerColor.RED,
-	// new Location2D(1, 0), new Location2D(0, 1));
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// // Perform the sequence of moves that will lead to the battle.
-	// controller.move(PieceType.MARSHAL, new Location2D(0, 1),
-	// new Location2D(0, 2)); // red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 4),
-	// new Location2D(4, 3)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(0, 2),
-	// new Location2D(0, 3)); // red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 3),
-	// new Location2D(4, 4)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(0, 3),
-	// new Location2D(0, 4)); // red
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 4),
-	// new Location2D(5, 3)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(0, 4),
-	// new Location2D(1, 4)); // red
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 3),
-	// new Location2D(5, 4)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(1, 4),
-	// new Location2D(2, 4)); // red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 4),
-	// new Location2D(4, 3)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(2, 4),
-	// new Location2D(3, 4)); // red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 3),
-	// new Location2D(4, 4)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(3, 4),
-	// new Location2D(4, 4)); // red
-	// controller.move(PieceType.COLONEL, new Location2D(2, 5),
-	// new Location2D(2, 4)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(4, 4),
-	// new Location2D(5, 4)); // red
-	// controller.move(PieceType.COLONEL, new Location2D(2, 4),
-	// new Location2D(2, 5)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(5, 4),
-	// new Location2D(5, 5)); // red
-	// controller.move(PieceType.COLONEL, new Location2D(3, 5),
-	// new Location2D(3, 4)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(5, 5),
-	// new Location2D(4, 5)); // red
-	// controller.move(PieceType.COLONEL, new Location2D(3, 4),
-	// new Location2D(3, 5)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(4, 5),
-	// new Location2D(3, 5)); // red
-	// controller.move(PieceType.MARSHAL, new Location2D(1, 5),
-	// new Location2D(1, 4)); // blue
-	// controller.move(PieceType.MARSHAL, new Location2D(3, 5),
-	// new Location2D(2, 5)); // red
-	// controller.move(PieceType.MARSHAL, new Location2D(1, 4),
-	// new Location2D(1, 5)); // blue
-	//
-	// MoveResult result = controller.move(PieceType.MARSHAL, new Location2D(
-	// 2, 5), new Location2D(1, 5)); // red marshal attacks blue
-	// // marshal, the last blue
-	// // piece.
-	//
-	// // check that the game status is RED_WINS/game ends
-	// assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
-	// }
-	//
-	// /**
-	// * Tests that red wins if blue cannot make a legal move, because the only
-	// * remaining blue piece is the flag, but red can make a legal move.
-	// *
-	// * @throws StrategyException
-	// * if an invalid move is made.
-	// */
-	// @Test
-	// public void testBlueWinsIfRedCantMoveWithoutRepetition()
-	// throws StrategyException {
-	// // Put marshalls in corner
-	// swapTwoPiecesInStartConfiguration(PlayerColor.RED,
-	// new Location2D(1, 0), new Location2D(0, 0));
-	// swapTwoPiecesInStartConfiguration(PlayerColor.BLUE,
-	// new Location2D(1, 5), new Location2D(0, 5));
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// // Perform the sequence of moves that will lead to the battle.
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
-	// new Location2D(0, 2));// red
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
-	// new Location2D(0, 3));// blue
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 2),
-	// new Location2D(0, 3));// red kills
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 4),
-	// new Location2D(1, 3));// blue
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 1),
-	// new Location2D(1, 2));// red
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 3),
-	// new Location2D(1, 2));// blue kills
-	// controller.move(PieceType.LIEUTENANT, new Location2D(2, 1),
-	// new Location2D(1, 1));// red
-	// controller.move(PieceType.LIEUTENANT, new Location2D(2, 4),
-	// new Location2D(1, 4));// blue
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 1),
-	// new Location2D(1, 2));// red
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 4),
-	// new Location2D(1, 3));// blue
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 2),
-	// new Location2D(1, 3));// red kills
-	// controller.move(PieceType.MARSHAL, new Location2D(0, 5),
-	// new Location2D(0, 4)); // blue
-	// controller.move(PieceType.COLONEL, new Location2D(2, 0),
-	// new Location2D(2, 1));// red
-	// controller.move(PieceType.COLONEL, new Location2D(2, 5),
-	// new Location2D(2, 4));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(2, 1),
-	// new Location2D(1, 1));// red
-	// controller.move(PieceType.COLONEL, new Location2D(2, 4),
-	// new Location2D(1, 4));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(1, 1),
-	// new Location2D(1, 2));// red
-	// controller.move(PieceType.COLONEL, new Location2D(1, 4),
-	// new Location2D(1, 3));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(1, 2),
-	// new Location2D(1, 3));// red kills
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 4),
-	// new Location2D(5, 3));// blue
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 1),
-	// new Location2D(5, 2));// red
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 3),
-	// new Location2D(5, 2));// blue kills
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 1),
-	// new Location2D(4, 2));// red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 4),
-	// new Location2D(4, 3));// blue
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 2),
-	// new Location2D(4, 3));// red kills
-	// controller.move(PieceType.SERGEANT, new Location2D(3, 4),
-	// new Location2D(4, 4));// blue
-	// controller.move(PieceType.SERGEANT, new Location2D(3, 1),
-	// new Location2D(4, 1));// red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 4),
-	// new Location2D(4, 3));// blue
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 1),
-	// new Location2D(4, 2));// red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 3),
-	// new Location2D(4, 2));// blue kills
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 0),
-	// new Location2D(4, 1));// red
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 5),
-	// new Location2D(4, 4));// blue
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 1),
-	// new Location2D(4, 2));// red
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 4),
-	// new Location2D(4, 3));// blue
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 2),
-	// new Location2D(4, 3));// red kills
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 5),
-	// new Location2D(5, 4));// blue
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 0),
-	// new Location2D(5, 1));// red
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 4),
-	// new Location2D(5, 3));// blue
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 1),
-	// new Location2D(5, 2));// red
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 3),
-	// new Location2D(5, 2));// blue kills
-	// controller.move(PieceType.COLONEL, new Location2D(3, 0),
-	// new Location2D(3, 1));// red
-	// controller.move(PieceType.COLONEL, new Location2D(3, 5),
-	// new Location2D(3, 4));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(3, 1),
-	// new Location2D(4, 1));// red
-	// controller.move(PieceType.COLONEL, new Location2D(3, 4),
-	// new Location2D(4, 4));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(4, 1),
-	// new Location2D(4, 2));// red
-	// controller.move(PieceType.COLONEL, new Location2D(4, 4),
-	// new Location2D(4, 3));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(4, 2),
-	// new Location2D(4, 3)); // red kills
-	// controller.move(PieceType.MARSHAL, new Location2D(0, 4),
-	// new Location2D(0, 3));// blue
-	// controller.move(PieceType.MARSHAL, new Location2D(0, 0),
-	// new Location2D(0, 1));// red moves forward out of corner.
-	// controller.move(PieceType.MARSHAL, new Location2D(0, 3),
-	// new Location2D(0, 2));// blue
-	// MoveResult result = controller.move(PieceType.MARSHAL, new Location2D(
-	// 0, 1), new Location2D(0, 0));// red moves back into corner, next
-	// // to the flag. The only way out
-	// // would be to move forward, but
-	// // that would violate the move
-	// // repetition rule, so blue
-	// // wins.
-	//
-	// // check that the game status is BLUE_WINS/game ends
-	// assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
-	// }
+	/**
+	 * Tests that blue wins if red cannot make a move without violating the move
+	 * repetition rule.
+	 * 
+	 * @throws StrategyException
+	 *             if an invalid move is made.
+	 */
+	@Test
+	public void testBlueWinsIfRedCantMoveWithoutRepetition()
+			throws StrategyException {
+		TestStrategyGameFactory testFactory = new TestStrategyGameFactory();
+		StrategyGameController controller = testFactory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+
+		// Change the board to remove all but 4 pieces.
+		testFactory.clearBoard();
+		testFactory.putPieceOnBoard(loc10, new Piece(PieceType.FLAG,
+				PlayerColor.RED));
+		testFactory.putPieceOnBoard(loc09, new Piece(PieceType.FLAG,
+				PlayerColor.BLUE));
+		testFactory.putPieceOnBoard(loc00, new Piece(PieceType.MARSHAL,
+				PlayerColor.RED));
+		testFactory.putPieceOnBoard(loc95, new Piece(PieceType.GENERAL,
+				PlayerColor.BLUE));
+
+		controller.move(PieceType.MARSHAL, loc00, loc01);// red moves forward
+															// out of corner.
+		controller.move(PieceType.GENERAL, loc95, loc94);// blue
+		// red moves back into corner, next to the flag. The only way out would
+		// be to move forward, but that would violate the move repetition rule,
+		// so blue wins.
+		MoveResult result = controller.move(PieceType.MARSHAL, loc01, loc00);
+
+		// check that the game status is BLUE_WINS/game ends
+		assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
+	}
 
 	/**
 	 * Tests that an attempt to move a bomb throws a StrategyException.
@@ -2025,8 +1858,9 @@ public class DeltaStrategyGameControllerTest {
 	}
 
 	/**
-	 * makes sure scout cannot move a valid number of spaces more than one
-	 * that is onto a chokepoint
+	 * makes sure scout cannot move a valid number of spaces more than one that
+	 * is onto a chokepoint
+	 * 
 	 * @throws StrategyException
 	 */
 	@Test(expected = StrategyException.class)
