@@ -1417,126 +1417,38 @@ public class DeltaStrategyGameControllerTest {
 		assertEquals(null, controller.getPieceAt(defenderLocation));
 	}
 
-	// /**
-	// * If all the pieces are off the board except the two flags then the game
-	// is
-	// * a draw
-	// *
-	// * @throws StrategyException
-	// */
-	// @Test
-	// public void gameEndsInDrawWhenOnlyTwoFlagsLeftOnBoard()
-	// throws StrategyException {
-	// StrategyGameController controller = factory.makeDeltaStrategyGame(
-	// startingRedConfig, startingBlueConfig);
-	// controller.startGame();
-	// // Perform the sequence of moves that will lead to the battle.
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 1),
-	// new Location2D(0, 2));// red
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 4),
-	// new Location2D(0, 3));// blue
-	// controller.move(PieceType.LIEUTENANT, new Location2D(0, 2),
-	// new Location2D(0, 3));// red kills
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 4),
-	// new Location2D(1, 3));// blue
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 1),
-	// new Location2D(1, 2));// red
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 3),
-	// new Location2D(1, 2));// blue kills
-	// controller.move(PieceType.LIEUTENANT, new Location2D(2, 1),
-	// new Location2D(1, 1));// red
-	// controller.move(PieceType.LIEUTENANT, new Location2D(2, 4),
-	// new Location2D(1, 4));// blue
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 1),
-	// new Location2D(1, 2));// red
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 4),
-	// new Location2D(1, 3));// blue
-	// controller.move(PieceType.LIEUTENANT, new Location2D(1, 2),
-	// new Location2D(1, 3));// red kills
-	// controller.move(PieceType.MARSHAL, new Location2D(1, 5),
-	// new Location2D(1, 4));// blue
-	// controller.move(PieceType.MARSHAL, new Location2D(1, 0),
-	// new Location2D(1, 1));// red
-	// controller.move(PieceType.MARSHAL, new Location2D(1, 4),
-	// new Location2D(1, 3));// blue
-	// controller.move(PieceType.MARSHAL, new Location2D(1, 1),
-	// new Location2D(1, 2));// red
-	// controller.move(PieceType.MARSHAL, new Location2D(1, 3),
-	// new Location2D(1, 2));// blue kills
-	// controller.move(PieceType.COLONEL, new Location2D(2, 0),
-	// new Location2D(2, 1));// red
-	// controller.move(PieceType.COLONEL, new Location2D(2, 5),
-	// new Location2D(2, 4));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(2, 1),
-	// new Location2D(1, 1));// red
-	// controller.move(PieceType.COLONEL, new Location2D(2, 4),
-	// new Location2D(1, 4));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(1, 1),
-	// new Location2D(1, 2));// red
-	// controller.move(PieceType.COLONEL, new Location2D(1, 4),
-	// new Location2D(1, 3));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(1, 2),
-	// new Location2D(1, 3));// red kills
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 4),
-	// new Location2D(5, 3));// blue
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 1),
-	// new Location2D(5, 2));// red
-	// controller.move(PieceType.SERGEANT, new Location2D(5, 3),
-	// new Location2D(5, 2));// blue kills
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 1),
-	// new Location2D(4, 2));// red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 4),
-	// new Location2D(4, 3));// blue
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 2),
-	// new Location2D(4, 3));// red kills
-	// controller.move(PieceType.SERGEANT, new Location2D(3, 4),
-	// new Location2D(4, 4));// blue
-	// controller.move(PieceType.SERGEANT, new Location2D(3, 1),
-	// new Location2D(4, 1));// red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 4),
-	// new Location2D(4, 3));// blue
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 1),
-	// new Location2D(4, 2));// red
-	// controller.move(PieceType.SERGEANT, new Location2D(4, 3),
-	// new Location2D(4, 2));// blue kills
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 0),
-	// new Location2D(4, 1));// red
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 5),
-	// new Location2D(4, 4));// blue
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 1),
-	// new Location2D(4, 2));// red
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 4),
-	// new Location2D(4, 3));// blue
-	// controller.move(PieceType.CAPTAIN, new Location2D(4, 2),
-	// new Location2D(4, 3));// red kills
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 5),
-	// new Location2D(5, 4));// blue
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 0),
-	// new Location2D(5, 1));// red
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 4),
-	// new Location2D(5, 3));// blue
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 1),
-	// new Location2D(5, 2));// red
-	// controller.move(PieceType.CAPTAIN, new Location2D(5, 3),
-	// new Location2D(5, 2));// blue kills
-	// controller.move(PieceType.COLONEL, new Location2D(3, 0),
-	// new Location2D(3, 1));// red
-	// controller.move(PieceType.COLONEL, new Location2D(3, 5),
-	// new Location2D(3, 4));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(3, 1),
-	// new Location2D(4, 1));// red
-	// controller.move(PieceType.COLONEL, new Location2D(3, 4),
-	// new Location2D(4, 4));// blue
-	// controller.move(PieceType.COLONEL, new Location2D(4, 1),
-	// new Location2D(4, 2));// red
-	// controller.move(PieceType.COLONEL, new Location2D(4, 4),
-	// new Location2D(4, 3));// blue
-	// MoveResult result = controller.move(PieceType.COLONEL, new Location2D(
-	// 4, 2), new Location2D(4, 3));// red kills
-	//
-	// // check that the game status is DRAW/game ends
-	// assertEquals(MoveResultStatus.DRAW, result.getStatus());
-	// }
+	 /**
+	 * If all the pieces are off the board except the two flags then the game
+	 is
+	 * a draw
+	 *
+	 * @throws StrategyException
+	 */
+	 @Test
+	 public void gameEndsInDrawWhenOnlyTwoFlagsLeftOnBoard()
+	 throws StrategyException {
+		TestStrategyGameFactory testFactory = new TestStrategyGameFactory();
+		StrategyGameController controller = testFactory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		
+		// Change the board to remove all but the flags & 2 marshals
+		testFactory.clearBoard();
+		testFactory.putPieceOnBoard(loc00, new Piece(PieceType.FLAG,
+				PlayerColor.RED));
+		testFactory.putPieceOnBoard(loc09, new Piece(PieceType.FLAG,
+				PlayerColor.BLUE));
+		testFactory.putPieceOnBoard(loc54, new Piece(PieceType.MARSHAL,
+				PlayerColor.RED));
+		testFactory.putPieceOnBoard(loc55, new Piece(PieceType.MARSHAL,
+				PlayerColor.BLUE));
+		
+		// red marshal attacks blue marshal, the last blue piece.
+		MoveResult result = controller.move(PieceType.MARSHAL, loc54, loc55);
+				
+		//check that the game status is DRAW/game ends
+		assertEquals(MoveResultStatus.DRAW, result.getStatus());
+	 }
 
 	/**
 	 * Tests that the move repetition rule is properly implemented, by having
