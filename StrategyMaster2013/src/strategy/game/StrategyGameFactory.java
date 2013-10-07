@@ -227,7 +227,8 @@ public class StrategyGameFactory {
 		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
 		// For movement behavior that varies based on the piece type
 		Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
-		validatorsByPiece.put(PieceType.SCOUT, new SeveralSpacesInOneDirectionMoveValidator());
+		validatorsByPiece.put(PieceType.SCOUT, new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		//pass in map of pieces that use unique move validators, pass in one-space-per-move validator as default
 		moveValidators.add(new DependsOnPieceTypeMoveValidator(validatorsByPiece, new OneSpaceInDirectionMoveValidator()));
 
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
