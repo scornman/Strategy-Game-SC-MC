@@ -30,6 +30,7 @@ import strategy.game.version.TurnUpdateBehavior;
 import strategy.game.version.ValidateConfigurationBehavior;
 import strategy.game.version.ValidateMoveBehavior;
 import strategy.game.version.alpha.AlphaStrategyGameController;
+import strategy.game.version.battleBehaviors.DeltaBattleBehavior;
 import strategy.game.version.battleBehaviors.GammaBattleBehavior;
 import strategy.game.version.beta.BetaStrategyGameController;
 import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
@@ -231,7 +232,7 @@ public class StrategyGameFactory {
 		moveValidators.add(new DependsOnPieceTypeMoveValidator(validatorsByPiece, new OneSpaceInDirectionMoveValidator()));
 
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
-		final BattleBehavior battleBehavior = new GammaBattleBehavior(gameBoard);
+		final BattleBehavior battleBehavior = new DeltaBattleBehavior(gameBoard);
 		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
 				gameBoard, moveValidators);
 

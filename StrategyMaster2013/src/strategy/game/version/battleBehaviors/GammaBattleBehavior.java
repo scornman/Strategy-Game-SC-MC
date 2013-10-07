@@ -31,8 +31,8 @@ import strategy.game.version.Board;
  * 
  */
 public class GammaBattleBehavior implements BattleBehavior {
-	private final Board gameBoard;
-	private final Map<PieceType, Integer> rankMap;
+	protected final Board gameBoard;
+	protected final Map<PieceType, Integer> rankMap;
 
 	/**
 	 * Constructor for GammaBattleBehavior
@@ -53,10 +53,16 @@ public class GammaBattleBehavior implements BattleBehavior {
 	private static Map<PieceType, Integer> setupPieceRanks() {
 		final Map<PieceType, Integer> pieceRanks = new HashMap<PieceType, Integer>();
 		pieceRanks.put(PieceType.MARSHAL, 12);
+		pieceRanks.put(PieceType.GENERAL, 11);
 		pieceRanks.put(PieceType.COLONEL, 10);
+		pieceRanks.put(PieceType.MAJOR, 9);
 		pieceRanks.put(PieceType.CAPTAIN, 8);
 		pieceRanks.put(PieceType.LIEUTENANT, 7);
 		pieceRanks.put(PieceType.SERGEANT, 6);
+		pieceRanks.put(PieceType.MINER, 5);
+		pieceRanks.put(PieceType.SCOUT, 4);
+		pieceRanks.put(PieceType.SPY, 3);
+		pieceRanks.put(PieceType.BOMB, 2);
 		pieceRanks.put(PieceType.FLAG, 1);
 		return pieceRanks;
 	}
