@@ -1,9 +1,13 @@
 package strategy.game.version.validateMoveBehaviors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
 import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
+import strategy.game.common.Location2D;
 import strategy.game.common.PieceType;
 import strategy.game.version.Board;
 import strategy.game.version.ValidateMoveBehavior;
@@ -24,9 +28,15 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) throws StrategyException {
-		// TODO Auto-generated method stub
-		isInSameLine(from, to);
-		return false;
+		
+		//TODO if null throw exception, otherwise call other method with correct params
+		Coordinate changingCoordinate = getChangingCoordinate(from, to);
+		
+		if(isMovingNotOverOtherPieces(from, to, changingCoordinate)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	/**
@@ -34,12 +44,66 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 	 * Check that either the x coords are the same or the y coords are the same
 	 * @param from starting piece location
 	 * @param to ending location piece is moving to
-	 * @return true if moving in the same line
+	 * @return Coordinate that is changing if moving in the same line (to get direction of movement)
+	 * otherwise return null for an error
 	 */
-	private boolean isInSameLine(Location from, Location to){
-		return (from.getCoordinate(Coordinate.X_COORDINATE) == to.getCoordinate(Coordinate.X_COORDINATE) ||
-				from.getCoordinate(Coordinate.Y_COORDINATE) == to.getCoordinate(Coordinate.Y_COORDINATE));
+	private Coordinate getChangingCoordinate(Location from, Location to){
+		//if x coords are the same, then is moving in the y direction
+		if(from.getCoordinate(Coordinate.X_COORDINATE) == to.getCoordinate(Coordinate.X_COORDINATE)){
+			return Coordinate.Y_COORDINATE;
+		//if y coords are the same, then is moving in the x direction	
+		}else if(from.getCoordinate(Coordinate.Y_COORDINATE) == to.getCoordinate(Coordinate.Y_COORDINATE)){
+			return Coordinate.X_COORDINATE;
+		//otherwise, is moving to an invalid location	
+		}else{
+			return null;
+		}	
+	}
 	
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param changingCoordinate
+	 * @return
+	 */
+	private boolean isMovingNotOverOtherPieces(Location from, Location to, Coordinate changingCoordinate){
+		List<Location> coordinatePairs = new ArrayList<Location>();
+		int endCoordinate = from.getCoordinate(changingCoordinate);
+		int startCoordinate = to.getCoordinate(changingCoordinate);
+		int lowCoordinate;
+		int highCoordinate;
+		
+		if(endCoordinate > startCoordinate){
+			highCoordinate = endCoordinate;
+			lowCoordinate = startCoordinate + 1;
+		}else{
+			highCoordinate = startCoordinate - 1;
+			lowCoordinate = endCoordinate;
+		}
+
+		if(changingCoordinate == Coordinate.Y_COORDINATE){
+			for(int i=lowCoordinate; i<=highCoordinate; i++){
+				coordinatePairs.add(new Location2D(from.getCoordinate(Coordinate.X_COORDINATE), i));
+			}
+		}else{
+			for(int i=lowCoordinate; i<=highCoordinate; i++){
+				coordinatePairs.add(new Location2D(i, from.getCoordinate(Coordinate.Y_COORDINATE)));
+			}
+		}
+		
+		for (int i=0; i<=coordinatePairs.size(); i++) {
+			try {
+				if(gameBoard.getPieceAt(coordinatePairs.get(i)) != null){
+					return false;
+				}
+			//if the piece tries to move over an invalid space on the board (choke point)	
+			} catch (StrategyException e) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 }
