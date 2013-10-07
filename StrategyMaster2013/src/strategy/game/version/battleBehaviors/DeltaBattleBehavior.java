@@ -52,11 +52,23 @@ public class DeltaBattleBehavior extends GammaBattleBehavior {
 		// Handle the battle interactions that do not follow the standard
 		// higher-strength-piece-wins pattern.
 		switch (defendType) {
-		// case BOMB:
-		// // The miner defeats the bomb and takes its position.
-		// if (attackType == PieceType.MINER) {
-		//
-		// }
+		case BOMB:
+			// The miner defeats the bomb and takes its position.
+			if (attackType == PieceType.MINER) {
+				return new PieceLocationDescriptor(attackPiece, toLocation);
+			} else {
+				// Everything else loses to the bomb, but the bomb does not take
+				// the loser's position.
+				return new PieceLocationDescriptor(defendPiece, toLocation);
+			}
+		case MARSHAL:
+			// A defending marshal loses to an attacking spy, but interacts
+			// normally with all other pieces.
+			if (attackType == PieceType.SPY) {
+				return new PieceLocationDescriptor(attackPiece, toLocation);
+			} else {
+				return super.getBattleWinner(fromLocation, toLocation);
+			}
 		default:
 			return super.getBattleWinner(fromLocation, toLocation);
 		}

@@ -53,8 +53,8 @@ DELTA:
 New Tests to do:
 X Check that bombs can't move
 - Check scout movement
-- Check that miners beat bombs, but nobody else does
-- Check that winning bombs don't move
+X Check that miners beat bombs, but nobody else does
+X Check that winning bombs don't move
 - Check that attacking Marshal beats flag
 - Check that attacking flag beats marshal
 

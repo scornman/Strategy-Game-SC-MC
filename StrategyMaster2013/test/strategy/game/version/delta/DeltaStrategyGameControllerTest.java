@@ -1853,6 +1853,7 @@ public class DeltaStrategyGameControllerTest {
 
 	/**
 	 * Tests that an attempt to move a bomb throws a StrategyException.
+	 * 
 	 * @throws StrategyException
 	 */
 	@Test(expected = StrategyException.class)
@@ -1863,6 +1864,156 @@ public class DeltaStrategyGameControllerTest {
 		// Attempt to move a red bomb
 		controller.move(PieceType.BOMB, loc93, loc94);
 		assertTrue(true);
+	}
+
+	/**
+	 * Tests that an attacking marshal is defeated by a defending bomb, which
+	 * then does not move as a result of the battle.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testMarshalLosesToBomb() throws StrategyException {
+		// Line up the marshal with the bomb
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc03, loc53);
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.MARSHAL, loc53, loc54);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+		// red
+		controller.move(PieceType.MARSHAL, loc54, loc55);
+		// blue
+		controller.move(PieceType.SPY, loc05, loc04);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.MARSHAL, loc55, loc56);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.BOMB,
+				PlayerColor.BLUE), loc56), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that an attacking sergeant is defeated by a defending bomb, which
+	 * then does not move as a result of the battle.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testSergeantLosesToBomb() throws StrategyException {
+		// Line up the sergeant with the bomb
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc62, loc53);
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.SERGEANT, loc53, loc54);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+		// red
+		controller.move(PieceType.SERGEANT, loc54, loc55);
+		// blue
+		controller.move(PieceType.SPY, loc05, loc04);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.SERGEANT, loc55, loc56);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.BOMB,
+				PlayerColor.BLUE), loc56), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that an attacking miner defeats a defending bomb and takes its
+	 * position.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testMinerDefeatsBomb() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.MINER, loc53, loc54);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+		// red
+		controller.move(PieceType.MINER, loc54, loc55);
+		// blue
+		controller.move(PieceType.SPY, loc05, loc04);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.MINER, loc55, loc56);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.MINER,
+				PlayerColor.RED), loc56), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that an attacking red marshall defeats a defending blue spy and
+	 * takes its position.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testAttackingRedMarshalDefeatsBlueSpy()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.MARSHAL, loc03, loc04);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.MARSHAL, loc04, loc05);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.MARSHAL,
+				PlayerColor.RED), loc05), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that an attacking red spy defeats a defending blue marshal and
+	 * takes its position.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testAttackingRedSpyDefeatsBlueMarshal()
+			throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.SPY, loc13, loc14);
+		// blue
+		controller.move(PieceType.MARSHAL, loc16, loc15);
+
+		// red attacks
+		MoveResult result = controller.move(PieceType.SPY, loc14, loc15);
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.SPY,
+				PlayerColor.RED), loc15), result.getBattleWinner());
+	}
+
+	/**
+	 * Tests that there is no battle winner when a blue spy attacks a red spy.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testNoWinnerInSpyVsSpy() throws StrategyException {
+		StrategyGameController controller = factory.makeDeltaStrategyGame(
+				startingRedConfig, startingBlueConfig);
+		controller.startGame();
+		// red
+		controller.move(PieceType.SPY, loc13, loc14);
+		// blue
+		controller.move(PieceType.SPY, loc06, loc05);
+		// red
+		controller.move(PieceType.SPY, loc14, loc15);
+
+		// blue attacks
+		MoveResult result = controller.move(PieceType.SPY, loc05, loc15);
+		assertEquals(null, result.getBattleWinner());
 	}
 
 }
