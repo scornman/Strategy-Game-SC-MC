@@ -274,6 +274,7 @@ public class StrategyGameFactory {
 	public Collection<ValidateConfigurationBehavior> getDeltaConfigurationValidators(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
+		
 		final Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
 		configValidators.add(new DeltaPieceDistributionConfigValidator(
 				startingRedConfig, startingBlueConfig));
