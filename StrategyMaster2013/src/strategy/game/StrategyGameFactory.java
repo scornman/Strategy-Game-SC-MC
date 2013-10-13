@@ -193,7 +193,7 @@ public class StrategyGameFactory {
 		
 
 		// Create the board.
-		final Board gameBoard = constructDeltaBoard(startingRedConfig,
+		final Board gameBoard = constructFullBoard(startingRedConfig,
 				startingBlueConfig);
 
 		// Create the configuration validators.
@@ -223,7 +223,7 @@ public class StrategyGameFactory {
 			throws StrategyException {
 
 		// Create the board.
-		final Board gameBoard = constructDeltaBoard(startingRedConfig,
+		final Board gameBoard = constructFullBoard(startingRedConfig,
 				startingBlueConfig);
 
 		// Create the configuration validators.
@@ -231,13 +231,12 @@ public class StrategyGameFactory {
 				startingRedConfig, startingBlueConfig);
 
 		// Finish construction of the game.
-		return constructDeltaStrategyFromBoardAndConfigValidators(gameBoard,
-				configValidators);
+		return constructDeltaStrategyFromBoardAndConfigValidators(gameBoard, configValidators);
 
 	}
 
 	/**
-	 * Creates a board for Delta Strategy based on the given starting piece
+	 * Creates a board for Full Strategy game based on the given starting piece
 	 * configurations.
 	 * 
 	 * @param startingRedConfig
@@ -246,7 +245,7 @@ public class StrategyGameFactory {
 	 *            the starting locations of all blue pieces.
 	 * @return the initial game board.
 	 */
-	public Board constructDeltaBoard(
+	public Board constructFullBoard(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
 		final Collection<Location> chokePoints = new ArrayList<Location>();

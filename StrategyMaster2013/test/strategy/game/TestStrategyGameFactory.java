@@ -42,7 +42,7 @@ public class TestStrategyGameFactory {
 			Collection<PieceLocationDescriptor> startingBlueConfig)
 			throws StrategyException {
 		// Create the board.
-		final Board gameBoard = factory.constructDeltaBoard(startingRedConfig,
+		final Board gameBoard = factory.constructFullBoard(startingRedConfig,
 				startingBlueConfig);
 
 		// Store the board for later use
@@ -71,7 +71,7 @@ public class TestStrategyGameFactory {
 			Collection<PieceLocationDescriptor> startingBlueConfig, Collection<StrategyGameObserver> observers)
 			throws StrategyException {
 		// Create the board.
-		final Board gameBoard = factory.constructDeltaBoard(startingRedConfig,
+		final Board gameBoard = factory.constructFullBoard(startingRedConfig,
 				startingBlueConfig);
 
 		// Store the board for later use

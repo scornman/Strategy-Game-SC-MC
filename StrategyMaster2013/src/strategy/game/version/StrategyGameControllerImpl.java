@@ -15,13 +15,15 @@ import strategy.game.common.MoveResultStatus;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
+import strategy.game.common.StrategyGameObservable;
+import strategy.game.common.StrategyGameObserver;
 
 /**
  * @author Madalyn
  * @version 9/22/13
  * 
  */
-public class StrategyGameControllerImpl implements StrategyGameController {
+public class StrategyGameControllerImpl implements StrategyGameController, StrategyGameObservable {
 	private final Collection<ValidateConfigurationBehavior> configValidators;
 	private final Collection<ValidateMoveBehavior> moveValidators;
 	private final TurnUpdateBehavior turnUpdateBehavior;
@@ -137,6 +139,18 @@ public class StrategyGameControllerImpl implements StrategyGameController {
 			throw new StrategyRuntimeException(e.getMessage());
 		}
 		return piece;
+	}
+
+	@Override
+	public void register(StrategyGameObserver observer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void unregister(StrategyGameObserver observer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
