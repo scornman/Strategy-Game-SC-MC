@@ -21,6 +21,7 @@ import strategy.game.common.Location2D;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
+import strategy.game.common.StrategyGameObserver;
 import strategy.game.version.BattleBehavior;
 import strategy.game.version.Board;
 import strategy.game.version.GameResultBehavior;
@@ -187,6 +188,35 @@ public class StrategyGameFactory {
 	public StrategyGameController makeDeltaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig)
+			throws StrategyException {
+
+		// Create the board.
+		final Board gameBoard = constructDeltaBoard(startingRedConfig,
+				startingBlueConfig);
+
+		// Create the configuration validators.
+		final Collection<ValidateConfigurationBehavior> configValidators = getDeltaConfigurationValidators(
+				startingRedConfig, startingBlueConfig);
+
+		// Finish construction of the game.
+		return constructDeltaStrategyFromBoardAndConfigValidators(gameBoard,
+				configValidators);
+
+	}
+	
+	/**
+	 * Create a new epsilon strategy game
+	 * 
+	 * @param startingRedConfig
+	 *            the starting locations of all red pieces.
+	 * @param startingBlueConfig
+	 *            the starting locations of all blue pieces.
+	 * @return a StrategyGameController for a epsilon strategy game
+	 * @throws StrategyException
+	 */
+	public StrategyGameController makeEpsilonStrategy(
+			Collection<PieceLocationDescriptor> startingRedConfig,
+			Collection<PieceLocationDescriptor> startingBlueConfig, Collection<StrategyGameObserver> observers)
 			throws StrategyException {
 
 		// Create the board.
