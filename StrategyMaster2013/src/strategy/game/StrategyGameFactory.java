@@ -189,6 +189,8 @@ public class StrategyGameFactory {
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig)
 			throws StrategyException {
+		
+		
 
 		// Create the board.
 		final Board gameBoard = constructDeltaBoard(startingRedConfig,
@@ -203,7 +205,7 @@ public class StrategyGameFactory {
 				configValidators);
 
 	}
-	
+
 	/**
 	 * Create a new epsilon strategy game
 	 * 
@@ -216,7 +218,8 @@ public class StrategyGameFactory {
 	 */
 	public StrategyGameController makeEpsilonStrategy(
 			Collection<PieceLocationDescriptor> startingRedConfig,
-			Collection<PieceLocationDescriptor> startingBlueConfig, Collection<StrategyGameObserver> observers)
+			Collection<PieceLocationDescriptor> startingBlueConfig,
+			Collection<StrategyGameObserver> observers)
 			throws StrategyException {
 
 		// Create the board.
@@ -275,21 +278,18 @@ public class StrategyGameFactory {
 	public Collection<ValidateConfigurationBehavior> getDeltaConfigurationValidators(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
+
+		// Combine the two configurations into one total configuration for
+		// passing to the NoPiecesStartAtSameLocationConfigValidator
+		final Collection<PieceLocationDescriptor> totalStartingConfig = combineConfigs(
+				startingRedConfig, startingBlueConfig);
+
+		// Create the config validators.
 		final Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
 		configValidators.add(new DeltaPieceDistributionConfigValidator(
 				startingRedConfig, startingBlueConfig));
 		configValidators.add(new DeltaStartLocationsConfigValidator(
 				startingRedConfig, startingBlueConfig));
-
-		// Combine the two configurations into one total configuration for
-		// passing to the NoPiecesStartAtSameLocationConfigValidator
-		final Collection<PieceLocationDescriptor> totalStartingConfig = new ArrayList<PieceLocationDescriptor>();
-		for (PieceLocationDescriptor iPLD : startingRedConfig) {
-			totalStartingConfig.add(iPLD);
-		}
-		for (PieceLocationDescriptor iPLD : startingBlueConfig) {
-			totalStartingConfig.add(iPLD);
-		}
 		configValidators.add(new NoPiecesStartAtSameLocationConfigValidator(
 				totalStartingConfig));
 
@@ -395,5 +395,27 @@ public class StrategyGameFactory {
 		}
 
 		return pieceMap;
+	}
+
+	/**
+	 * Returns one total configuration of the board.
+	 * 
+	 * @param startingRedConfig
+	 *            the config of the red pieces.
+	 * @param startingBlueConfig
+	 *            the config of the blue pieces.
+	 * @return a collection of all pieces.
+	 */
+	private Collection<PieceLocationDescriptor> combineConfigs(
+			Collection<PieceLocationDescriptor> startingRedConfig,
+			Collection<PieceLocationDescriptor> startingBlueConfig) {
+		final Collection<PieceLocationDescriptor> totalStartingConfig = new ArrayList<PieceLocationDescriptor>();
+		for (PieceLocationDescriptor iPLD : startingRedConfig) {
+			totalStartingConfig.add(iPLD);
+		}
+		for (PieceLocationDescriptor iPLD : startingBlueConfig) {
+			totalStartingConfig.add(iPLD);
+		}
+		return totalStartingConfig;
 	}
 }

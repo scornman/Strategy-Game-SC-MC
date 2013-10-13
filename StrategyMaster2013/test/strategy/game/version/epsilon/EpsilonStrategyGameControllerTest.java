@@ -183,6 +183,8 @@ public class EpsilonStrategyGameControllerTest {
 		// Red flag (1)
 		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
 		redLocations.add(loc83);
+		redPieces.add(new Piece(PieceType.FLAG, PlayerColor.RED));
+		redLocations.add(loc82);
 		// Red Bombs (6)
 		redPieces.add(new Piece(PieceType.BOMB, PlayerColor.RED));
 		redLocations.add(loc93);
@@ -218,8 +220,6 @@ public class EpsilonStrategyGameControllerTest {
 		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
 		redLocations.add(loc81);
 		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
-		redLocations.add(loc82);
-		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
 		redLocations.add(loc91);
 		redPieces.add(new Piece(PieceType.CAPTAIN, PlayerColor.RED));
 		redLocations.add(loc92);
@@ -228,9 +228,10 @@ public class EpsilonStrategyGameControllerTest {
 		redLocations.add(loc71);
 		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
 		redLocations.add(loc70);
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		// Red First Lieutenants
+		redPieces.add(new Piece(PieceType.FIRST_LIEUTENANT, PlayerColor.RED));
 		redLocations.add(loc80);
-		redPieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.RED));
+		redPieces.add(new Piece(PieceType.FIRST_LIEUTENANT, PlayerColor.RED));
 		redLocations.add(loc90);
 		// Red Sergeants
 		redPieces.add(new Piece(PieceType.SERGEANT, PlayerColor.RED));
@@ -297,9 +298,11 @@ public class EpsilonStrategyGameControllerTest {
 		ArrayList<Piece> bluePieces = new ArrayList<Piece>();
 		ArrayList<Location> blueLocations = new ArrayList<Location>();
 
-		// Blue flag (1)
+		// Blue flags (2)
 		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
 		blueLocations.add(loc46);
+		bluePieces.add(new Piece(PieceType.FLAG, PlayerColor.BLUE));
+		blueLocations.add(loc47);
 		// Blue Bombs (6)
 		bluePieces.add(new Piece(PieceType.BOMB, PlayerColor.BLUE));
 		blueLocations.add(loc56);
@@ -345,9 +348,10 @@ public class EpsilonStrategyGameControllerTest {
 		blueLocations.add(loc78);
 		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
 		blueLocations.add(loc79);
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
+		// Blue First Lieutenants
+		bluePieces.add(new Piece(PieceType.FIRST_LIEUTENANT, PlayerColor.BLUE));
 		blueLocations.add(loc89);
-		bluePieces.add(new Piece(PieceType.LIEUTENANT, PlayerColor.BLUE));
+		bluePieces.add(new Piece(PieceType.FIRST_LIEUTENANT, PlayerColor.BLUE));
 		blueLocations.add(loc99);
 		// Blue Sergeants
 		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
@@ -358,15 +362,13 @@ public class EpsilonStrategyGameControllerTest {
 		blueLocations.add(loc67);
 		bluePieces.add(new Piece(PieceType.SERGEANT, PlayerColor.BLUE));
 		blueLocations.add(loc68);
-		// Blue Miners (5)
+		// Blue Miners (4)
 		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
 		blueLocations.add(loc96);
 		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
 		blueLocations.add(loc37);
 		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
 		blueLocations.add(loc38);
-		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
-		blueLocations.add(loc47);
 		bluePieces.add(new Piece(PieceType.MINER, PlayerColor.BLUE));
 		blueLocations.add(loc48);
 		// Blue Scouts (8)
