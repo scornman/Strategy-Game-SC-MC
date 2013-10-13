@@ -38,6 +38,7 @@ import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
 import strategy.game.version.validateConfigurationBehaviors.DeltaPieceDistributionConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.DeltaStartLocationsConfigValidator;
+import strategy.game.version.validateConfigurationBehaviors.EpsilonPieceDistributionConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributionConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.GammaStartLocationsConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.NoPiecesStartAtSameLocationConfigValidator;
@@ -194,16 +195,55 @@ public class StrategyGameFactory {
 		final Board gameBoard = constructFullBoard(startingRedConfig,
 				startingBlueConfig);
 
-		// Create the configuration validators.
-		final Collection<ValidateConfigurationBehavior> configValidators = getDeltaConfigurationValidators(
+		// Combine the two configurations into one total configuration for
+		// passing to the NoPiecesStartAtSameLocationConfigValidator
+		final Collection<PieceLocationDescriptor> totalStartingConfig = combineConfigs(
 				startingRedConfig, startingBlueConfig);
 
-		// Finish construction of the game.
-		return constructDeltaStrategyFromBoardAndConfigValidators(gameBoard,
-				configValidators);
+		// Create the config validators.
+		final Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
+		configValidators.add(new DeltaPieceDistributionConfigValidator(
+				startingRedConfig, startingBlueConfig));
+		configValidators.add(new DeltaStartLocationsConfigValidator(
+				startingRedConfig, startingBlueConfig));
+		configValidators.add(new NoPiecesStartAtSameLocationConfigValidator(
+				totalStartingConfig));
+
+		// Create the move history
+		final MoveHistory moveHistory = new MoveHistory();
+
+		// Create the move validators
+		final Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
+		// Validators for movement behaviors common to all piece types.
+		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
+		moveValidators.add(new NotMovingFlagMoveValidator());
+		moveValidators.add(new NotMovingBombMoveValidator());
+		moveValidators.add(new MovingOnTurnMoveValidator(gameBoard));
+		moveValidators.add(new CorrectPieceTypeMoveValidator(gameBoard));
+		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
+
+		// For movement behavior that varies based on the piece type
+		final Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
+		validatorsByPiece.put(PieceType.SCOUT,
+				new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+
+		// pass in map of pieces that use unique move validators, pass in
+		// one-space-per-move validator as default
+		moveValidators.add(new DependsOnPieceTypeMoveValidator(
+				validatorsByPiece, new OneSpaceInDirectionMoveValidator()));
+
+		// Create the remaining components
+		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
+		final BattleBehavior battleBehavior = new DeltaBattleBehavior(gameBoard);
+		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
+				gameBoard, moveValidators);
+
+		return new StrategyGameControllerImpl(configValidators, moveValidators,
+				turnUpdateBehavior, battleBehavior, gameResultBehavior,
+				gameBoard, moveHistory);
 
 	}
-	
+
 	/**
 	 * Create a new epsilon strategy game
 	 * 
@@ -216,19 +256,60 @@ public class StrategyGameFactory {
 	 */
 	public StrategyGameController makeEpsilonStrategy(
 			Collection<PieceLocationDescriptor> startingRedConfig,
-			Collection<PieceLocationDescriptor> startingBlueConfig, Collection<StrategyGameObserver> observers)
+			Collection<PieceLocationDescriptor> startingBlueConfig,
+			Collection<StrategyGameObserver> observers)
 			throws StrategyException {
 
 		// Create the board.
 		final Board gameBoard = constructFullBoard(startingRedConfig,
 				startingBlueConfig);
 
-		// Create the configuration validators.
-		final Collection<ValidateConfigurationBehavior> configValidators = getDeltaConfigurationValidators(
+		// Combine the two configurations into one total configuration for
+		// passing to the NoPiecesStartAtSameLocationConfigValidator
+		final Collection<PieceLocationDescriptor> totalStartingConfig = combineConfigs(
 				startingRedConfig, startingBlueConfig);
 
-		// Finish construction of the game.
-		return constructDeltaStrategyFromBoardAndConfigValidators(gameBoard, configValidators);
+		// Create the config validators.
+		final Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
+		configValidators.add(new EpsilonPieceDistributionConfigValidator(
+				startingRedConfig, startingBlueConfig));
+		configValidators.add(new DeltaStartLocationsConfigValidator(
+				startingRedConfig, startingBlueConfig));
+		configValidators.add(new NoPiecesStartAtSameLocationConfigValidator(
+				totalStartingConfig));
+
+		// Create the move history
+		final MoveHistory moveHistory = new MoveHistory();
+
+		// Create the move validators
+		final Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
+		// Validators for movement behaviors common to all piece types.
+		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
+		moveValidators.add(new NotMovingFlagMoveValidator());
+		moveValidators.add(new NotMovingBombMoveValidator());
+		moveValidators.add(new MovingOnTurnMoveValidator(gameBoard));
+		moveValidators.add(new CorrectPieceTypeMoveValidator(gameBoard));
+		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
+
+		// For movement behavior that varies based on the piece type
+		final Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
+		validatorsByPiece.put(PieceType.SCOUT,
+				new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+
+		// pass in map of pieces that use unique move validators, pass in
+		// one-space-per-move validator as default
+		moveValidators.add(new DependsOnPieceTypeMoveValidator(
+				validatorsByPiece, new OneSpaceInDirectionMoveValidator()));
+
+		// Create the remaining components
+		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
+		final BattleBehavior battleBehavior = new DeltaBattleBehavior(gameBoard);
+		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
+				gameBoard, moveValidators);
+
+		return new StrategyGameControllerImpl(configValidators, moveValidators,
+				turnUpdateBehavior, battleBehavior, gameResultBehavior,
+				gameBoard, moveHistory);
 
 	}
 
@@ -259,87 +340,6 @@ public class StrategyGameFactory {
 		final Board gameBoard = new Board(pieceMap);
 
 		return gameBoard;
-	}
-
-	/**
-	 * Creates the behaviors with which a Delta Strategy game determines whether
-	 * a set of starting configurations are valid.
-	 * 
-	 * @param startingRedConfig
-	 *            the starting locations of all red pieces.
-	 * @param startingBlueConfig
-	 *            the starting locations of all blue pieces.
-	 * @return the set of configuration validation behaviors.
-	 */
-	public Collection<ValidateConfigurationBehavior> getDeltaConfigurationValidators(
-			Collection<PieceLocationDescriptor> startingRedConfig,
-			Collection<PieceLocationDescriptor> startingBlueConfig) {
-		
-		final Collection<ValidateConfigurationBehavior> configValidators = new ArrayList<ValidateConfigurationBehavior>();
-		configValidators.add(new DeltaPieceDistributionConfigValidator(
-				startingRedConfig, startingBlueConfig));
-		configValidators.add(new DeltaStartLocationsConfigValidator(
-				startingRedConfig, startingBlueConfig));
-
-		// Combine the two configurations into one total configuration for
-		// passing to the NoPiecesStartAtSameLocationConfigValidator
-		final Collection<PieceLocationDescriptor> totalStartingConfig = new ArrayList<PieceLocationDescriptor>();
-		for (PieceLocationDescriptor iPLD : startingRedConfig) {
-			totalStartingConfig.add(iPLD);
-		}
-		for (PieceLocationDescriptor iPLD : startingBlueConfig) {
-			totalStartingConfig.add(iPLD);
-		}
-		configValidators.add(new NoPiecesStartAtSameLocationConfigValidator(
-				totalStartingConfig));
-
-		return configValidators;
-	}
-
-	/**
-	 * Handles the portion of constructing a StrategyGameController for Delta
-	 * Strategy that does not involve dealing with piece configurations.
-	 * 
-	 * @param gameBoard
-	 *            the initial board containing all pieces at their starting
-	 *            locations.
-	 * @param configValidators
-	 *            the set of behaviors responsible for validating the starting
-	 *            piece configurations.
-	 * @return a new StrategyGameControllerImpl()
-	 * @throws StrategyException
-	 */
-	public StrategyGameController constructDeltaStrategyFromBoardAndConfigValidators(
-			Board gameBoard,
-			Collection<ValidateConfigurationBehavior> configValidators)
-			throws StrategyException {
-		final MoveHistory moveHistory = new MoveHistory();
-
-		final Collection<ValidateMoveBehavior> moveValidators = new ArrayList<ValidateMoveBehavior>();
-		// Validators for movement behaviors common to all piece types.
-		moveValidators.add(new NotAttackingOwnTeamMoveValidator(gameBoard));
-		moveValidators.add(new NotMovingFlagMoveValidator());
-		moveValidators.add(new NotMovingBombMoveValidator());
-		moveValidators.add(new MovingOnTurnMoveValidator(gameBoard));
-		moveValidators.add(new CorrectPieceTypeMoveValidator(gameBoard));
-		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
-		// For movement behavior that varies based on the piece type
-		final Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
-		validatorsByPiece.put(PieceType.SCOUT,
-				new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
-		// pass in map of pieces that use unique move validators, pass in
-		// one-space-per-move validator as default
-		moveValidators.add(new DependsOnPieceTypeMoveValidator(
-				validatorsByPiece, new OneSpaceInDirectionMoveValidator()));
-
-		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
-		final BattleBehavior battleBehavior = new DeltaBattleBehavior(gameBoard);
-		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
-				gameBoard, moveValidators);
-
-		return new StrategyGameControllerImpl(configValidators, moveValidators,
-				turnUpdateBehavior, battleBehavior, gameResultBehavior,
-				gameBoard, moveHistory);
 	}
 
 	/**
@@ -395,5 +395,27 @@ public class StrategyGameFactory {
 		}
 
 		return pieceMap;
+	}
+
+	/**
+	 * Returns one total configuration of the board.
+	 * 
+	 * @param startingRedConfig
+	 *            the config of the red pieces.
+	 * @param startingBlueConfig
+	 *            the config of the blue pieces.
+	 * @return a collection of all pieces.
+	 */
+	public Collection<PieceLocationDescriptor> combineConfigs(
+			Collection<PieceLocationDescriptor> startingRedConfig,
+			Collection<PieceLocationDescriptor> startingBlueConfig) {
+		final Collection<PieceLocationDescriptor> totalStartingConfig = new ArrayList<PieceLocationDescriptor>();
+		for (PieceLocationDescriptor iPLD : startingRedConfig) {
+			totalStartingConfig.add(iPLD);
+		}
+		for (PieceLocationDescriptor iPLD : startingBlueConfig) {
+			totalStartingConfig.add(iPLD);
+		}
+		return totalStartingConfig;
 	}
 }
