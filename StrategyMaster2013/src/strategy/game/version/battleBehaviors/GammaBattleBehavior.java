@@ -57,6 +57,7 @@ public class GammaBattleBehavior implements BattleBehavior {
 		pieceRanks.put(PieceType.COLONEL, 10);
 		pieceRanks.put(PieceType.MAJOR, 9);
 		pieceRanks.put(PieceType.CAPTAIN, 8);
+		pieceRanks.put(PieceType.FIRST_LIEUTENANT, 7);
 		pieceRanks.put(PieceType.LIEUTENANT, 7);
 		pieceRanks.put(PieceType.SERGEANT, 6);
 		pieceRanks.put(PieceType.MINER, 5);

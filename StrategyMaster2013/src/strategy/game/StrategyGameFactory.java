@@ -32,6 +32,7 @@ import strategy.game.version.ValidateConfigurationBehavior;
 import strategy.game.version.ValidateMoveBehavior;
 import strategy.game.version.alpha.AlphaStrategyGameController;
 import strategy.game.version.battleBehaviors.DeltaBattleBehavior;
+import strategy.game.version.battleBehaviors.EpsilonBattleBehavior;
 import strategy.game.version.battleBehaviors.GammaBattleBehavior;
 import strategy.game.version.beta.BetaStrategyGameController;
 import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
@@ -51,6 +52,7 @@ import strategy.game.version.validateMoveBehaviors.NotMovingBombMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotMovingFlagMoveValidator;
 import strategy.game.version.validateMoveBehaviors.OneSpaceInDirectionMoveValidator;
 import strategy.game.version.validateMoveBehaviors.SeveralSpacesInOneDirectionMoveValidator;
+import strategy.game.version.validateMoveBehaviors.TwoSpaceStrikeMoveValidator;
 
 /**
  * <p>
@@ -295,6 +297,8 @@ public class StrategyGameFactory {
 		final Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
 		validatorsByPiece.put(PieceType.SCOUT,
 				new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		validatorsByPiece.put(PieceType.FIRST_LIEUTENANT,
+				new TwoSpaceStrikeMoveValidator(gameBoard));
 
 		// pass in map of pieces that use unique move validators, pass in
 		// one-space-per-move validator as default
@@ -303,7 +307,8 @@ public class StrategyGameFactory {
 
 		// Create the remaining components
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
-		final BattleBehavior battleBehavior = new DeltaBattleBehavior(gameBoard);
+		final BattleBehavior battleBehavior = new EpsilonBattleBehavior(
+				gameBoard);
 		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
 				gameBoard, moveValidators);
 

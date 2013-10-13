@@ -21,6 +21,7 @@ import strategy.game.version.TurnUpdateBehavior;
 import strategy.game.version.ValidateConfigurationBehavior;
 import strategy.game.version.ValidateMoveBehavior;
 import strategy.game.version.battleBehaviors.DeltaBattleBehavior;
+import strategy.game.version.battleBehaviors.EpsilonBattleBehavior;
 import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
 import strategy.game.version.validateConfigurationBehaviors.DeltaPieceDistributionConfigValidator;
@@ -36,6 +37,7 @@ import strategy.game.version.validateMoveBehaviors.NotMovingBombMoveValidator;
 import strategy.game.version.validateMoveBehaviors.NotMovingFlagMoveValidator;
 import strategy.game.version.validateMoveBehaviors.OneSpaceInDirectionMoveValidator;
 import strategy.game.version.validateMoveBehaviors.SeveralSpacesInOneDirectionMoveValidator;
+import strategy.game.version.validateMoveBehaviors.TwoSpaceStrikeMoveValidator;
 
 /**
  * Test factory which constructs StrategyGameController objects while retaining
@@ -174,6 +176,8 @@ public class TestStrategyGameFactory {
 		final Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
 		validatorsByPiece.put(PieceType.SCOUT,
 				new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		validatorsByPiece.put(PieceType.FIRST_LIEUTENANT,
+				new TwoSpaceStrikeMoveValidator(gameBoard));
 
 		// pass in map of pieces that use unique move validators, pass in
 		// one-space-per-move validator as default
@@ -182,7 +186,8 @@ public class TestStrategyGameFactory {
 
 		// Create the remaining components
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
-		final BattleBehavior battleBehavior = new DeltaBattleBehavior(gameBoard);
+		final BattleBehavior battleBehavior = new EpsilonBattleBehavior(
+				gameBoard);
 		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
 				gameBoard, moveValidators);
 
