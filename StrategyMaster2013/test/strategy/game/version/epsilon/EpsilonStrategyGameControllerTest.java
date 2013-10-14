@@ -1883,5 +1883,30 @@ public class EpsilonStrategyGameControllerTest {
 		controller.move(PieceType.SCOUT, loc44, loc64);
 		assertTrue(true);
 	}
+	
+	/**
+	 * Make sure a first lt and lt are both defeated when a first lt attacks a lt
+	 */
+	
+	
+	/**
+	 * Makes sure a first lt cannot move 2 spaces to an empty space
+	 */
+	
+	/**
+	 * Make sure a first lt cannot attack a piece two spaces away if there
+	 * is a player in between the to & from locations
+	 */
+	
+	/**
+	 * Makes sure a first lt wins if it attacks a spy two spaces away 
+	 * & moves to the location of the spy and the spy is removed from the board
+	 */
+	
+	/**
+	 * Makes sure the first lt loses if it attacks a marshal two spaces away
+	 * Make sure the marshal's location stays the same & the first lt 
+	 * is removed from the board
+	 */
 
 }
