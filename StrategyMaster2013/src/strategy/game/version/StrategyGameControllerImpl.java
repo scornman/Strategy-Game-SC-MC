@@ -3,6 +3,7 @@
  */
 package strategy.game.version;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import strategy.common.PlayerColor;
@@ -23,7 +24,8 @@ import strategy.game.common.StrategyGameObserver;
  * @version 9/22/13
  * 
  */
-public class StrategyGameControllerImpl implements StrategyGameController, StrategyGameObservable {
+public class StrategyGameControllerImpl implements StrategyGameController,
+		StrategyGameObservable {
 	private final Collection<ValidateConfigurationBehavior> configValidators;
 	private final Collection<ValidateMoveBehavior> moveValidators;
 	private final TurnUpdateBehavior turnUpdateBehavior;
@@ -33,6 +35,7 @@ public class StrategyGameControllerImpl implements StrategyGameController, Strat
 	private boolean gameStarted;
 	private PlayerColor currentColor;
 	private final MoveHistory moveHistory;
+	private final Collection<StrategyGameObserver> reporters;
 
 	/**
 	 * Constructor for StrategyGameControllerImpl
@@ -51,8 +54,8 @@ public class StrategyGameControllerImpl implements StrategyGameController, Strat
 			Collection<ValidateMoveBehavior> moveValidators,
 			TurnUpdateBehavior turnUpdateBehavior,
 			BattleBehavior battleBehavior,
-			GameResultBehavior gameResultBehavior, Board gameBoard, MoveHistory moveHistory)
-			throws StrategyException {
+			GameResultBehavior gameResultBehavior, Board gameBoard,
+			MoveHistory moveHistory) throws StrategyException {
 		this.configValidators = configValidators;
 		this.moveValidators = moveValidators;
 		this.turnUpdateBehavior = turnUpdateBehavior;
@@ -64,6 +67,9 @@ public class StrategyGameControllerImpl implements StrategyGameController, Strat
 										// this changes change this
 		// Create the move history for the game
 		this.moveHistory = moveHistory;
+
+		// Initialize the collection of observers
+		reporters = new ArrayList<StrategyGameObserver>();
 
 		// Ensure that the starting piece configurations are valid before
 		// proceeding
@@ -89,18 +95,25 @@ public class StrategyGameControllerImpl implements StrategyGameController, Strat
 			throws StrategyException {
 
 		if (piece == null || from == null || to == null) {
-			throw new StrategyException(
+			StrategyException fault = new StrategyException(
 					"You must enter valid parameters to move.");
+			updateReporters(piece, from, to, null, fault);
+			throw fault;
 		}
 
 		if (!gameStarted) {
-			throw new StrategyException(
+			StrategyException fault = new StrategyException(
 					"Cannot move before the game is started.");
+			updateReporters(piece, from, to, null, fault);
+			throw fault;
 		}
 
 		for (ValidateMoveBehavior moveValidator : moveValidators) {
 			if (!(moveValidator.isMoveValid(piece, from, to, currentColor))) {
-				throw new StrategyException("That move is not valid.");
+				StrategyException fault = new StrategyException(
+						"That move is not valid.");
+				updateReporters(piece, from, to, null, fault);
+				throw fault;
 			}
 		}
 
@@ -123,6 +136,10 @@ public class StrategyGameControllerImpl implements StrategyGameController, Strat
 		// check the game status
 		final MoveResultStatus gameStatus = gameResultBehavior.getGameStatus();
 		final MoveResult result = new MoveResult(gameStatus, battleWinner);
+
+		// Update the reporters with information about this latest move
+		updateReporters(piece, from, to, result, null);
+
 		// update whose turn it is
 		currentColor = turnUpdateBehavior.updateTurn(currentColor);
 
@@ -141,16 +158,43 @@ public class StrategyGameControllerImpl implements StrategyGameController, Strat
 		return piece;
 	}
 
+	/**
+	 * Registers an observer to report on the status of the game.
+	 */
 	@Override
 	public void register(StrategyGameObserver observer) {
-		// TODO Auto-generated method stub
-		
+		reporters.add(observer);
 	}
 
+	/**
+	 * Unregisters one of the observers so that it will no longer report on the
+	 * statu of the game.
+	 */
 	@Override
 	public void unregister(StrategyGameObserver observer) {
-		// TODO Auto-generated method stub
-		
+		reporters.remove(observer);
+	}
+
+	/**
+	 * Updates all registered reporters with information about a move.
+	 * 
+	 * @param piece
+	 *            the type of piece that was moved.
+	 * @param from
+	 *            the location from which the piece was moved.
+	 * @param to
+	 *            the location to which the piece was moved.
+	 * @param result
+	 *            the result of the move.
+	 * @param fault
+	 *            the error thrown as a result of the move, if any.
+	 * @return
+	 */
+	private void updateReporters(PieceType piece, Location from, Location to,
+			MoveResult result, StrategyException fault) {
+		for (StrategyGameObserver observer : reporters) {
+			observer.moveHappened(piece, from, to, result, fault);
+		}
 	}
 
 }
