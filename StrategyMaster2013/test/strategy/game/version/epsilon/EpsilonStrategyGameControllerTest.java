@@ -2056,5 +2056,22 @@ public class EpsilonStrategyGameControllerTest {
 		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.MARSHAL,
 						PlayerColor.RED), loc04), result.getBattleWinner());
 	}
+	
+	/**
+	 * Makes sure first lt cannot move MORE than two spaces
+	 * (even with a valid strike)
+	 */
+	@Test(expected = StrategyException.class)
+	public void firstLtCannotMoveThreeSpacesAndStrike() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc80, loc93);
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.FIRST_LIEUTENANT, loc93, loc96);
+		
+		assertTrue(true);
+	}
 
 }
