@@ -103,14 +103,14 @@ public class StrategyGameControllerImpl implements StrategyGameController,
 		}
 		
 		if(piece == null || from == null || to == null){
-			StrategyException fault = new StrategyException(
+			final StrategyException fault = new StrategyException(
 					"You must enter valid parameters to move.");
 			updateReporters(piece, from, to, null, fault);
 			throw fault;
 		}
 
 		if (!gameStarted) {
-			StrategyException fault = new StrategyException(
+			final StrategyException fault = new StrategyException(
 					"Cannot move before the game is started.");
 			updateReporters(piece, from, to, null, fault);
 			throw fault;
