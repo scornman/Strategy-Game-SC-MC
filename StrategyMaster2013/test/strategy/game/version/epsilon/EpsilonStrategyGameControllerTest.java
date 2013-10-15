@@ -2003,5 +2003,13 @@ public class EpsilonStrategyGameControllerTest {
 	 * Make sure the marshal's location stays the same & the first lt 
 	 * is removed from the board
 	 */
+	@Test
+	public void blueFirstLtAttacksRedMarshalAndLoses() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc89, loc06);
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+	}
 
 }
