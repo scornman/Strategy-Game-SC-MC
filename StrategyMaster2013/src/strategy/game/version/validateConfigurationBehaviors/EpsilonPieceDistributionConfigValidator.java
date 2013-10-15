@@ -313,16 +313,11 @@ public class EpsilonPieceDistributionConfigValidator implements
 			}
 		}
 
-		if (!differenceFound) {
-			// The lists must not be exactly the same.
-			return false;
-		} else {
-			// At the end, if all items in the first list except one have found
-			// matches in the second list, and the two lists are the same size,
-			// the lists must contain the same pieces except for one.
-			return true;
-		}
-
+		// The lists must not be exactly the same; return false
+		// At the end, if all items in the first list except one have found
+		// matches in the second list, and the two lists are the same size,
+		// the lists must contain the same pieces except for one; return true
+		return (differenceFound);
 	}
 
 }

@@ -16,10 +16,23 @@ import strategy.game.common.PieceType;
 import strategy.game.version.Board;
 import strategy.game.version.ValidateMoveBehavior;
 
+/**
+ * A class that validates if a piece (specifically the First Lieutenant)
+ * can either move one space, or can move exactly two spaces, but only
+ * when it is striking another piece. Otherwise, this makes sure the move
+ * is not valid
+ * 
+ * @author Madalyn
+ * @version 10/15/13
+ */
 public class TwoSpaceStrikeMoveValidator implements ValidateMoveBehavior {
 	
 	private final Board gameBoard;
 
+	/**
+	 * The constructor for the class TwoSpaceStriekMoveValidator
+	 * @param gameBoard
+	 */
 	public TwoSpaceStrikeMoveValidator(Board gameBoard) {
 		this.gameBoard = gameBoard;
 	}

@@ -91,8 +91,8 @@ public class StrategyGameFactory {
 	/**
 	 * Create an Alpha Strategy game.
 	 * 
-	 * @return the created Alpha Strategy game
-	 */
+	
+	 * @return the created Alpha Strategy game */
 	public StrategyGameController makeAlphaStrategyGame() {
 		final StrategyGameController controller = new AlphaStrategyGameController();
 		return controller;
@@ -105,11 +105,11 @@ public class StrategyGameFactory {
 	 *            the initial starting configuration for the RED pieces
 	 * @param blueConfiguration
 	 *            the initial starting configuration for the BLUE pieces
+	
+	
 	 * @return the Beta Strategy game instance with the initial configuration of
-	 *         pieces
-	 * @throws StrategyException
-	 *             if either configuration is correct
-	 */
+	 *         pieces * @throws StrategyException
+	 *             if either configuration is correct */
 	public StrategyGameController makeBetaStrategyGame(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration)
@@ -124,9 +124,9 @@ public class StrategyGameFactory {
 	 * 
 	 * @param startingRedConfig
 	 * @param startingBlueConfig
-	 * @return a StrategyGameController for a gamma strategy game
-	 * @throws StrategyException
-	 */
+	
+	
+	 * @return a StrategyGameController for a gamma strategy game * @throws StrategyException */
 	public StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig)
@@ -188,9 +188,9 @@ public class StrategyGameFactory {
 	 *            the starting locations of all red pieces.
 	 * @param startingBlueConfig
 	 *            the starting locations of all blue pieces.
-	 * @return a StrategyGameController for a delta strategy game
-	 * @throws StrategyException
-	 */
+	
+	
+	 * @return a StrategyGameController for a delta strategy game * @throws StrategyException */
 	public StrategyGameController makeDeltaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig)
@@ -258,9 +258,8 @@ public class StrategyGameFactory {
 	 *            the starting locations of all red pieces.
 	 * @param startingBlueConfig
 	 *            the starting locations of all blue pieces.
-	 * @return a StrategyGameController for a epsilon strategy game
-	 * @throws StrategyException
-	 */
+	 * @param observers Collection<StrategyGameObserver>
+	 * @return a StrategyGameController for a epsilon strategy game * @throws StrategyException */
 	public StrategyGameController makeEpsilonStrategy(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig,
@@ -335,8 +334,8 @@ public class StrategyGameFactory {
 	 *            the starting locations of all red pieces.
 	 * @param startingBlueConfig
 	 *            the starting locations of all blue pieces.
-	 * @return the initial game board.
-	 */
+	
+	 * @return the initial game board. */
 	public Board constructFullBoard(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
@@ -418,8 +417,8 @@ public class StrategyGameFactory {
 	 *            the config of the red pieces.
 	 * @param startingBlueConfig
 	 *            the config of the blue pieces.
-	 * @return a collection of all pieces.
-	 */
+	
+	 * @return a collection of all pieces. */
 	public Collection<PieceLocationDescriptor> combineConfigs(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
