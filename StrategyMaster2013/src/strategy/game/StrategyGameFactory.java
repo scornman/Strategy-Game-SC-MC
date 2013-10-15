@@ -91,8 +91,9 @@ public class StrategyGameFactory {
 	/**
 	 * Create an Alpha Strategy game.
 	 * 
-	
-	 * @return the created Alpha Strategy game */
+	 * 
+	 * @return the created Alpha Strategy game
+	 */
 	public StrategyGameController makeAlphaStrategyGame() {
 		final StrategyGameController controller = new AlphaStrategyGameController();
 		return controller;
@@ -105,12 +106,12 @@ public class StrategyGameFactory {
 	 *            the initial starting configuration for the RED pieces
 	 * @param blueConfiguration
 	 *            the initial starting configuration for the BLUE pieces
-	
-	
+	 * 
+	 * 
 	 * @return the Beta Strategy game instance with the initial configuration of
-	 *         pieces 
+	 *         pieces
 	 * @throws StrategyException
-	 *             if either configuration is correct 
+	 *             if either configuration is correct
 	 **/
 	public StrategyGameController makeBetaStrategyGame(
 			Collection<PieceLocationDescriptor> redConfiguration,
@@ -126,8 +127,8 @@ public class StrategyGameFactory {
 	 * 
 	 * @param startingRedConfig
 	 * @param startingBlueConfig
-	 * @return a StrategyGameController for a gamma strategy game 
-	 * @throws StrategyException 
+	 * @return a StrategyGameController for a gamma strategy game
+	 * @throws StrategyException
 	 **/
 	public StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
@@ -190,8 +191,8 @@ public class StrategyGameFactory {
 	 *            the starting locations of all red pieces.
 	 * @param startingBlueConfig
 	 *            the starting locations of all blue pieces.
-	 * @return a StrategyGameController for a delta strategy game 
-	 * @throws StrategyException 
+	 * @return a StrategyGameController for a delta strategy game
+	 * @throws StrategyException
 	 **/
 	public StrategyGameController makeDeltaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
@@ -232,8 +233,10 @@ public class StrategyGameFactory {
 		// For movement behavior that varies based on the piece type
 		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
 		final List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
-		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
-		scoutValidators.add(new CantAttackUnlessOneSpaceMoveValidator(gameBoard));
+		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(
+				gameBoard));
+		scoutValidators
+				.add(new CantAttackUnlessOneSpaceMoveValidator(gameBoard));
 		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
 
 		// pass in map of pieces that use unique move validators, pass in
@@ -260,9 +263,10 @@ public class StrategyGameFactory {
 	 *            the starting locations of all red pieces.
 	 * @param startingBlueConfig
 	 *            the starting locations of all blue pieces.
-	 * @param observers Collection<StrategyGameObserver>
-	 * @return a StrategyGameController for a epsilon strategy game 
-	 * @throws StrategyException 
+	 * @param observers
+	 *            Collection<StrategyGameObserver>
+	 * @return a StrategyGameController for a epsilon strategy game
+	 * @throws StrategyException
 	 **/
 	public StrategyGameController makeEpsilonStrategy(
 			Collection<PieceLocationDescriptor> startingRedConfig,
@@ -304,13 +308,18 @@ public class StrategyGameFactory {
 		// For movement behavior that varies based on the piece type
 		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
 		final List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
-		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
-		scoutValidators.add(new CantAttackUnlessOneSpaceMoveValidator(gameBoard));
+		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(
+				gameBoard));
+		scoutValidators
+				.add(new CantAttackUnlessOneSpaceMoveValidator(gameBoard));
 		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
 		final List<ValidateMoveBehavior> firstLieutenantValidators = new ArrayList<ValidateMoveBehavior>();
-		firstLieutenantValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
-		firstLieutenantValidators.add(new TwoSpaceStrikeMoveValidator(gameBoard));
-		validatorsByPiece.put(PieceType.FIRST_LIEUTENANT, firstLieutenantValidators);
+		firstLieutenantValidators
+				.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		firstLieutenantValidators
+				.add(new TwoSpaceStrikeMoveValidator(gameBoard));
+		validatorsByPiece.put(PieceType.FIRST_LIEUTENANT,
+				firstLieutenantValidators);
 
 		// pass in map of pieces that use unique move validators, pass in
 		// one-space-per-move validator as default
@@ -324,10 +333,19 @@ public class StrategyGameFactory {
 		final GameResultBehavior gameResultBehavior = new TwoFlagGameResultBehavior(
 				gameBoard, moveValidators);
 
-		return new StrategyGameControllerImpl(configValidators, moveValidators,
-				turnUpdateBehavior, battleBehavior, gameResultBehavior,
-				gameBoard, moveHistory);
+		// Create the game controller
+		StrategyGameControllerImpl controller = new StrategyGameControllerImpl(
+				configValidators, moveValidators, turnUpdateBehavior,
+				battleBehavior, gameResultBehavior, gameBoard, moveHistory);
 
+		// Register the observers with the game controller, and indicate to them
+		// that the game has started.
+		for (StrategyGameObserver reporter : observers) {
+			controller.register(reporter);
+			reporter.gameStart(startingRedConfig, startingBlueConfig);
+		}
+
+		return controller;
 	}
 
 	/**
@@ -338,8 +356,9 @@ public class StrategyGameFactory {
 	 *            the starting locations of all red pieces.
 	 * @param startingBlueConfig
 	 *            the starting locations of all blue pieces.
-	
-	 * @return the initial game board. */
+	 * 
+	 * @return the initial game board.
+	 */
 	public Board constructFullBoard(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {
@@ -421,8 +440,9 @@ public class StrategyGameFactory {
 	 *            the config of the red pieces.
 	 * @param startingBlueConfig
 	 *            the config of the blue pieces.
-	
-	 * @return a collection of all pieces. */
+	 * 
+	 * @return a collection of all pieces.
+	 */
 	public Collection<PieceLocationDescriptor> combineConfigs(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig) {

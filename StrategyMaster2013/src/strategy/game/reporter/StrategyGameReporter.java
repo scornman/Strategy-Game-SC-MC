@@ -11,9 +11,12 @@ package strategy.game.reporter;
 
 import java.util.Collection;
 
+import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
+import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
 import strategy.game.common.MoveResult;
+import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
 import strategy.game.common.StrategyGameObserver;
@@ -33,6 +36,7 @@ public class StrategyGameReporter implements StrategyGameObserver {
 	 * game.
 	 */
 	String lastMoveDescription;
+	PlayerColor currentColor;
 
 	/**
 	 * Creates a new StrategyGameReporter.
@@ -48,8 +52,11 @@ public class StrategyGameReporter implements StrategyGameObserver {
 	@Override
 	public void gameStart(Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration) {
-		// TODO Auto-generated method stub
-
+		currentColor = PlayerColor.RED;
+		lastMoveDescription = "Ladies and Gentlemen, welcome to the Strategy Arena "
+				+ "for an exciting match between the visiting RED team and the "
+				+ "home team: BLUE! Let the game begin!";
+		printMessage(lastMoveDescription);
 	}
 
 	/**
@@ -64,6 +71,12 @@ public class StrategyGameReporter implements StrategyGameObserver {
 				fault);
 		// Print out the move statement
 		printMessage(lastMoveDescription);
+		// Update the turn color.
+		if (currentColor == PlayerColor.RED) {
+			currentColor = PlayerColor.BLUE;
+		} else {
+			currentColor = PlayerColor.RED;
+		}
 	}
 
 	/**
@@ -83,7 +96,58 @@ public class StrategyGameReporter implements StrategyGameObserver {
 	 */
 	public String constructMoveReport(PieceType piece, Location from,
 			Location to, MoveResult result, StrategyException fault) {
-		return "Whoa! Something happened in the game!";
+		String report = "";
+		if (result != null) {
+
+			// Include information on the piece that moved.
+			report += "The " + currentColor + " " + piece.getPrintableName()
+					+ " makes a move!\n";
+			// Include the from and to locations.
+			report += "It's leaving location " + getPrintableLocation(from)
+					+ " and heading for " + getPrintableLocation(to) + ".\n";
+			// Determine the battle winner, if any.
+			PieceLocationDescriptor winner = result.getBattleWinner();
+			// If there was a battle
+			if (winner != null) {
+				report += "What's this? A battle!";
+
+				// Inclue the battle winner
+				report += "And the " + getPrintableBattleWinner(winner)
+						+ " is the winner!";
+			}
+		}
+
+		return report;
+	}
+
+	/**
+	 * Constructs a string representation of a location
+	 * 
+	 * @param location
+	 *            the location to represent
+	 * @return a string representation of a location
+	 */
+	private String getPrintableLocation(Location location) {
+		String printableLoc = "("
+				+ location.getCoordinate(Coordinate.X_COORDINATE) + ", "
+				+ location.getCoordinate(Coordinate.Y_COORDINATE) + ")";
+		return printableLoc;
+	}
+
+	/**
+	 * Constructs a string representation of a battle winner
+	 * (PieceLocationDescriptor)
+	 * 
+	 * @param battleWinner
+	 *            the battle winner to represent
+	 * @return a string representation of a battle winner
+	 *         (PieceLocationDescriptor)
+	 */
+	private String getPrintableBattleWinner(PieceLocationDescriptor battleWinner) {
+		Piece winningPiece = battleWinner.getPiece();
+		String printableWinner = "the " + winningPiece.getOwner() + " "
+				+ winningPiece.getType().getPrintableName();
+		return printableWinner;
 	}
 
 	/**
@@ -94,6 +158,15 @@ public class StrategyGameReporter implements StrategyGameObserver {
 	 */
 	public void printMessage(String message) {
 		System.out.println(message);
+	}
+
+	/**
+	 * Accesses the string announced for the last move.
+	 * 
+	 * @return the string announced for the last move.
+	 */
+	public String getLastMoveDescription() {
+		return lastMoveDescription;
 	}
 
 }
