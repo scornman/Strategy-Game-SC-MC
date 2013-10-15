@@ -16,8 +16,23 @@ import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
 import strategy.game.version.Board;
 
+/**
+ * A class that deals with the battle behavior in the Epsilon
+ * Version of Strategy Game. It extends Delta Battle Behavior and
+ * adds on top of Delta Battle Behavior's functionality for special
+ * battle behavior scenarios; specifically dealing with pieces that
+ * can strike by moving two spaces at a time. 
+ * 
+ * @author Madalyn
+ * @version 10/15/13
+ *
+ */
 public class EpsilonBattleBehavior extends DeltaBattleBehavior {
 
+	/**
+	 * The constructor for EpsilonBattleBehavior
+	 * @param gameBoard
+	 */
 	public EpsilonBattleBehavior(Board gameBoard) {
 		super(gameBoard);
 		// TODO Auto-generated constructor stub

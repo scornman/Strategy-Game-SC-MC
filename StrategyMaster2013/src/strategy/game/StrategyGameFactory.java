@@ -108,8 +108,10 @@ public class StrategyGameFactory {
 	
 	
 	 * @return the Beta Strategy game instance with the initial configuration of
-	 *         pieces * @throws StrategyException
-	 *             if either configuration is correct */
+	 *         pieces 
+	 * @throws StrategyException
+	 *             if either configuration is correct 
+	 **/
 	public StrategyGameController makeBetaStrategyGame(
 			Collection<PieceLocationDescriptor> redConfiguration,
 			Collection<PieceLocationDescriptor> blueConfiguration)
@@ -124,9 +126,9 @@ public class StrategyGameFactory {
 	 * 
 	 * @param startingRedConfig
 	 * @param startingBlueConfig
-	
-	
-	 * @return a StrategyGameController for a gamma strategy game * @throws StrategyException */
+	 * @return a StrategyGameController for a gamma strategy game 
+	 * @throws StrategyException 
+	 **/
 	public StrategyGameController makeGammaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig)
@@ -188,9 +190,9 @@ public class StrategyGameFactory {
 	 *            the starting locations of all red pieces.
 	 * @param startingBlueConfig
 	 *            the starting locations of all blue pieces.
-	
-	
-	 * @return a StrategyGameController for a delta strategy game * @throws StrategyException */
+	 * @return a StrategyGameController for a delta strategy game 
+	 * @throws StrategyException 
+	 **/
 	public StrategyGameController makeDeltaStrategyGame(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig)
@@ -259,7 +261,9 @@ public class StrategyGameFactory {
 	 * @param startingBlueConfig
 	 *            the starting locations of all blue pieces.
 	 * @param observers Collection<StrategyGameObserver>
-	 * @return a StrategyGameController for a epsilon strategy game * @throws StrategyException */
+	 * @return a StrategyGameController for a epsilon strategy game 
+	 * @throws StrategyException 
+	 **/
 	public StrategyGameController makeEpsilonStrategy(
 			Collection<PieceLocationDescriptor> startingRedConfig,
 			Collection<PieceLocationDescriptor> startingBlueConfig,
