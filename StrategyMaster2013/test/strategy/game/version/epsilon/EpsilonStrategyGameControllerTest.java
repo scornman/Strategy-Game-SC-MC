@@ -2010,6 +2010,13 @@ public class EpsilonStrategyGameControllerTest {
 		StrategyGameController controller = factory.makeEpsilonStrategy(
 				startingRedConfig, startingBlueConfig, observers);
 		controller.startGame();
+		
+		controller.move(PieceType.MARSHAL, loc03, loc04);
+		MoveResult result = controller.move(PieceType.FIRST_LIEUTENANT, loc06, loc04);
+		
+		// Check that the red marshal wins and but DOES NOT take the place 
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.MARSHAL,
+						PlayerColor.RED), loc04), result.getBattleWinner());
 	}
 
 }
