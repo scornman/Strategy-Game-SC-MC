@@ -1935,11 +1935,37 @@ public class EpsilonStrategyGameControllerTest {
 	/**
 	 * Makes sure a first lt cannot move 2 spaces to an empty space
 	 */
+	@Test(expected = StrategyException.class)
+	public void firstLtMovesTwoSpacesToEmptySpaceIsNotAllowed() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc80, loc53);
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		//move red first lt. 2 spaces without attacking illegally
+		controller.move(PieceType.FIRST_LIEUTENANT, loc53, loc55); 
+		
+		assertTrue(true);
+	}
 	
 	/**
 	 * Make sure a first lt cannot attack a piece two spaces away if there
 	 * is a player in between the to & from locations
 	 */
+	@Test(expected = StrategyException.class)
+	public void firstLtCannotMoveTwoSpacesToAttackIfAnotherPlayerIsInTheWay() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc89, loc47);
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.SCOUT, loc43, loc45); //move red scout up two
+		controller.move(PieceType.FIRST_LIEUTENANT, loc47, loc45); //move blue first lt. two to attack scout
+		
+		assertTrue(true);
+	}
 	
 	/**
 	 * Makes sure a first lt wins if it attacks a miner two spaces away 
