@@ -9,6 +9,8 @@
  *******************************************************************************/
 package strategy.game.version.validateMoveBehaviors;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import strategy.common.PlayerColor;
@@ -29,7 +31,7 @@ public class DependsOnPieceTypeMoveValidator implements ValidateMoveBehavior {
 	/**
 	 * Maps individual piece types to their matching move behaviors.
 	 */
-	private final Map<PieceType, ValidateMoveBehavior> behaviorsByPiece;
+	private final Map<PieceType, List<ValidateMoveBehavior>> behaviorsByPiece;
 	
 	/**
 	 * The move validator to use for all piece types not specified in the
@@ -47,22 +49,27 @@ public class DependsOnPieceTypeMoveValidator implements ValidateMoveBehavior {
 	 *            the behaviorsByPiece map.
 	 */
 	public DependsOnPieceTypeMoveValidator(
-			Map<PieceType, ValidateMoveBehavior> behaviorsByPiece,
+			Map<PieceType, List<ValidateMoveBehavior>> behaviorsByPiece,
 			ValidateMoveBehavior defaultBehavior) {
 		this.behaviorsByPiece = behaviorsByPiece;
 		this.defaultBehavior = defaultBehavior;
 	}
-
+	
 	@Override
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) throws StrategyException {
-		ValidateMoveBehavior pieceBehavior;
+		List<ValidateMoveBehavior> pieceBehaviors;
 		if (behaviorsByPiece.keySet().contains(piece)) {
-			pieceBehavior = behaviorsByPiece.get(piece);
+			pieceBehaviors = behaviorsByPiece.get(piece);
 		} else {
-			pieceBehavior = defaultBehavior;
+			pieceBehaviors = new ArrayList<ValidateMoveBehavior>();
+			pieceBehaviors.add(defaultBehavior);					
 		}
-
-		return pieceBehavior.isMoveValid(piece, from, to, currentColor);
+		for(ValidateMoveBehavior pieceBehavior : pieceBehaviors) {
+			if (!pieceBehavior.isMoveValid(piece, from, to, currentColor)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

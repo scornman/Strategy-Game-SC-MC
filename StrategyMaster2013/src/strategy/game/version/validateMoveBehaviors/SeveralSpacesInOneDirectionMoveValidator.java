@@ -73,7 +73,7 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 	}
 
 	/**
-	 * Makes sure the piece [Scout] is trying to move somewhere in the same line
+	 * Makes sure the piece [Scout or 1st Lt] is trying to move somewhere in the same line
 	 * Check that either the x coords are the same or the y coords are the same
 	 * 
 	 * @param from
