@@ -1921,5 +1921,140 @@ public class EpsilonStrategyGameControllerTest {
 		controller.move(PieceType.SCOUT, loc44, loc64);
 		assertTrue(true);
 	}
+	
+	/**
+	 * Make sure a first lt and lt are both defeated when a first lt attacks a lt
+	 * when moving one space to attack
+	 */
+	@Test
+	public void firstLtAttacksLtBothRemovedInStandardStrikeMove() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc80, loc53);//first lt -red
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc79, loc56);//lt -blue
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.FIRST_LIEUTENANT, loc53, loc54); //move red first lt
+		controller.move(PieceType.LIEUTENANT, loc56, loc55); //move blue lt.
+		MoveResult result = controller.move(PieceType.FIRST_LIEUTENANT, loc54, loc55); //strike with red first lt.
+		// Check that there is no battle winner
+		assertNull(result.getBattleWinner());
+		//Check there is no piece at the first lt's location
+		assertNull(controller.getPieceAt(loc55));
+		//Check there is no piece at the lt's location
+		assertNull(controller.getPieceAt(loc54));
+	}
+	
+	/**
+	 * Make sure a first lt and lt are both defeated when a first lt attacks a lt
+	 * when moving two spaces
+	 */
+	@Test
+	public void firstLtAttacksLtBothRemovedInMoveTwoSpacesStrike() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc70, loc53);
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc89, loc56);
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.LIEUTENANT, loc53, loc54); //move red lt
+		MoveResult result = controller.move(PieceType.FIRST_LIEUTENANT, loc56, loc54); //strike with blue first lt.
+	
+		// Check that there is no battle winner
+		assertNull(result.getBattleWinner());
+		//Check there is no piece at the first lt's location
+		assertNull(controller.getPieceAt(loc56));
+		//Check there is no piece at the lt's location
+		assertNull(controller.getPieceAt(loc53));
+	}
+	
+	/**
+	 * Makes sure a first lt cannot move 2 spaces to an empty space
+	 */
+	@Test(expected = StrategyException.class)
+	public void firstLtMovesTwoSpacesToEmptySpaceIsNotAllowed() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc80, loc53);
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		//move red first lt. 2 spaces without attacking illegally
+		controller.move(PieceType.FIRST_LIEUTENANT, loc53, loc55); 
+		
+		assertTrue(true);
+	}
+	
+	/**
+	 * Make sure a first lt cannot attack a piece two spaces away if there
+	 * is a player in between the to & from locations
+	 */
+	@Test(expected = StrategyException.class)
+	public void firstLtCannotMoveTwoSpacesToAttackIfAnotherPlayerIsInTheWay() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc89, loc47);
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.SCOUT, loc43, loc45); //move red scout up two
+		controller.move(PieceType.FIRST_LIEUTENANT, loc47, loc45); //move blue first lt. two to attack scout
+		
+		assertTrue(true);
+	}
+	
+	/**
+	 * Makes sure a first lt wins if it attacks a miner two spaces away 
+	 * & moves to the location of the miner and the miner is removed from the board
+	 */
+	@Test
+	public void blueFirstLtStrikesRedMinerByMovingTwoSpaces() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc89, loc56);
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.MINER, loc53, loc54); //move red miner
+		MoveResult result = controller.move(PieceType.FIRST_LIEUTENANT, loc56, loc54); //strike with blue first lt.
+	
+		// Check that the blue first lieutenant wins and takes the place 
+		// of the red miner.
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.FIRST_LIEUTENANT,
+				PlayerColor.BLUE), loc54), result.getBattleWinner());
+		
+		// Check that the game does not end.
+		MoveResultStatus status = result.getStatus();
+		assertEquals(MoveResultStatus.OK, status);
+				
+		// Check that the board has properly updated to reflect the post-battle
+		// state.
+		assertEquals(new Piece(PieceType.FIRST_LIEUTENANT,
+				PlayerColor.BLUE), controller.getPieceAt(loc54));
+		assertNull(controller.getPieceAt(loc56));
+
+	}
+	
+	/**
+	 * Makes sure the first lt loses if it attacks a marshal two spaces away
+	 * Make sure the marshal's location stays the same & the first lt 
+	 * is removed from the board
+	 */
+	@Test
+	public void blueFirstLtAttacksRedMarshalAndLoses() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc89, loc06);
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.MARSHAL, loc03, loc04);
+		MoveResult result = controller.move(PieceType.FIRST_LIEUTENANT, loc06, loc04);
+		
+		// Check that the red marshal wins and but DOES NOT take the place 
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.MARSHAL,
+						PlayerColor.RED), loc04), result.getBattleWinner());
+	}
 
 }

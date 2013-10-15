@@ -13,6 +13,7 @@ package strategy.game;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import strategy.common.StrategyException;
@@ -44,6 +45,7 @@ import strategy.game.version.validateConfigurationBehaviors.EpsilonPieceDistribu
 import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributionConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.GammaStartLocationsConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.NoPiecesStartAtSameLocationConfigValidator;
+import strategy.game.version.validateMoveBehaviors.CantAttackMoveValidator;
 import strategy.game.version.validateMoveBehaviors.CorrectPieceTypeMoveValidator;
 import strategy.game.version.validateMoveBehaviors.DependsOnPieceTypeMoveValidator;
 import strategy.game.version.validateMoveBehaviors.MoveRepetitionRuleValidator;
@@ -226,9 +228,11 @@ public class StrategyGameFactory {
 		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
 
 		// For movement behavior that varies based on the piece type
-		final Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
-		validatorsByPiece.put(PieceType.SCOUT,
-				new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
+		List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
+		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		scoutValidators.add(new CantAttackMoveValidator(gameBoard));
+		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
 
 		// pass in map of pieces that use unique move validators, pass in
 		// one-space-per-move validator as default
@@ -295,11 +299,15 @@ public class StrategyGameFactory {
 		moveValidators.add(new MoveRepetitionRuleValidator(moveHistory));
 
 		// For movement behavior that varies based on the piece type
-		final Map<PieceType, ValidateMoveBehavior> validatorsByPiece = new HashMap<PieceType, ValidateMoveBehavior>();
-		validatorsByPiece.put(PieceType.SCOUT,
-				new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
-		validatorsByPiece.put(PieceType.FIRST_LIEUTENANT,
-				new TwoSpaceStrikeMoveValidator(gameBoard));
+		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
+		List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
+		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		scoutValidators.add(new CantAttackMoveValidator(gameBoard));
+		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
+		List<ValidateMoveBehavior> firstLieutenantValidators = new ArrayList<ValidateMoveBehavior>();
+		firstLieutenantValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		firstLieutenantValidators.add(new TwoSpaceStrikeMoveValidator(gameBoard));
+		validatorsByPiece.put(PieceType.FIRST_LIEUTENANT, firstLieutenantValidators);
 
 		// pass in map of pieces that use unique move validators, pass in
 		// one-space-per-move validator as default

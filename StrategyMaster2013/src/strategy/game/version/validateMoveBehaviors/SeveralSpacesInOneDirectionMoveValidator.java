@@ -73,7 +73,7 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 	}
 
 	/**
-	 * Makes sure the piece [Scout] is trying to move somewhere in the same line
+	 * Makes sure the piece [Scout or 1st Lt] is trying to move somewhere in the same line
 	 * Check that either the x coords are the same or the y coords are the same
 	 * 
 	 * @param from
@@ -114,11 +114,11 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 		int highCoordinate;
 
 		if (endCoordinate > startCoordinate) {
-			highCoordinate = endCoordinate;
+			highCoordinate = endCoordinate - 1;
 			lowCoordinate = startCoordinate + 1;
 		} else {
 			highCoordinate = startCoordinate - 1;
-			lowCoordinate = endCoordinate;
+			lowCoordinate = endCoordinate + 1;
 		}
 
 		if (changingCoordinate == Coordinate.Y_COORDINATE) {
