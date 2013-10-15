@@ -2105,5 +2105,37 @@ public class EpsilonStrategyGameControllerTest {
 
 		assertTrue(true);
 	}
-
+	
+	/**
+	 * Checks that if red resigns from the game 
+	 * blue wins
+	 */
+	@Test
+	public void redResignsAndBlueWins() throws StrategyException{
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		//red's turn is always the first move
+		//all null params is synonymous with resigning
+		MoveResult result = controller.move(null, null, null);
+		assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
+	}
+	
+	/**
+	 * Checks that if blue resigns from the game 
+	 * red wins
+	 */
+	@Test
+	public void blueResignsAndRedWins() throws StrategyException{
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		//red makes random first move
+		controller.move(PieceType.SPY, loc13, loc14);
+		//all null params is synonymous with resigning
+		MoveResult result = controller.move(null, null, null);
+		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
+	}
 }
