@@ -1886,8 +1886,51 @@ public class EpsilonStrategyGameControllerTest {
 	
 	/**
 	 * Make sure a first lt and lt are both defeated when a first lt attacks a lt
+	 * when moving one space to attack
 	 */
+	@Test
+	public void firstLtAttacksLtBothRemovedInStandardStrikeMove() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc80, loc53);//first lt -red
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc79, loc56);//lt -blue
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.FIRST_LIEUTENANT, loc53, loc54); //move red first lt
+		controller.move(PieceType.LIEUTENANT, loc56, loc55); //move blue lt.
+		MoveResult result = controller.move(PieceType.FIRST_LIEUTENANT, loc54, loc55); //strike with red first lt.
+		// Check that there is no battle winner
+		assertNull(result.getBattleWinner());
+		//Check there is no piece at the first lt's location
+		assertNull(controller.getPieceAt(loc55));
+		//Check there is no piece at the lt's location
+		assertNull(controller.getPieceAt(loc54));
+	}
 	
+	/**
+	 * Make sure a first lt and lt are both defeated when a first lt attacks a lt
+	 * when moving two spaces
+	 */
+	@Test
+	public void firstLtAttacksLtBothRemovedInMoveTwoSpacesStrike() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.RED, loc70, loc53);
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc89, loc56);
+		
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.LIEUTENANT, loc53, loc54); //move red lt
+		MoveResult result = controller.move(PieceType.FIRST_LIEUTENANT, loc56, loc54); //strike with blue first lt.
+	
+		// Check that there is no battle winner
+		assertNull(result.getBattleWinner());
+		//Check there is no piece at the first lt's location
+		assertNull(controller.getPieceAt(loc56));
+		//Check there is no piece at the lt's location
+		assertNull(controller.getPieceAt(loc53));
+	}
 	
 	/**
 	 * Makes sure a first lt cannot move 2 spaces to an empty space

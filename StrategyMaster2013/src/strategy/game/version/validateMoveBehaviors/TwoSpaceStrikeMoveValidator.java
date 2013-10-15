@@ -19,6 +19,9 @@ public class TwoSpaceStrikeMoveValidator implements ValidateMoveBehavior {
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) throws StrategyException {
 		try {
+			if (from.distanceTo(to) == 1) {
+				return true;
+			}
 			if (gameBoard.getPieceAt(to) == null) {
 				return false;
 			}
