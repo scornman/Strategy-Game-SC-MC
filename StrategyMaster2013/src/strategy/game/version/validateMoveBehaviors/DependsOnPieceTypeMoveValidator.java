@@ -24,7 +24,8 @@ import strategy.game.version.ValidateMoveBehavior;
  * that is moving.
  * 
  * @author scornman
- * @version 10/5/2013
+ * @author Madalyn
+ * @version 10/14/2013
  */
 public class DependsOnPieceTypeMoveValidator implements ValidateMoveBehavior {
 

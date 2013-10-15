@@ -1899,9 +1899,35 @@ public class EpsilonStrategyGameControllerTest {
 	 */
 	
 	/**
-	 * Makes sure a first lt wins if it attacks a spy two spaces away 
-	 * & moves to the location of the spy and the spy is removed from the board
+	 * Makes sure a first lt wins if it attacks a miner two spaces away 
+	 * & moves to the location of the miner and the miner is removed from the board
 	 */
+	@Test
+	public void blueFirstLtStrikesRedMinerByMovingTwoSpaces() throws StrategyException{
+		swapTwoPiecesInStartConfiguration(PlayerColor.BLUE, loc89, loc56);
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		
+		controller.move(PieceType.MINER, loc53, loc54); //move red miner
+		MoveResult result = controller.move(PieceType.FIRST_LIEUTENANT, loc56, loc54); //strike with blue first lt.
+	
+		// Check that the blue first lieutenant wins and takes the place 
+		// of the red miner.
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.FIRST_LIEUTENANT,
+				PlayerColor.BLUE), loc54), result.getBattleWinner());
+		
+		// Check that the game does not end.
+		MoveResultStatus status = result.getStatus();
+		assertEquals(MoveResultStatus.OK, status);
+				
+		// Check that the board has properly updated to reflect the post-battle
+		// state.
+		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.FIRST_LIEUTENANT,
+				PlayerColor.BLUE), loc54), controller.getPieceAt(loc54));
+		assertNull(controller.getPieceAt(loc56));
+
+	}
 	
 	/**
 	 * Makes sure the first lt loses if it attacks a marshal two spaces away
