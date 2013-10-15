@@ -93,8 +93,16 @@ public class StrategyGameControllerImpl implements StrategyGameController,
 	@Override
 	public MoveResult move(PieceType piece, Location from, Location to)
 			throws StrategyException {
-
-		if (piece == null || from == null || to == null) {
+		
+		if (piece == null && from == null && to == null) {
+			if(currentColor == PlayerColor.RED){
+				return new MoveResult(MoveResultStatus.BLUE_WINS, null);
+			}else{
+				return new MoveResult(MoveResultStatus.RED_WINS, null);
+			}
+		}
+		
+		if(piece == null || from == null || to == null){
 			StrategyException fault = new StrategyException(
 					"You must enter valid parameters to move.");
 			updateReporters(piece, from, to, null, fault);
