@@ -23,7 +23,7 @@ import strategy.game.version.TurnUpdateBehavior;
 public class AlternateTeamTurnBehavior implements TurnUpdateBehavior{
 
 	@Override
-	public PlayerColor updateTurn(PlayerColor currentColor) {	
+	public PlayerColor updateTurn(PlayerColor currentColor) {
 		if (currentColor == PlayerColor.RED){
 			currentColor = PlayerColor.BLUE;
 		}else{

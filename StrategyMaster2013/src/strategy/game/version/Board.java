@@ -155,7 +155,7 @@ public class Board {
 	 */
 	public int getNumberOfFlags(PlayerColor color) {
 		int numFlags = 0;
-		Piece flagPiece = new Piece(PieceType.FLAG, color);
+		final Piece flagPiece = new Piece(PieceType.FLAG, color);
 		
 		for(Location iLoc: pieceMap.keySet()) {
 			if(flagPiece.equals(pieceMap.get(iLoc))) {

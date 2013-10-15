@@ -64,7 +64,7 @@ public class DependsOnPieceTypeMoveValidator implements ValidateMoveBehavior {
 			pieceBehaviors = behaviorsByPiece.get(piece);
 		} else {
 			pieceBehaviors = new ArrayList<ValidateMoveBehavior>();
-			pieceBehaviors.add(defaultBehavior);					
+			pieceBehaviors.add(defaultBehavior);	
 		}
 		for(ValidateMoveBehavior pieceBehavior : pieceBehaviors) {
 			if (!pieceBehavior.isMoveValid(piece, from, to, currentColor)) {

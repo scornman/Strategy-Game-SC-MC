@@ -243,7 +243,7 @@ public class EpsilonPieceDistributionConfigValidator implements
 		}
 
 		// Create a flag object to search for
-		Piece flagPiece = new Piece(PieceType.FLAG, color);
+		final Piece flagPiece = new Piece(PieceType.FLAG, color);
 
 		// Find the first flag and remove it
 		if (pieces.contains(flagPiece)) {

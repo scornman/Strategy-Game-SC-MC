@@ -4,9 +4,7 @@
 package strategy.game.version;
 
 import strategy.common.StrategyException;
-import strategy.game.common.Location;
 import strategy.game.common.MoveResultStatus;
-import strategy.game.common.PieceType;
 
 /**
  * @author Madalyn

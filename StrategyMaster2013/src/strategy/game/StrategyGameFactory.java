@@ -229,7 +229,7 @@ public class StrategyGameFactory {
 
 		// For movement behavior that varies based on the piece type
 		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
-		List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
+		final List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
 		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
 		scoutValidators.add(new CantAttackUnlessOneSpaceMoveValidator(gameBoard));
 		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
@@ -300,11 +300,11 @@ public class StrategyGameFactory {
 
 		// For movement behavior that varies based on the piece type
 		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
-		List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
+		final List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
 		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
 		scoutValidators.add(new CantAttackUnlessOneSpaceMoveValidator(gameBoard));
 		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
-		List<ValidateMoveBehavior> firstLieutenantValidators = new ArrayList<ValidateMoveBehavior>();
+		final List<ValidateMoveBehavior> firstLieutenantValidators = new ArrayList<ValidateMoveBehavior>();
 		firstLieutenantValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
 		firstLieutenantValidators.add(new TwoSpaceStrikeMoveValidator(gameBoard));
 		validatorsByPiece.put(PieceType.FIRST_LIEUTENANT, firstLieutenantValidators);
