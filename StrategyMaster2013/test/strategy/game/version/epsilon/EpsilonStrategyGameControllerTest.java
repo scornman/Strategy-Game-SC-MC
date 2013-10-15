@@ -22,8 +22,8 @@ import strategy.common.*;
 import strategy.game.common.*;
 
 /**
- * Test cases for testing the EpsilonStrategyGameController class and the overall
- * functionality of the Epsilon Strategy Game.
+ * Test cases for testing the EpsilonStrategyGameController class and the
+ * overall functionality of the Epsilon Strategy Game.
  * 
  * @author scornman
  * @author Madalyn
@@ -46,7 +46,7 @@ public class EpsilonStrategyGameControllerTest {
 	 */
 	private Collection<PieceLocationDescriptor> startingRedConfig;
 	private Collection<PieceLocationDescriptor> startingBlueConfig;
-	
+
 	/**
 	 * The observers for the strategy game.
 	 */
@@ -521,7 +521,8 @@ public class EpsilonStrategyGameControllerTest {
 	@Test
 	public void testFactoryMethodCreatesGameWhenGivenValidConfigurations()
 			throws StrategyException {
-		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig, observers);
+		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig,
+				observers);
 		assertTrue(true);
 	}
 
@@ -544,7 +545,8 @@ public class EpsilonStrategyGameControllerTest {
 				oldMarshallLocation, newMarshallLocation);
 
 		// Create the controller
-		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig, observers);
+		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig,
+				observers);
 	}
 
 	/**
@@ -566,7 +568,8 @@ public class EpsilonStrategyGameControllerTest {
 				oldColonelLocation, newColonelLocation);
 
 		// Create the controller
-		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig, observers);
+		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig,
+				observers);
 	}
 
 	/**
@@ -588,7 +591,8 @@ public class EpsilonStrategyGameControllerTest {
 				oldLocation, newLocation);
 
 		// Create the controller
-		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig, observers);
+		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig,
+				observers);
 	}
 
 	/**
@@ -610,7 +614,8 @@ public class EpsilonStrategyGameControllerTest {
 				oldLocation, newLocation);
 
 		// Create the controller
-		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig, observers);
+		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig,
+				observers);
 	}
 
 	/**
@@ -632,7 +637,8 @@ public class EpsilonStrategyGameControllerTest {
 		assertTrue(startingRedConfig.remove(pldToRemove));
 
 		// Create the controller
-		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig, observers);
+		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig,
+				observers);
 	}
 
 	/**
@@ -654,7 +660,8 @@ public class EpsilonStrategyGameControllerTest {
 		assertTrue(startingBlueConfig.remove(pldToRemove));
 
 		// Create the controller
-		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig, observers);
+		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig,
+				observers);
 	}
 
 	/**
@@ -676,7 +683,8 @@ public class EpsilonStrategyGameControllerTest {
 				replacementPiece, pieceLocation);
 
 		// Create the controller
-		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig, observers);
+		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig,
+				observers);
 	}
 
 	/**
@@ -698,7 +706,8 @@ public class EpsilonStrategyGameControllerTest {
 				replacementPiece, pieceLocation);
 
 		// Create the controller
-		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig, observers);
+		factory.makeEpsilonStrategy(startingRedConfig, startingBlueConfig,
+				observers);
 	}
 
 	/**
@@ -1229,23 +1238,38 @@ public class EpsilonStrategyGameControllerTest {
 		// move random blue piece
 		// move red scout
 		// move random blue piece
-		// capture flag
+		// capture first blue flag
+		// move random blue piece
+		// capture second blue flag
 		controller.move(PieceType.SCOUT, loc43, loc44);
 		controller.move(PieceType.MARSHAL, loc16, loc15);
 		controller.move(PieceType.SCOUT, loc44, loc45);
 		controller.move(PieceType.MINER, loc96, loc95);
-		MoveResult result = controller.move(PieceType.SCOUT, loc45, loc46);
+
+		// check that the game status is FLAG_CAPTURED
+		MoveResult firstFlagResult = controller.move(PieceType.SCOUT, loc45,
+				loc46);
+		assertEquals(MoveResultStatus.FLAG_CAPTURED, firstFlagResult.getStatus());
+
+		// check that the game status is OK
+		MoveResult intermediateResult = controller.move(PieceType.MARSHAL,
+				loc15, loc14);
+		assertEquals(MoveResultStatus.OK, intermediateResult.getStatus());
+
 		// check that the game status is RED_WINS/game ends
-		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
+		MoveResult secondFlagResult = controller.move(PieceType.SCOUT, loc46,
+				loc47);
+		assertEquals(MoveResultStatus.RED_WINS, secondFlagResult.getStatus());
 	}
 
 	/**
-	 * tests that game ends in BLUE_WINS after blue captures the red flag
+	 * tests that game ends in BLUE_WINS after blue captures both of the red
+	 * flags
 	 * 
 	 * @throws StrategyException
 	 */
 	@Test
-	public void gameEndsInBlueWinsAfterBlueCapturesRedFlag()
+	public void gameEndsInBlueWinsAfterBlueCapturesBothRedFlags()
 			throws StrategyException {
 
 		StrategyGameController controller = factory.makeEpsilonStrategy(
@@ -1257,15 +1281,30 @@ public class EpsilonStrategyGameControllerTest {
 		// move random red piece
 		// move blue scout
 		// move random red piece
-		// capture flag
+		// capture first red flag
+		// move random red piece
+		// capture second red flag
 		controller.move(PieceType.MARSHAL, loc03, loc04);
 		controller.move(PieceType.SCOUT, loc86, loc85);
 		controller.move(PieceType.MARSHAL, loc04, loc14);
 		controller.move(PieceType.SCOUT, loc85, loc84);
 		controller.move(PieceType.MARSHAL, loc14, loc04);
-		MoveResult result = controller.move(PieceType.SCOUT, loc84, loc83);
+
+		MoveResult firstFlagResult = controller.move(PieceType.SCOUT, loc84,
+				loc83);
+		// check that the game status is FLAG_CAPTURED
+		assertEquals(MoveResultStatus.FLAG_CAPTURED,
+				firstFlagResult.getStatus());
+
+		MoveResult intermediateResult = controller.move(PieceType.MARSHAL,
+				loc04, loc03);
+		// check that the game status is once more OK
+		assertEquals(MoveResultStatus.OK, intermediateResult.getStatus());
+
+		MoveResult secondFlagResult = controller.move(PieceType.SCOUT, loc83,
+				loc82);
 		// check that the game status is BLUE_WINS/game ends
-		assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
+		assertEquals(MoveResultStatus.BLUE_WINS, secondFlagResult.getStatus());
 	}
 
 	/**
@@ -1424,21 +1463,20 @@ public class EpsilonStrategyGameControllerTest {
 		assertEquals(null, controller.getPieceAt(defenderLocation));
 	}
 
-	 /**
-	 * If all the pieces are off the board except the two flags then the game
-	 is
+	/**
+	 * If all the pieces are off the board except the two flags then the game is
 	 * a draw
-	 *
+	 * 
 	 * @throws StrategyException
 	 */
-	 @Test
-	 public void gameEndsInDrawWhenOnlyTwoFlagsLeftOnBoard()
-	 throws StrategyException {
+	@Test
+	public void gameEndsInDrawWhenOnlyTwoFlagsLeftOnBoard()
+			throws StrategyException {
 		TestStrategyGameFactory testFactory = new TestStrategyGameFactory();
 		StrategyGameController controller = testFactory.makeEpsilonStrategy(
 				startingRedConfig, startingBlueConfig, observers);
 		controller.startGame();
-		
+
 		// Change the board to remove all but the flags & 2 marshals
 		testFactory.clearBoard();
 		testFactory.putPieceOnBoard(loc00, new Piece(PieceType.FLAG,
@@ -1449,13 +1487,13 @@ public class EpsilonStrategyGameControllerTest {
 				PlayerColor.RED));
 		testFactory.putPieceOnBoard(loc55, new Piece(PieceType.MARSHAL,
 				PlayerColor.BLUE));
-		
+
 		// red marshal attacks blue marshal, the last blue piece.
 		MoveResult result = controller.move(PieceType.MARSHAL, loc54, loc55);
-				
-		//check that the game status is DRAW/game ends
+
+		// check that the game status is DRAW/game ends
 		assertEquals(MoveResultStatus.DRAW, result.getStatus());
-	 }
+	}
 
 	/**
 	 * Tests that the move repetition rule is properly implemented, by having

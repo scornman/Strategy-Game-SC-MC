@@ -23,6 +23,7 @@ import strategy.game.version.ValidateMoveBehavior;
 import strategy.game.version.battleBehaviors.DeltaBattleBehavior;
 import strategy.game.version.battleBehaviors.EpsilonBattleBehavior;
 import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
+import strategy.game.version.gameResultBehaviors.TwoFlagGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
 import strategy.game.version.validateConfigurationBehaviors.DeltaPieceDistributionConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.DeltaStartLocationsConfigValidator;
@@ -188,7 +189,7 @@ public class TestStrategyGameFactory {
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 		final BattleBehavior battleBehavior = new EpsilonBattleBehavior(
 				gameBoard);
-		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
+		final GameResultBehavior gameResultBehavior = new TwoFlagGameResultBehavior(
 				gameBoard, moveValidators);
 
 		return new StrategyGameControllerImpl(configValidators, moveValidators,
