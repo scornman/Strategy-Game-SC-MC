@@ -122,12 +122,12 @@ public class SeveralSpacesInOneDirectionMoveValidator implements
 		}
 
 		if (changingCoordinate == Coordinate.Y_COORDINATE) {
-			for (int i = lowCoordinate; i <= highCoordinate; i++) {
+			for (int i = lowCoordinate+1; i <= highCoordinate; i++) {
 				coordinatePairs.add(new Location2D(from
 						.getCoordinate(Coordinate.X_COORDINATE), i));
 			}
 		} else {
-			for (int i = lowCoordinate; i <= highCoordinate; i++) {
+			for (int i = lowCoordinate+1; i <= highCoordinate; i++) {
 				coordinatePairs.add(new Location2D(i, from
 						.getCoordinate(Coordinate.Y_COORDINATE)));
 			}

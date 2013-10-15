@@ -17,7 +17,7 @@ public class TwoSpaceStrikeMoveValidator implements ValidateMoveBehavior {
 	public boolean isMoveValid(PieceType piece, Location from, Location to,
 			PlayerColor currentColor) throws StrategyException {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

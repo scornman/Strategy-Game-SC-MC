@@ -1923,8 +1923,8 @@ public class EpsilonStrategyGameControllerTest {
 				
 		// Check that the board has properly updated to reflect the post-battle
 		// state.
-		assertEquals(new PieceLocationDescriptor(new Piece(PieceType.FIRST_LIEUTENANT,
-				PlayerColor.BLUE), loc54), controller.getPieceAt(loc54));
+		assertEquals(new Piece(PieceType.FIRST_LIEUTENANT,
+				PlayerColor.BLUE), controller.getPieceAt(loc54));
 		assertNull(controller.getPieceAt(loc56));
 
 	}
