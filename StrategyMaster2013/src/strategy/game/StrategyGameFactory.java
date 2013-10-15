@@ -37,6 +37,7 @@ import strategy.game.version.battleBehaviors.EpsilonBattleBehavior;
 import strategy.game.version.battleBehaviors.GammaBattleBehavior;
 import strategy.game.version.beta.BetaStrategyGameController;
 import strategy.game.version.gameResultBehaviors.StatusGameResultBehavior;
+import strategy.game.version.gameResultBehaviors.TwoFlagGameResultBehavior;
 import strategy.game.version.turnUpdateBehaviors.AlternateTeamTurnBehavior;
 import strategy.game.version.validateConfigurationBehaviors.DeltaPieceDistributionConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.DeltaStartLocationsConfigValidator;
@@ -44,7 +45,7 @@ import strategy.game.version.validateConfigurationBehaviors.EpsilonPieceDistribu
 import strategy.game.version.validateConfigurationBehaviors.GammaPieceDistributionConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.GammaStartLocationsConfigValidator;
 import strategy.game.version.validateConfigurationBehaviors.NoPiecesStartAtSameLocationConfigValidator;
-import strategy.game.version.validateMoveBehaviors.CantAttackMoveValidator;
+import strategy.game.version.validateMoveBehaviors.CantAttackUnlessOneSpaceMoveValidator;
 import strategy.game.version.validateMoveBehaviors.CorrectPieceTypeMoveValidator;
 import strategy.game.version.validateMoveBehaviors.DependsOnPieceTypeMoveValidator;
 import strategy.game.version.validateMoveBehaviors.MoveRepetitionRuleValidator;
@@ -230,7 +231,7 @@ public class StrategyGameFactory {
 		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
 		List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
 		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
-		scoutValidators.add(new CantAttackMoveValidator(gameBoard));
+		scoutValidators.add(new CantAttackUnlessOneSpaceMoveValidator(gameBoard));
 		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
 
 		// pass in map of pieces that use unique move validators, pass in
@@ -301,7 +302,7 @@ public class StrategyGameFactory {
 		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
 		List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
 		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
-		scoutValidators.add(new CantAttackMoveValidator(gameBoard));
+		scoutValidators.add(new CantAttackUnlessOneSpaceMoveValidator(gameBoard));
 		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
 		List<ValidateMoveBehavior> firstLieutenantValidators = new ArrayList<ValidateMoveBehavior>();
 		firstLieutenantValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
@@ -317,7 +318,7 @@ public class StrategyGameFactory {
 		final TurnUpdateBehavior turnUpdateBehavior = new AlternateTeamTurnBehavior();
 		final BattleBehavior battleBehavior = new EpsilonBattleBehavior(
 				gameBoard);
-		final GameResultBehavior gameResultBehavior = new StatusGameResultBehavior(
+		final GameResultBehavior gameResultBehavior = new TwoFlagGameResultBehavior(
 				gameBoard, moveValidators);
 
 		return new StrategyGameControllerImpl(configValidators, moveValidators,

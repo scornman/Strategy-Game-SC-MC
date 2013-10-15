@@ -13,10 +13,12 @@ package strategy.game.version;
 import java.util.Map;
 import java.util.Set;
 
+import strategy.common.PlayerColor;
 import strategy.common.StrategyException;
 import strategy.game.common.Location;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
+import strategy.game.common.PieceType;
 
 /**
  * The game board that keeps track of all of the pieces and their locations.
@@ -141,5 +143,25 @@ public class Board {
 	 */
 	public Set<Location> getValidLocations() {
 		return pieceMap.keySet();
+	}
+
+	/**
+	 * Determines the number of flags remaining on the board for the given
+	 * color.
+	 * 
+	 * @param color
+	 *            the color of the player whose flage are to be counted.
+	 * @return the number of flags of the specified color on the board.
+	 */
+	public int getNumberOfFlags(PlayerColor color) {
+		int numFlags = 0;
+		Piece flagPiece = new Piece(PieceType.FLAG, color);
+		
+		for(Location iLoc: pieceMap.keySet()) {
+			if(flagPiece.equals(pieceMap.get(iLoc))) {
+				numFlags++;
+			}
+		}
+		return numFlags;
 	}
 }
