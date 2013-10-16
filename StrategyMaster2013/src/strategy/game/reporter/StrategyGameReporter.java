@@ -16,6 +16,7 @@ import strategy.common.StrategyException;
 import strategy.game.common.Coordinate;
 import strategy.game.common.Location;
 import strategy.game.common.MoveResult;
+import strategy.game.common.MoveResultStatus;
 import strategy.game.common.Piece;
 import strategy.game.common.PieceLocationDescriptor;
 import strategy.game.common.PieceType;
@@ -97,6 +98,13 @@ public class StrategyGameReporter implements StrategyGameObserver {
 	public String constructMoveReport(PieceType piece, Location from,
 			Location to, MoveResult result, StrategyException fault) {
 		String report = "";
+		PlayerColor otherColor;
+		if (currentColor == PlayerColor.RED) {
+			otherColor = PlayerColor.BLUE;
+		} else {
+			otherColor = PlayerColor.RED;
+		}
+
 		if (result != null) {
 
 			// Include information on the piece that moved.
@@ -109,11 +117,31 @@ public class StrategyGameReporter implements StrategyGameObserver {
 			PieceLocationDescriptor winner = result.getBattleWinner();
 			// If there was a battle
 			if (winner != null) {
-				report += "What's this? A battle!";
+				report += "What's this? A battle! ";
 
 				// Inclue the battle winner
 				report += "And the " + getPrintableBattleWinner(winner)
-						+ " is the winner!";
+						+ " is the winner!\n";
+			}
+
+			// Get the move result status
+			MoveResultStatus status = result.getStatus();
+
+			// If one of the flags has been captured report this.
+			if (status == MoveResultStatus.FLAG_CAPTURED) {
+				report += "And " + currentColor + " has captured one of the "
+						+ otherColor + " flags! What a huge turn of events!\n";
+				// If the game is over, report the appropriate messages.
+			} else if (status != MoveResultStatus.OK) {
+				report += "The game is over! The game is over! Do you believe it?\n";
+				if (status == MoveResultStatus.RED_WINS) {
+					report += "RED HAS WON THE GAME! What a REDiculously impressive finish!\n";
+				} else if (status == MoveResultStatus.BLUE_WINS) {
+					report += "BLUE HAS WON THE GAME! Blue fans will leave excited today, while you red fans will be feeling the BLUEs.\n";
+				} else {
+					report += "It's a draw! I can't believe I stayed for the whole game only for nobody to win!\n";
+				}
+				report += "And that's all from Strategy Arena. This is your announcer, Obser Ver, signing off.\n";
 			}
 		}
 
