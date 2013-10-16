@@ -334,7 +334,7 @@ public class StrategyGameFactory {
 				gameBoard, moveValidators);
 
 		// Create the game controller
-		StrategyGameControllerImpl controller = new StrategyGameControllerImpl(
+		final StrategyGameControllerImpl controller = new StrategyGameControllerImpl(
 				configValidators, moveValidators, turnUpdateBehavior,
 				battleBehavior, gameResultBehavior, gameBoard, moveHistory);
 
