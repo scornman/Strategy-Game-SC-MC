@@ -18,10 +18,22 @@ package strategy.game.common;
  */
 public interface StrategyGameObservable {
 
-	 // Registers an observer 
-	 void register(StrategyGameObserver observer); 
-	 
-	 // Removes an observer 
-	 void unregister(StrategyGameObserver observer);
-	 
+	/**
+	 * Registers an observer with this observable.
+	 * 
+	 * @param observer
+	 *            the new observer to register with the observable.
+	 */
+	// Registers an observer
+	void register(StrategyGameObserver observer);
+
+	/**
+	 * Unregisters an observer with this observable.
+	 * 
+	 * @param observer
+	 *            the observer to unregister with the observable.
+	 */
+	// Removes an observer
+	void unregister(StrategyGameObserver observer);
+
 }

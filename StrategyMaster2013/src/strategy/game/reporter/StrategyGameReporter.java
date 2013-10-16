@@ -93,7 +93,7 @@ public class StrategyGameReporter implements StrategyGameObserver {
 	 *            the result of the move.
 	 * @param fault
 	 *            the error thrown as a result of the move, if any.
-	 * @return
+	 * @return a string describing the move.
 	 */
 	public String constructMoveReport(PieceType piece, Location from,
 			Location to, MoveResult result, StrategyException fault) {
