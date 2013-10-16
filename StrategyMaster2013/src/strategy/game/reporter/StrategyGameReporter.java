@@ -28,6 +28,7 @@ import strategy.game.common.StrategyGameObserver;
  * 
  * @author Madalyn
  * @author scornman
+ * @version 10/15/13
  * 
  */
 public class StrategyGameReporter implements StrategyGameObserver {
@@ -114,7 +115,7 @@ public class StrategyGameReporter implements StrategyGameObserver {
 			report += "It's leaving location " + getPrintableLocation(from)
 					+ " and heading for " + getPrintableLocation(to) + ".\n";
 			// Determine the battle winner, if any.
-			PieceLocationDescriptor winner = result.getBattleWinner();
+			final PieceLocationDescriptor winner = result.getBattleWinner();
 			// If there was a battle
 			if (winner != null) {
 				report += "What's this? A battle! ";
@@ -125,7 +126,7 @@ public class StrategyGameReporter implements StrategyGameObserver {
 			}
 
 			// Get the move result status
-			MoveResultStatus status = result.getStatus();
+			final MoveResultStatus status = result.getStatus();
 
 			// If one of the flags has been captured report this.
 			if (status == MoveResultStatus.FLAG_CAPTURED) {
@@ -158,7 +159,7 @@ public class StrategyGameReporter implements StrategyGameObserver {
 	 * @return a string representation of a location
 	 */
 	private String getPrintableLocation(Location location) {
-		String printableLoc = "("
+		final String printableLoc = "("
 				+ location.getCoordinate(Coordinate.X_COORDINATE) + ", "
 				+ location.getCoordinate(Coordinate.Y_COORDINATE) + ")";
 		return printableLoc;
@@ -174,8 +175,8 @@ public class StrategyGameReporter implements StrategyGameObserver {
 	 *         (PieceLocationDescriptor)
 	 */
 	private String getPrintableBattleWinner(PieceLocationDescriptor battleWinner) {
-		Piece winningPiece = battleWinner.getPiece();
-		String printableWinner = "the " + winningPiece.getOwner() + " "
+		final Piece winningPiece = battleWinner.getPiece();
+		final String printableWinner = "the " + winningPiece.getOwner() + " "
 				+ winningPiece.getType().getPrintableName();
 		return printableWinner;
 	}

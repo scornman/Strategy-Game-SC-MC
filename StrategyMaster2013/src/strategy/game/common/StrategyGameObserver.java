@@ -24,27 +24,26 @@ public interface StrategyGameObserver {
 
 	 /**
 	  * Initializes the observer to the state at the start of the game.
+	  * Called at the beginning of the game with the initial configurations. 
 	  * @param redConfiguration the starting configuration of red pieces.
 	  * @param blueConfiguration the starting configuration of blue pieces.
 	  */
-	 // Called at the beginning of the game with the initial 
-	 // configurations. 
 	 void gameStart( 
 			 Collection<PieceLocationDescriptor> redConfiguration, 
 			 Collection<PieceLocationDescriptor> blueConfiguration); 
 	 
 	 /**
 	  * update method for the observer called whenever a move is made.
+	  * Called whenever a move is made by the game controller. If 
+	  * the controller caught an exception, it returns null for the 
+	  * result, but the exception in the fault; otherwise, fault 
+	  * is null. 
 	  * @param piece the type of the piece that is moved.
 	  * @param from the location moved from.
 	  * @param to the location moved to.
 	  * @param result the result of the move.
 	  * @param fault the error thrown when attempting to execute the move, if any.
 	  */
-	 // Called whenever a move is made by the game controller. If 
-	 // the controller caught an exception, it returns null for the 
-	 // result, but the exception in the fault; otherwise, fault 
-	 // is null. 
 	 void moveHappened(PieceType piece, Location from, Location to,  MoveResult result, StrategyException fault); 
 	 
 }
