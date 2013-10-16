@@ -9,6 +9,13 @@
  *******************************************************************************/
 package strategy.game.common;
 
+/**
+ * The StrategyGameObservable Interface
+ * @author Gary Pollice
+ * @author Madalyn
+ * @version 10/15/13
+ *
+ */
 public interface StrategyGameObservable {
 
 	 // Registers an observer 

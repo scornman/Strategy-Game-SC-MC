@@ -13,6 +13,13 @@ import java.util.Collection;
 
 import strategy.common.StrategyException;
 
+/**
+ * The StrategyGameObserver Interface
+ * @author Gary Pollice
+ * @author Madalyn
+ * @version 10/15/13
+ *
+ */
 public interface StrategyGameObserver {
 
 	 // Called at the beginning of the game with the initial 
