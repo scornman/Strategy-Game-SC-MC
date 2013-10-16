@@ -108,7 +108,8 @@ public class TestStrategyGameFactory {
 		// For movement behavior that varies based on the piece type
 		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
 		List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
-		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(
+				gameBoard));
 		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
 
 		// pass in map of pieces that use unique move validators, pass in
@@ -178,12 +179,16 @@ public class TestStrategyGameFactory {
 		// For movement behavior that varies based on the piece type
 		final Map<PieceType, List<ValidateMoveBehavior>> validatorsByPiece = new HashMap<PieceType, List<ValidateMoveBehavior>>();
 		List<ValidateMoveBehavior> scoutValidators = new ArrayList<ValidateMoveBehavior>();
-		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		scoutValidators.add(new SeveralSpacesInOneDirectionMoveValidator(
+				gameBoard));
 		validatorsByPiece.put(PieceType.SCOUT, scoutValidators);
 		List<ValidateMoveBehavior> firstLieutenantValidators = new ArrayList<ValidateMoveBehavior>();
-		firstLieutenantValidators.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
-		firstLieutenantValidators.add(new TwoSpaceStrikeMoveValidator(gameBoard));
-		validatorsByPiece.put(PieceType.FIRST_LIEUTENANT, firstLieutenantValidators);
+		firstLieutenantValidators
+				.add(new SeveralSpacesInOneDirectionMoveValidator(gameBoard));
+		firstLieutenantValidators
+				.add(new TwoSpaceStrikeMoveValidator(gameBoard));
+		validatorsByPiece.put(PieceType.FIRST_LIEUTENANT,
+				firstLieutenantValidators);
 
 		// pass in map of pieces that use unique move validators, pass in
 		// one-space-per-move validator as default
@@ -197,10 +202,19 @@ public class TestStrategyGameFactory {
 		final GameResultBehavior gameResultBehavior = new TwoFlagGameResultBehavior(
 				gameBoard, moveValidators);
 
-		return new StrategyGameControllerImpl(configValidators, moveValidators,
-				turnUpdateBehavior, battleBehavior, gameResultBehavior,
-				gameBoard, moveHistory);
+		// Create the game controller
+		StrategyGameControllerImpl controller = new StrategyGameControllerImpl(
+				configValidators, moveValidators, turnUpdateBehavior,
+				battleBehavior, gameResultBehavior, gameBoard, moveHistory);
 
+		// Register the observers with the game controller, and indicate to them
+		// that the game has started.
+		for (StrategyGameObserver reporter : observers) {
+			controller.register(reporter);
+			reporter.gameStart(startingRedConfig, startingBlueConfig);
+		}
+
+		return controller;
 	}
 
 	/**

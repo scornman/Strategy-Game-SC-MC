@@ -143,6 +143,8 @@ public class StrategyGameReporter implements StrategyGameObserver {
 				}
 				report += "And that's all from Strategy Arena. This is your announcer, Obser Ver, signing off.\n";
 			}
+		} else {
+			report += "Oh no! An error occurred! " + fault.getMessage() + "\n";
 		}
 
 		return report;

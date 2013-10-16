@@ -52,6 +52,8 @@ public class EpsilonStrategyGameControllerTest {
 	 * The observers for the strategy game.
 	 */
 	private Collection<StrategyGameObserver> observers;
+	// The specific reporter used.
+	private StrategyGameReporter announcer;
 
 	/**
 	 * Constants for easy access to locations
@@ -176,7 +178,8 @@ public class EpsilonStrategyGameControllerTest {
 	 */
 	private Collection<StrategyGameObserver> setupDefaultObservers() {
 		Collection<StrategyGameObserver> reporters = new ArrayList<StrategyGameObserver>();
-		reporters.add(new StrategyGameReporter());
+		announcer = new StrategyGameReporter();
+		reporters.add(announcer);
 		return reporters;
 	}
 
@@ -2105,37 +2108,96 @@ public class EpsilonStrategyGameControllerTest {
 
 		assertTrue(true);
 	}
-	
+
 	/**
-	 * Checks that if red resigns from the game 
-	 * blue wins
+	 * Checks that if red resigns from the game blue wins
 	 */
 	@Test
-	public void redResignsAndBlueWins() throws StrategyException{
+	public void redResignsAndBlueWins() throws StrategyException {
 		StrategyGameController controller = factory.makeEpsilonStrategy(
 				startingRedConfig, startingBlueConfig, observers);
 		controller.startGame();
-		
-		//red's turn is always the first move
-		//all null params is synonymous with resigning
+
+		// red's turn is always the first move
+		// all null params is synonymous with resigning
 		MoveResult result = controller.move(null, null, null);
 		assertEquals(MoveResultStatus.BLUE_WINS, result.getStatus());
 	}
-	
+
 	/**
-	 * Checks that if blue resigns from the game 
-	 * red wins
+	 * Checks that if blue resigns from the game red wins
 	 */
 	@Test
-	public void blueResignsAndRedWins() throws StrategyException{
+	public void blueResignsAndRedWins() throws StrategyException {
 		StrategyGameController controller = factory.makeEpsilonStrategy(
 				startingRedConfig, startingBlueConfig, observers);
 		controller.startGame();
-		
-		//red makes random first move
+
+		// red makes random first move
 		controller.move(PieceType.SPY, loc13, loc14);
-		//all null params is synonymous with resigning
+		// all null params is synonymous with resigning
 		MoveResult result = controller.move(null, null, null);
 		assertEquals(MoveResultStatus.RED_WINS, result.getStatus());
+	}
+
+	/**
+	 * Tests that the reporter correctly reports that the game has started.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testReporterStartGame() throws StrategyException {
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+
+		String expectedGameStartAnnouncement = "Ladies and Gentlemen, welcome to the Strategy Arena "
+				+ "for an exciting match between the visiting RED team and the "
+				+ "home team: BLUE! Let the game begin!";
+		assertEquals(expectedGameStartAnnouncement,
+				announcer.getLastMoveDescription());
+	}
+
+	/**
+	 * Tests that the reporter correctly reports a move.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testReporterMove() throws StrategyException {
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+
+		controller.move(PieceType.SPY, loc13, loc14);
+
+		String expectedMoveAnnouncement = "The RED Spy makes a move!\nIt's leaving location (1, 3) and heading for (1, 4).\n";
+		assertEquals(expectedMoveAnnouncement,
+				announcer.getLastMoveDescription());
+	}
+
+	/**
+	 * Tests that the reporter correctly reports a move.
+	 * 
+	 * @throws StrategyException
+	 */
+	@Test
+	public void testReporterBattle() throws StrategyException {
+		StrategyGameController controller = factory.makeEpsilonStrategy(
+				startingRedConfig, startingBlueConfig, observers);
+		controller.startGame();
+		// red
+		controller.move(PieceType.SPY, loc13, loc14);
+		// blue
+		controller.move(PieceType.MARSHAL, loc16, loc15);
+
+		// red attacks
+		controller.move(PieceType.SPY, loc14, loc15);
+
+		String expectedMoveAnnouncement = "The RED Spy makes a move!\n"
+				+ "It's leaving location (1, 4) and heading for (1, 5).\n"
+				+ "What's this? A battle! And the the RED Spy is the winner!\n";
+		assertEquals(expectedMoveAnnouncement,
+				announcer.getLastMoveDescription());
 	}
 }
